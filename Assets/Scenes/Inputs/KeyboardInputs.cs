@@ -1,6 +1,5 @@
 ﻿using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
-using UnityEngine.InputSystem.LowLevel;
 
 namespace Inputs {
     public class KeyboardInputs : IInputs {
@@ -23,9 +22,12 @@ namespace Inputs {
         }
         
         public override bool isPressed(int code) {
-            // TODO : si c'est le code pour pour déplacer la cam ou changer la direction,
-            // on doit get la combinaisaion de touches appuyés.
             if (keys[code] != null) {
+                // Ouvrir menu pause
+                if (code == 0) {
+                    return Keyboard.current.escapeKey.isPressed;
+                }
+                
                 // Tirer
                 if (code == 1) {
                     return keys[code].isPressed;
@@ -45,7 +47,7 @@ namespace Inputs {
                     // TODO : Check pour voir si Left ou Right sont appuyés
                     return keys[code].isPressed ||
                            keys[code + 1].isPressed ;
-                }    
+                }
             }
             return false;
         }

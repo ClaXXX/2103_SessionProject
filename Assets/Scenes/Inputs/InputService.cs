@@ -44,4 +44,17 @@ public class InputService : MonoBehaviour {
         // TODO : Appel méthode du domaine pour tirer la rondelle dans la direction choisie
         Debug.Log("pew pew");
     }
+
+    public void openMenu() {
+        // TODO : Ouvrir l'écran pause ici
+        Debug.Log("Pause!");
+    }
+    
+    public IInputs getInputs() {
+        return inputs;
+    }
+
+    public void changeInputs(IInputs inputs) {
+        this.inputs = inputs;
+    }
 }

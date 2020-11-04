@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.LowLevel;
 namespace Inputs {
     public class KeyboardInputs : IInputs {
 
-        private KeyControl[] keys;
+        private KeyControl[] keys = new KeyControl[8];
         
         // TODO : Doit contenir une liste de touches
         // Faudrait regrouper WASD sous un objet qui extend button.
@@ -25,28 +25,28 @@ namespace Inputs {
         public override bool isPressed(int code) {
             // TODO : si c'est le code pour pour déplacer la cam ou changer la direction,
             // on doit get la combinaisaion de touches appuyés.
+            if (keys[code] != null) {
+                // Tirer
+                if (code == 1) {
+                    return keys[code].isPressed;
+                }
             
-            // Tirer
-            if (code == 1) {
-                return keys[code].isPressed;
-            }
+                // Deplacer camera
+                if (code == 2) {
+                    // TODO : Check pour voir si W, A, S ou D sont appuyés
+                    return keys[code].isPressed ||
+                           keys[code + 1].isPressed ||
+                           keys[code + 2].isPressed ||
+                           keys[code + 3].isPressed ;
+                }
             
-            // Deplacer camera
-            if (code == 2) {
-                // TODO : Check pour voir si W, A, S ou D sont appuyés
-                return keys[code].isPressed ||
-                       keys[code + 1].isPressed ||
-                       keys[code + 2].isPressed ||
-                       keys[code + 3].isPressed ;
+                // Changer direction
+                if (code == 6) {
+                    // TODO : Check pour voir si Left ou Right sont appuyés
+                    return keys[code].isPressed ||
+                           keys[code + 1].isPressed ;
+                }    
             }
-            
-            // Changer direction
-            if (code == 6) {
-                // TODO : Check pour voir si Left ou Right sont appuyés
-                return keys[code].isPressed ||
-                       keys[code + 1].isPressed ;
-            }
-
             return false;
         }
     }

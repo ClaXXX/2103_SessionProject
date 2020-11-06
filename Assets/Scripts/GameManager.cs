@@ -6,29 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
     }
 
-    // Update is called once per frame
     void Update()
     {
     }
 
     public void Play()
     {
-        Debug.Log("Game Started");
+        // Debug.Log("Game Started");
     }
 
     public void LaunchGame()
     {
-        Debug.Log("Game Launched");
+        // Debug.Log("Game Launched");
     }
 
     public void Settings()
     {
-        Debug.Log("Game Preferences Menu open");
+        // Debug.Log("Game Preferences Menu open");
     }
 
     /**
@@ -36,24 +34,23 @@ public class GameManager : MonoBehaviour
      */
     public void BackToMainMenu()
     {
-        Debug.Log("Back To Main Menu");
+        // Debug.Log("Back To Main Menu");
     }
 
     public void BackToGame()
     {
-        Debug.Log("Back To Game");
+        // Debug.Log("Back To Game");
     }
 
     public void RestartGame()
     {
-        Debug.Log("Game Restart");
+        // Debug.Log("Game Restart");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     
     public void Quit()
     {
-        Debug.Log("Game Application Ended");
+        // Debug.Log("Game Application Ended");
         Application.Quit();
     }
 }
-

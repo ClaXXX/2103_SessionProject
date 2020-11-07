@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 
@@ -11,6 +9,8 @@ public class KeyboardMenuScript : MonoBehaviour {
     private KeyControl keyControl;
 
     private bool isWaitingForKey;
+
+    // TODO : Ajouter une instance du TurnManager
     
     
     void Start() {

@@ -5,27 +5,34 @@ using UnityEngine;
 
 public class InputService : MonoBehaviour {
 
-    private IInputs inputs; // TODO : Soit Gamepad ou Keyboard
+    private Player player = new Player();
+
+    private TurnManager turnManager;
 
     private void Start() {
-        inputs = new KeyboardInputs(); // TODO : Devrait prob être injecte
+        Player[] players = new Player[1];
+        players[0] = player;
+        turnManager = TurnManager.getInstance();
         
-        inputs.actionMap.Add("Tirer", 1);
-        inputs.actionMap.Add("BougerCamera", 2);
-        inputs.actionMap.Add("ChangerDirection", 6);
+        // TODO : Chaque joueur contient un IInput. Et chaque instance de InputService contient un joueur
+        player.inputs = new KeyboardInputs();
+        
+        player.inputs.actionMap.Add("Tirer", 1);
+        player.inputs.actionMap.Add("BougerCamera", 2);
+        player.inputs.actionMap.Add("ChangerDirection", 6);
         Debug.Log("action map initialized");
     }
 
     void Update() {
-        if (inputs.isPressed(inputs.actionMap["Tirer"])) {
+        if (player.inputs.isPressed(player.inputs.actionMap["Tirer"])) {
             shoot();
         }
         
-        if (inputs.isPressed(inputs.actionMap["BougerCamera"])) {
+        if (player.inputs.isPressed(player.inputs.actionMap["BougerCamera"])) {
             changeCameraPosition();
         }
         
-        if (inputs.isPressed(inputs.actionMap["ChangerDirection"])) {
+        if (player.inputs.isPressed(player.inputs.actionMap["ChangerDirection"])) {
             changeDirection();
         }
     }
@@ -51,10 +58,10 @@ public class InputService : MonoBehaviour {
     }
     
     public IInputs getInputs() {
-        return inputs;
+        return player.inputs;
     }
 
     public void changeInputs(IInputs inputs) {
-        this.inputs = inputs;
+        player.inputs = inputs;
     }
 }

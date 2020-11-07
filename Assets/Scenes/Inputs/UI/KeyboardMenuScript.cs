@@ -26,7 +26,7 @@ public class KeyboardMenuScript : MonoBehaviour {
         menuPanel.GetChild(1).GetComponentInChildren<Text>().text = "";
         menuPanel.GetChild(2).GetComponentInChildren<Text>().text = "";
         menuPanel.GetChild(3).GetComponentInChildren<Text>().text = "";
-        menuPanel.GetChild(4).GetComponentInChildren<Text>().text = "";
+        menuPanel.GetChild(4).GetComponentInChildren<Text>().text = "TEST SWITCH PAGE";
     }
 
     // NOTE : Panel parent (lui qui contient toutes les options) qui décident quand l'afficher

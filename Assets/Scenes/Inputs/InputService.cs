@@ -17,8 +17,6 @@ public class InputService : MonoBehaviour {
     }
 
     void Update() {
-        Debug.Log("I'm runnin!");
-        
         if (turnManager.getActivePlayer().inputs.isPressed(turnManager.getActivePlayer().inputs.actionMap["Tirer"])) {
             shoot();
         }

@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
-using UnityEngine;
-
+﻿
 public class TurnManager {
     
     // TODO : Serait pas pire que se soit un Singleton

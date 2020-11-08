@@ -54,5 +54,9 @@ namespace Inputs {
         public override InputControl[] getAllControls() {
             return keys;
         }
+
+        public override void setNewControls(InputControl[] controls) {
+            keys = controls;
+        }
     }
 }

@@ -10,5 +10,9 @@ namespace Scenes {
         public override InputControl[] getAllControls() {
             throw new System.NotImplementedException();
         }
+
+        public override void setNewControls(InputControl[] controls) {
+            throw new System.NotImplementedException();
+        }
     }
 }

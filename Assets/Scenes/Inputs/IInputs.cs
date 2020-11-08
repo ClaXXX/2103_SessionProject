@@ -9,5 +9,7 @@ namespace Inputs {
         public abstract bool isPressed(int code);
 
         public abstract InputControl[] getAllControls();
+
+        public abstract void setNewControls(InputControl[] controls);
     }
 }

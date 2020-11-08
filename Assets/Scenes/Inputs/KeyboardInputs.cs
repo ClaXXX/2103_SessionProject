@@ -1,10 +1,9 @@
 ﻿using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
 namespace Inputs {
     public class KeyboardInputs : IInputs {
 
-        private KeyControl[] keys = new KeyControl[8];
+        private InputControl[] keys = new InputControl[8];
         
         // TODO : Doit contenir une liste de touches
         // Faudrait regrouper WASD sous un objet qui extend button.
@@ -30,26 +29,30 @@ namespace Inputs {
                 
                 // Tirer
                 if (code == 1) {
-                    return keys[code].isPressed;
+                    return keys[code].IsPressed();
                 }
             
                 // Deplacer camera
                 if (code == 2) {
                     // TODO : Check pour voir si W, A, S ou D sont appuyés
-                    return keys[code].isPressed ||
-                           keys[code + 1].isPressed ||
-                           keys[code + 2].isPressed ||
-                           keys[code + 3].isPressed ;
+                    return keys[code].IsPressed() ||
+                           keys[code + 1].IsPressed() ||
+                           keys[code + 2].IsPressed() ||
+                           keys[code + 3].IsPressed();
                 }
             
                 // Changer direction
                 if (code == 6) {
                     // TODO : Check pour voir si Left ou Right sont appuyés
-                    return keys[code].isPressed ||
-                           keys[code + 1].isPressed ;
+                    return keys[code].IsPressed() ||
+                           keys[code + 1].IsPressed();
                 }
             }
             return false;
+        }
+
+        public override InputControl[] getAllControls() {
+            return keys;
         }
     }
 }

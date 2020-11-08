@@ -1,38 +1,33 @@
-﻿using System;
-using Inputs;
-using Scenes;
+﻿using Inputs;
 using UnityEngine;
 
 public class InputService : MonoBehaviour {
 
-    private Player player = new Player();
-
     private TurnManager turnManager;
 
     private void Start() {
-        Player[] players = new Player[1];
-        players[0] = player;
         turnManager = TurnManager.getInstance();
         
         // TODO : Chaque joueur contient un IInput. Et chaque instance de InputService contient un joueur
-        player.inputs = new KeyboardInputs();
-        
-        player.inputs.actionMap.Add("Tirer", 1);
-        player.inputs.actionMap.Add("BougerCamera", 2);
-        player.inputs.actionMap.Add("ChangerDirection", 6);
+
+        turnManager.getActivePlayer().inputs.actionMap.Add("Tirer", 1);
+        turnManager.getActivePlayer().inputs.actionMap.Add("BougerCamera", 2);
+        turnManager.getActivePlayer().inputs.actionMap.Add("ChangerDirection", 6);
         Debug.Log("action map initialized");
     }
 
     void Update() {
-        if (player.inputs.isPressed(player.inputs.actionMap["Tirer"])) {
+        Debug.Log("I'm runnin!");
+        
+        if (turnManager.getActivePlayer().inputs.isPressed(turnManager.getActivePlayer().inputs.actionMap["Tirer"])) {
             shoot();
         }
         
-        if (player.inputs.isPressed(player.inputs.actionMap["BougerCamera"])) {
+        if (turnManager.getActivePlayer().inputs.isPressed(turnManager.getActivePlayer().inputs.actionMap["BougerCamera"])) {
             changeCameraPosition();
         }
         
-        if (player.inputs.isPressed(player.inputs.actionMap["ChangerDirection"])) {
+        if (turnManager.getActivePlayer().inputs.isPressed(turnManager.getActivePlayer().inputs.actionMap["ChangerDirection"])) {
             changeDirection();
         }
     }
@@ -58,10 +53,10 @@ public class InputService : MonoBehaviour {
     }
     
     public IInputs getInputs() {
-        return player.inputs;
+        return turnManager.getActivePlayer().inputs;
     }
 
     public void changeInputs(IInputs inputs) {
-        player.inputs = inputs;
+        turnManager.getActivePlayer().inputs = inputs;
     }
 }

@@ -3,16 +3,52 @@ using UnityEngine.InputSystem;
 
 namespace Scenes {
     public class GamepadInputs : IInputs {  
+        
+        private InputControl[] buttons = new InputControl[8];
+
+        public GamepadInputs() {
+            buttons[1] = Gamepad.current.xButton;
+            
+            buttons[2] = Gamepad.current.rightStick;
+
+            buttons[5] = Gamepad.current.xButton;
+
+            buttons[6] = Gamepad.current.leftStick;
+        }
+        
         public override bool isPressed(int code) {
-            throw new System.NotImplementedException();
+            if (buttons[code] != null) {
+                // Ouvrir menu pause
+                if (code == 0) {
+                    return Keyboard.current.escapeKey.isPressed;
+                }
+                
+                // Tirer
+                if (code == 1) {
+                    return buttons[code].IsPressed();
+                }
+            
+                // Deplacer camera
+                if (code == 2) {
+                    // TODO : Check pour voir si W, A, S ou D sont appuyés
+                    return buttons[code].IsPressed();
+                }
+            
+                // Changer direction
+                if (code == 6) {
+                    // TODO : Check pour voir si Left ou Right sont appuyés
+                    return buttons[code].IsPressed();
+                }
+            }
+            return false;
         }
 
         public override InputControl[] getAllControls() {
-            throw new System.NotImplementedException();
+            return buttons;
         }
 
         public override void setNewControls(InputControl[] controls) {
-            throw new System.NotImplementedException();
+            buttons = controls;
         }
     }
 }

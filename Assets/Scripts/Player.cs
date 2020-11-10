@@ -4,8 +4,7 @@ using Scenes;
 public class Player {
     public IInputs inputs;
 
-    public Player() {
-        inputs = new GamepadInputs();
-        //inputs = new KeyboardInputs();
+    public Player(IInputs chosenInputs) {
+        inputs = chosenInputs;
     }
 }

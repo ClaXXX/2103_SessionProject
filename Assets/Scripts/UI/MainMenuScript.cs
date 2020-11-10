@@ -37,7 +37,8 @@ namespace UI {
                 
                 turnManager.setPlayers(players);
 
-                SceneManager.LoadScene("Game");
+                LoadingData.sceneToLoad = "Game";
+                SceneManager.LoadScene("Loading");
         }
     }
 }

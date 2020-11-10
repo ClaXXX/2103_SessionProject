@@ -21,20 +21,19 @@ public class GameManager : MonoBehaviour
 
     public void LaunchGame()
     {
-        // Debug.Log("Game Launched");
+        LoadingData.sceneToLoad = "Game";
+        SceneManager.LoadScene("Loading");
     }
 
     public void Settings()
     {
         // Debug.Log("Game Preferences Menu open");
     }
-
-    /**
-     * Potentially useless and to replace by Restart Game
-     */
+    
     public void BackToMainMenu()
     {
-        // Debug.Log("Back To Main Menu");
+        LoadingData.sceneToLoad = "Menus";
+        SceneManager.LoadScene("Loading");
     }
 
     public void BackToGame()

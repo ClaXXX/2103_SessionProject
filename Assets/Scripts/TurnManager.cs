@@ -1,4 +1,7 @@
 ﻿
+using DefaultNamespace;
+using UI;
+
 public class TurnManager {
     
     // TODO : Serait pas pire que se soit un Singleton
@@ -6,14 +9,16 @@ public class TurnManager {
     private static TurnManager instance;
 
     private Player[] players;
+    private PlayerFactory playerFactory;
 
     private int playerIterator = 0;
     private Player activePlayer;
 
     private TurnManager() {
+        playerFactory = new PlayerFactory();
         players = new Player[2];
-        players[0] = new Player(); // TODO : Ligne pour tester
-        activePlayer = players[0];
+        //players[0] = new Player(); // TODO : Ligne pour tester
+        //activePlayer = players[0];
     }
 
     public static TurnManager getInstance() {
@@ -36,7 +41,10 @@ public class TurnManager {
         return activePlayer;
     }
 
-    public void setPlayers(Player[] sadfg) {
-        this.players = sadfg;
+    public void setPlayers(PlayerDto[] playerDtos) {
+        players[0] = playerFactory.createPlayer(playerDtos[0]);
+        players[1] = playerFactory.createPlayer(playerDtos[1]);
+
+        activePlayer = players[0];
     }
 }

@@ -42,6 +42,8 @@ public class TurnManager {
     }
 
     public void setPlayers(PlayerDto[] playerDtos) {
+        
+        // TODO : Le turnManager ne devrait pas avoir a appelé des factorys
         players[0] = playerFactory.createPlayer(playerDtos[0]);
         players[1] = playerFactory.createPlayer(playerDtos[1]);
 

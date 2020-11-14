@@ -1,14 +1,14 @@
-﻿using Inputs;
-using Scenes;
+﻿using DefaultNamespace;
+using Inputs;
+using UnityEngine;
 
-public class Player {
+public class Player : MonoBehaviour{
     public IInputs inputs;
+    // TODO : Mettre la classe en charge du déplacement ici
 
-    public Player(IInputs chosenInputs) {
-        inputs = chosenInputs;
+    public void initializeConfigs(PlayerConfigs playerConfig) {
+        inputs = playerConfig.getInputs();
     }
-
-    public void initializeConfigs(object playerConfig) {
-        throw new System.NotImplementedException();
-    }
+    
+    
 }

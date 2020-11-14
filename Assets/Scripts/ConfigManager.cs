@@ -13,7 +13,6 @@ namespace DefaultNamespace {
         
 
         void Awake() {
-            Debug.Log("Is awake!");
             if (instance == null) {
                 instance = this;
                 inputsFactory = new InputsFactory();

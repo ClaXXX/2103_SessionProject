@@ -13,20 +13,6 @@ public class TurnManager {
     private int playerIterator = 0;
     private Player activePlayer;
 
-    private TurnManager() {
-        players = new Player[2];
-        //players[0] = new Player(); // TODO : Ligne pour tester
-        //activePlayer = players[0];
-    }
-
-    public static TurnManager getInstance() {
-        if (instance == null) {
-            instance = new TurnManager();
-        }
-        return instance;
-    }
-    
-
     public void nextTurn() {
         if (playerIterator == players.Length) {
             playerIterator = 0;

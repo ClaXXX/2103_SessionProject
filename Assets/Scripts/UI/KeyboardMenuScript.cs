@@ -24,7 +24,7 @@ public class KeyboardMenuScript : MonoBehaviour {
         //menuPanel.gameObject.SetActive(true); // TODO : Seulement pour tester
         isWaitingForKey = false;
 
-        turnManager = TurnManager.getInstance();
+        //turnManager = TurnManager.getInstance();
 
         Player player = turnManager.getActivePlayer();
 

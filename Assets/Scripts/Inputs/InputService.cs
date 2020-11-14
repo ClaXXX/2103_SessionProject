@@ -1,22 +1,13 @@
-﻿using Inputs;
+﻿using System.Collections.Generic;
+using DefaultNamespace;
+using Inputs;
 using UnityEngine;
 
 public class InputService : MonoBehaviour {
-
     private TurnManager turnManager;
-    
-    [SerializeField] GameObject player1;
-    [SerializeField] GameObject player2;
 
     private void Start() {
-        turnManager = TurnManager.getInstance();
-        
-        // TODO : Chaque joueur contient un IInput. Et chaque instance de InputService contient un joueur
-
-        turnManager.getActivePlayer().inputs.actionMap.Add("Tirer", 1);
-        turnManager.getActivePlayer().inputs.actionMap.Add("BougerCamera", 2);
-        turnManager.getActivePlayer().inputs.actionMap.Add("ChangerDirection", 6);
-        Debug.Log("action map initialized");
+        turnManager = new TurnManager();
     }
 
     void Update() {
@@ -59,5 +50,9 @@ public class InputService : MonoBehaviour {
 
     public void changeInputs(IInputs inputs) {
         turnManager.getActivePlayer().inputs = inputs;
+    }
+
+    public void setPlayers(Player[] sentPlayers) {
+        turnManager.setPlayers(sentPlayers);
     }
 }

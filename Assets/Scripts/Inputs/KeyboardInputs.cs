@@ -8,7 +8,7 @@ namespace Inputs {
         // TODO : Doit contenir une liste de touches
         // Faudrait regrouper WASD sous un objet qui extend button.
 
-        public KeyboardInputs() {
+        public KeyboardInputs() : base() {
             keys[1] = Keyboard.current.spaceKey;
             
             keys[2] = Keyboard.current.wKey;

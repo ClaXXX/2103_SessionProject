@@ -1,4 +1,5 @@
-﻿using Inputs;
+﻿using System.Transactions;
+using Inputs;
 using UnityEngine.InputSystem;
 
 namespace Scenes {
@@ -6,7 +7,7 @@ namespace Scenes {
         
         private InputControl[] buttons = new InputControl[8];
 
-        public GamepadInputs() {
+        public GamepadInputs() : base(){
             buttons[1] = Gamepad.current.xButton;
             
             buttons[2] = Gamepad.current.rightStick;

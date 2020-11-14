@@ -4,6 +4,9 @@ using UnityEngine;
 public class InputService : MonoBehaviour {
 
     private TurnManager turnManager;
+    
+    [SerializeField] GameObject player1;
+    [SerializeField] GameObject player2;
 
     private void Start() {
         turnManager = TurnManager.getInstance();

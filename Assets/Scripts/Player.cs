@@ -7,4 +7,8 @@ public class Player {
     public Player(IInputs chosenInputs) {
         inputs = chosenInputs;
     }
+
+    public void initializeConfigs(object playerConfig) {
+        throw new System.NotImplementedException();
+    }
 }

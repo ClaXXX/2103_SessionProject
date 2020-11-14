@@ -9,13 +9,11 @@ public class TurnManager {
     private static TurnManager instance;
 
     private Player[] players;
-    private PlayerFactory playerFactory;
 
     private int playerIterator = 0;
     private Player activePlayer;
 
     private TurnManager() {
-        playerFactory = new PlayerFactory();
         players = new Player[2];
         //players[0] = new Player(); // TODO : Ligne pour tester
         //activePlayer = players[0];
@@ -41,12 +39,8 @@ public class TurnManager {
         return activePlayer;
     }
 
-    public void setPlayers(PlayerDto[] playerDtos) {
-        
-        // TODO : Le turnManager ne devrait pas avoir a appelé des factorys
-        players[0] = playerFactory.createPlayer(playerDtos[0]);
-        players[1] = playerFactory.createPlayer(playerDtos[1]);
-
+    public void setPlayers(Player[] sentPlayers) {
+        players = sentPlayers;
         activePlayer = players[0];
     }
 }

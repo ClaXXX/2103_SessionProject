@@ -12,15 +12,13 @@ namespace UI {
         [SerializeField] private Dropdown player2Select;
 
         private PlayerAssembler playerAssembler;
-        private TurnManager turnManager;
-        private GameInitializer gameInitializer;
+        private ConfigManager _configManager; // TODO : Devrait recevoir notre GameInitializer
         
         private Transform menuPanel;
 
         public void Start() {
             playerAssembler = new PlayerAssembler();
-            turnManager = TurnManager.getInstance();
-            gameInitializer = new GameInitializer();
+            _configManager = ConfigManager.instance;
         }
 
         public void quitGame() {
@@ -38,9 +36,9 @@ namespace UI {
                 players[0] = playerAssembler.assemble(player1ControlsValue, 1);
                 players[1] = playerAssembler.assemble(player2ControlsValue, player2SelectValue);
                 
-                gameInitializer.addPlayers(players);
                 
-                turnManager.setPlayers(players);
+                _configManager.addPlayers(players);
+            
             
                 
                 LoadingData.sceneToLoad = "Game";

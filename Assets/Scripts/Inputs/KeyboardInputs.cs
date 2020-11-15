@@ -4,9 +4,6 @@ namespace Inputs {
     public class KeyboardInputs : IInputs {
 
         private InputControl[] keys = new InputControl[8];
-        
-        // TODO : Doit contenir une liste de touches
-        // Faudrait regrouper WASD sous un objet qui extend button.
 
         public KeyboardInputs() : base() {
             keys[1] = Keyboard.current.spaceKey;

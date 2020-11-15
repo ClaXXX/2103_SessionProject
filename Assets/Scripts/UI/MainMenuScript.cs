@@ -12,7 +12,7 @@ namespace UI {
         [SerializeField] private Dropdown player2Select;
 
         private PlayerAssembler playerAssembler;
-        private ConfigManager _configManager; // TODO : Devrait recevoir notre GameInitializer
+        private ConfigManager _configManager;
         
         private Transform menuPanel;
 

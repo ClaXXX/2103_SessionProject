@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using DefaultNamespace;
-using Inputs;
+﻿using Inputs;
 using UnityEngine;
 
 public class InputService : MonoBehaviour {
@@ -27,16 +25,19 @@ public class InputService : MonoBehaviour {
     public void changeCameraPosition() {
         // TODO : Appel méthode du domaine pour changer la position de la cam du joueur
         Debug.Log("Cam go weeeeee");
+        //turnManager.nextTurn(); // TODO : Est appeler trop souvent, utiliser une coroutine?
     }
 
     public void changeDirection() {
         // TODO : Appel méthode du domaine pour changer la direction de la rondelle du joueur courant
         Debug.Log("Direction spiiinnnnnn");
+        //turnManager.nextTurn();
     }
 
     public void shoot() {
         // TODO : Appel méthode du domaine pour tirer la rondelle dans la direction choisie
         Debug.Log("pew pew");
+        //turnManager.nextTurn();
     }
 
     public void openMenu() {

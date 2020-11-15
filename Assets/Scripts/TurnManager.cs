@@ -3,9 +3,6 @@ using DefaultNamespace;
 using UI;
 
 public class TurnManager {
-    
-    // TODO : Serait pas pire que se soit un Singleton
-
     private static TurnManager instance;
 
     private Player[] players;
@@ -17,7 +14,6 @@ public class TurnManager {
         if (playerIterator == players.Length) {
             playerIterator = 0;
         }
-        // TODO : Desactiver le joueur
         activePlayer = players[playerIterator];
     }
 

@@ -1,8 +1,10 @@
 ﻿using DefaultNamespace;
 using Inputs;
+using Mirror;
 using UnityEngine;
 
-public class Player : MonoBehaviour{
+public class Player : NetworkBehaviour
+{
     public IInputs inputs;
     // TODO : Mettre la classe en charge du déplacement ici
 

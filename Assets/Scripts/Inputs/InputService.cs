@@ -36,6 +36,7 @@ public class InputService : MonoBehaviour {
 
     public void shoot() {
         // TODO : Appel méthode du domaine pour tirer la rondelle dans la direction choisie
+        turnManager.getActivePlayer().shoot();
         Debug.Log("pew pew");
         //turnManager.nextTurn();
     }

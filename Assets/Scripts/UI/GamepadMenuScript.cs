@@ -28,7 +28,7 @@ public class GamepadMenuScript : MonoBehaviour {
         menuPanel.gameObject.SetActive(true); // TODO : Seulement pour tester
         isWaitingForInput = false;
 
-        turnManager = TurnManager.getInstance();
+        //turnManager = TurnManager.getInstance();
 
         Player player = turnManager.getActivePlayer();
 

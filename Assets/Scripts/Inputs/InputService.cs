@@ -2,18 +2,10 @@
 using UnityEngine;
 
 public class InputService : MonoBehaviour {
-
     private TurnManager turnManager;
 
     private void Start() {
-        turnManager = TurnManager.getInstance();
-        
-        // TODO : Chaque joueur contient un IInput. Et chaque instance de InputService contient un joueur
-
-        turnManager.getActivePlayer().inputs.actionMap.Add("Tirer", 1);
-        turnManager.getActivePlayer().inputs.actionMap.Add("BougerCamera", 2);
-        turnManager.getActivePlayer().inputs.actionMap.Add("ChangerDirection", 6);
-        Debug.Log("action map initialized");
+        turnManager = new TurnManager();
     }
 
     void Update() {
@@ -33,16 +25,20 @@ public class InputService : MonoBehaviour {
     public void changeCameraPosition() {
         // TODO : Appel méthode du domaine pour changer la position de la cam du joueur
         Debug.Log("Cam go weeeeee");
+        //turnManager.nextTurn(); // TODO : Est appeler trop souvent, utiliser une coroutine?
     }
 
     public void changeDirection() {
         // TODO : Appel méthode du domaine pour changer la direction de la rondelle du joueur courant
         Debug.Log("Direction spiiinnnnnn");
+        //turnManager.nextTurn();
     }
 
     public void shoot() {
         // TODO : Appel méthode du domaine pour tirer la rondelle dans la direction choisie
+        turnManager.getActivePlayer().shoot();
         Debug.Log("pew pew");
+        //turnManager.nextTurn();
     }
 
     public void openMenu() {
@@ -56,5 +52,9 @@ public class InputService : MonoBehaviour {
 
     public void changeInputs(IInputs inputs) {
         turnManager.getActivePlayer().inputs = inputs;
+    }
+
+    public void setPlayers(Player[] sentPlayers) {
+        turnManager.setPlayers(sentPlayers);
     }
 }

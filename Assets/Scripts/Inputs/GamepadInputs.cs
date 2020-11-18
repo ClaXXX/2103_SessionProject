@@ -6,12 +6,12 @@ namespace Scenes {
         
         private InputControl[] buttons = new InputControl[8];
 
-        public GamepadInputs() {
-            buttons[1] = Gamepad.current.xButton;
+        public GamepadInputs() : base(){
+            buttons[1] = Gamepad.current.buttonWest;
             
             buttons[2] = Gamepad.current.rightStick;
 
-            buttons[5] = Gamepad.current.xButton;
+            buttons[5] = Gamepad.current.buttonEast;
 
             buttons[6] = Gamepad.current.leftStick;
         }

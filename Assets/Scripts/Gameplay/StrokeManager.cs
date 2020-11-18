@@ -20,8 +20,11 @@ public class StrokeManager : MonoBehaviour
         Rolling,
         Stroke,
         Static,
+        Paused,
         Waiting
     }
+
+    private StrokeMode LastMode;
     public StrokeMode StrokeModeVar { get; protected set;  }
 
     private void Start()
@@ -42,7 +45,7 @@ public class StrokeManager : MonoBehaviour
         
         UpdateStrokeForce(verticalMov);
         StrokeAngle += Input.GetAxis("Horizontal") * 100f * Time.deltaTime;
-        if (Input.GetButtonUp("Fire1")) // The GetKeyUp method only works fine on the Update methods call
+        if (Input.GetKeyUp("space")) // The GetKeyUp method only works fine on the Update methods call
         {
             StrokeModeVar = StrokeMode.Stroke;
         }
@@ -53,6 +56,8 @@ public class StrokeManager : MonoBehaviour
     {
         switch (StrokeModeVar)
         {
+            case StrokeMode.Paused:
+                return;
             case StrokeMode.Waiting:
                 return;
             case StrokeMode.Static:
@@ -94,5 +99,20 @@ public class StrokeManager : MonoBehaviour
     public void StopWait()
     {
         StrokeModeVar = StrokeMode.Static;
+    }
+
+    public void Paused()
+    {
+        if (StrokeModeVar == StrokeMode.Paused)
+        {
+            return;
+        }
+        LastMode = StrokeModeVar;
+        StrokeModeVar = StrokeMode.Paused;
+    }
+
+    public void Continue()
+    {
+        StrokeModeVar = LastMode;
     }
 }

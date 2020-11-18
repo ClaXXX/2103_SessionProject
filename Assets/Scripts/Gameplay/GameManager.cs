@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefabs;
     public Camera mainCamera;
     public GameObject gameOverObj;
+    public GameObject pauseObj;
 
     public enum GameMode
     {
@@ -33,7 +35,26 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Game paused
+        if (GameModeVar != GameMode.Running)
+        {
+            return;
+        }
+
+        if (Input.GetKeyUp("escape"))
+        {
+            GameModeVar = GameMode.Paused;
+            pauseObj.SetActive(true);
+            _players[PlayerIndex - 1].Pause();
+            mainCamera.enabled = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (GameModeVar != GameMode.Paused)
+        {
+            return;
+        }
     }
 
     void LaunchGame(int playerNbr)
@@ -53,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     public void Next()
     {
-        if (GameModeVar != GameMode.Running)
+        if (GameModeVar == GameMode.Finished)
         {
             return;
         }
@@ -68,6 +89,13 @@ public class GameManager : MonoBehaviour
         
         _players[PlayerIndex].Play();
         PlayerIndex++;
+    }
+
+    public void Continue()
+    {
+        GameModeVar = GameMode.Running;
+        mainCamera.enabled = false;
+        _players[PlayerIndex - 1].Continue();
     }
 
     public void GameOver()

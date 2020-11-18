@@ -21,6 +21,18 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void Pause()
+    {
+        Camera.enabled = false;
+        StrokeManager.Paused();
+    }
+
+    public void Continue()
+    {
+        Camera.enabled = true;
+        StrokeManager.Continue();
+    }
+
     public void Play()
     {
         Camera.enabled = true;

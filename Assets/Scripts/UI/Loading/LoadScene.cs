@@ -24,4 +24,10 @@ public class LoadScene : MonoBehaviour
         progressBar.value = value;
         progressText.text = "Loading: " + (value * 100) + "%";
     }
+    
+    public static void LoadTo(String scene)
+    {
+        LoadingData.sceneToLoad = scene;
+        SceneManager.LoadScene("Loading");
+    }
 }

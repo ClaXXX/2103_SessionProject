@@ -33,10 +33,10 @@ namespace GamePlay
 
         void Start()
         {
-            if (GameSettings.PlayerMode == PlayerMode.Local)
-            {
-                LaunchGame(2);
-            }
+            // if (GameSettings.PlayerMode == PlayerMode.Local)
+            // {
+            //     LaunchGame(2);
+            // }
             LaunchGame(2);
         }
 

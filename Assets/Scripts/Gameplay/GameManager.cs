@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DefaultNamespace;
 using JetBrains.Annotations;
 using Mirror;
 using UnityEngine;
@@ -85,7 +86,10 @@ namespace GamePlay
             } else if (PlayerIndex >= _players.Count)
             {
                 GameObject go = Instantiate(playerPrefabs);
+                var playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
+                go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
                 _players.Add(go.GetComponent<PlayerManager>());
+                
             }
             
             _players[PlayerIndex].Play();

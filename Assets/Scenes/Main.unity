@@ -3156,7 +3156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &842527389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6038,8 +6038,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1ca57afc1c47f585e73bf7d2031707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1Controls: {fileID: 1259900085}
-  player2Controls: {fileID: 753517920}
+  onlinePlayerControls: {fileID: 1501416861}
+  localPlayer1Controls: {fileID: 1259900085}
+  localPlayer2Controls: {fileID: 753517920}
   player2Select: {fileID: 188480486}
 --- !u!1 &1448116394
 GameObject:
@@ -6185,7 +6186,6 @@ GameObject:
   - component: {fileID: 1462825573}
   - component: {fileID: 1462825572}
   - component: {fileID: 1462825571}
-  - component: {fileID: 1462825574}
   m_Layer: 5
   m_Name: Play Button
   m_TagString: Untagged
@@ -6256,9 +6256,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: be1ca57afc1c47f585e73bf7d2031707, type: 3}
-        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
-        m_MethodName: 
+      - m_Target: {fileID: 1445961114}
+        m_TargetAssemblyTypeName: UI.MainMenuScript, Assembly-CSharp
+        m_MethodName: configureLocalGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6267,7 +6267,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &1462825572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6306,21 +6306,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462825569}
   m_CullTransparentMesh: 0
---- !u!114 &1462825574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462825569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be1ca57afc1c47f585e73bf7d2031707, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player1Controls: {fileID: 1259900085}
-  player2Controls: {fileID: 753517920}
-  player2Select: {fileID: 188480486}
 --- !u!1 &1468125016
 GameObject:
   m_ObjectHideFlags: 0
@@ -6651,7 +6636,7 @@ GameObject:
   - component: {fileID: 1501416862}
   - component: {fileID: 1501416861}
   m_Layer: 5
-  m_Name: Player 1 controls
+  m_Name: Player online controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6676,7 +6661,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14, y: 0.006286621}
+  m_AnchoredPosition: {x: -12, y: 78}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1501416861
@@ -7414,8 +7399,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1738739366}
-  m_LocalRotation: {x: 0.052470163, y: 0.013484032, z: -0.0006797847, w: 0.9985312}
-  m_LocalPosition: {x: 0, y: 0, z: -441.04477}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2118458958}
@@ -7424,7 +7409,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 88.5163, y: 55.92473}
+  m_AnchoredPosition: {x: -15.4, y: -78}
   m_SizeDelta: {x: 225.02057, y: 82.31714}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1738739368
@@ -7473,6 +7458,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1468125020}
         m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
         m_MethodName: StartHost
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1445961114}
+        m_TargetAssemblyTypeName: UI.MainMenuScript, Assembly-CSharp
+        m_MethodName: configureOnlineGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7753,7 +7750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1802189501
 RectTransform:
   m_ObjectHideFlags: 0

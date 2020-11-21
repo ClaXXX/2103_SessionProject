@@ -3156,7 +3156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &842527389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6185,6 +6185,7 @@ GameObject:
   - component: {fileID: 1462825573}
   - component: {fileID: 1462825572}
   - component: {fileID: 1462825571}
+  - component: {fileID: 1462825574}
   m_Layer: 5
   m_Name: Play Button
   m_TagString: Untagged
@@ -6199,8 +6200,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462825569}
-  m_LocalRotation: {x: 0.052470163, y: 0.013484032, z: -0.0006797847, w: 0.9985312}
-  m_LocalPosition: {x: 0, y: 0, z: -441.04477}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2062784899}
@@ -6209,7 +6210,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 88.5163, y: 55.918457}
+  m_AnchoredPosition: {x: 10, y: -104.6}
   m_SizeDelta: {x: 225.02057, y: 82.31714}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1462825571
@@ -6255,9 +6256,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1468125020}
+      - m_Target: {fileID: 11500000, guid: be1ca57afc1c47f585e73bf7d2031707, type: 3}
         m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
-        m_MethodName: StartHost
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6305,6 +6306,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462825569}
   m_CullTransparentMesh: 0
+--- !u!114 &1462825574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462825569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1ca57afc1c47f585e73bf7d2031707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Controls: {fileID: 1259900085}
+  player2Controls: {fileID: 753517920}
+  player2Select: {fileID: 188480486}
 --- !u!1 &1468125016
 GameObject:
   m_ObjectHideFlags: 0
@@ -7737,7 +7753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1802189501
 RectTransform:
   m_ObjectHideFlags: 0

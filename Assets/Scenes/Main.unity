@@ -6404,7 +6404,7 @@ MonoBehaviour:
   autoStartServerBuild: 1
   showDebugMessages: 0
   serverTickRate: 30
-  offlineScene: Assets/Scenes/NetworkGame.unity
+  offlineScene: Assets/Mirror/Examples/Room/Scenes/OfflineScene.unity
   onlineScene: Assets/Scenes/NetworkGame.unity
   transport: {fileID: 1468125019}
   networkAddress: localhost

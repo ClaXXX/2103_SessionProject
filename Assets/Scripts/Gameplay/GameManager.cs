@@ -9,15 +9,16 @@ namespace GamePlay
 {
     public class GameManager : NetworkBehaviour
     {
-        // General GamePlay //
-        [Header("GamePlay Settings")]
         private List<PlayerManager> _players = new List<PlayerManager>();
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
         public int PlayerIndex { get; protected set; }
 
-        public GameObject playerPrefabs;
+        [Header("General")]
+        public GameObject playerPrefabs; // to change to Network Player prefabs ?
         public Camera mainCamera;
+        
+        [Header("Menus")]
         public GameObject gameOverObj;
         public GameObject pauseObj;
 
@@ -28,21 +29,15 @@ namespace GamePlay
             Finished
         }
 
-        public GameMode GameModeVar;
-        
-        [Header("Network Settings")]
-
-        private Network.NetworkManager _networkManager;
+        public GameMode GameModeVar { get; protected set; }
 
         void Start()
         {
             if (GameSettings.PlayerMode == PlayerMode.Local)
             {
                 LaunchGame(2);
-                return;
             }
-
-            _networkManager = FindObjectOfType<Network.NetworkManager>();
+            LaunchGame(2);
         }
 
         void Update()
@@ -63,10 +58,6 @@ namespace GamePlay
 
         #region GamePlay
 
-        public void LaunchNetworkGame()
-        {
-        }
-        
         public void LaunchGame(int playerNbr)
         {
             if (playerNbr >= MAXPlayerNbr)
@@ -100,6 +91,10 @@ namespace GamePlay
             _players[PlayerIndex].Play();
             PlayerIndex++;
         }
+        
+        #endregion
+        
+        #region Menus
 
         public void Continue()
         {
@@ -120,35 +115,12 @@ namespace GamePlay
         {
             LoadScene.LoadTo(SceneManager.GetActiveScene().name);
         }
-
-        #endregion
-
+        
         public void Quit()
         {
             LoadScene.LoadTo("Main");
         }
         
-        #region Network
-        
-        public void CreateLocalPlayer()
-        {
-            GameObject go = Instantiate(playerPrefabs);
-            _players.Add(go.GetComponent<PlayerManager>());
-        }
-
-        public void CreateOnlinePlayer()
-        {
-            GameObject go = Instantiate(playerPrefabs);
-            _players.Add(go.GetComponent<PlayerManager>());
-            NetworkServer.Spawn(go);
-        }
-        
-        public void ClientConnect()
-        {
-            Debug.Log("Client Added");
-            PlayerNbr++;
-        }
-
         #endregion
     }
     

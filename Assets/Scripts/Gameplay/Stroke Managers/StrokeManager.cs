@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Mirror.Examples.RigidbodyPhysics;
+﻿using Inputs;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class StrokeManager : MonoBehaviour
 {
     private const float MAXStrokeForce = 15f;
 
+    public Player player;
+        
     public Rigidbody playerBall;
     public int StrokeCount { get; protected set; }
     public float StrokeAngle { get; protected set; }
@@ -27,7 +25,7 @@ public class StrokeManager : MonoBehaviour
     private StrokeMode LastMode;
     public StrokeMode StrokeModeVar { get; protected set;  }
 
-    private void Start()
+    private void Start() 
     {
         StrokeForce = 1f;
         StrokeModeVar = StrokeMode.Static;
@@ -41,12 +39,19 @@ public class StrokeManager : MonoBehaviour
             return;
         }
 
-        float verticalMov = Input.GetAxis("Vertical") * 100f * Time.deltaTime;
-        
-        UpdateStrokeForce(verticalMov);
-        StrokeAngle += Input.GetAxis("Horizontal") * 100f * Time.deltaTime;
-        if (Input.GetKeyUp("space")) // The GetKeyUp method only works fine on the Update methods call
-        {
+        // TODO : Change Strength Action
+        if (player.inputs.isPressed(player.inputs.actionMap["Modify Stroke Strength"])) {
+            float verticalMov = player.inputs.getVerticalDirection().y * 100f * Time.deltaTime;
+            UpdateStrokeForce(verticalMov);
+        }
+
+        // TODO : Change Direction Action
+        if (player.inputs.isPressed(player.inputs.actionMap["Change Stroke Direction"])) {
+            StrokeAngle += player.inputs.getHorizontalDirection().x * 100f * Time.deltaTime;
+        }
+
+        // TODO : Fire Action
+        if (player.inputs.isPressed(player.inputs.actionMap["Stroke"])) {
             StrokeModeVar = StrokeMode.Stroke;
         }
     }

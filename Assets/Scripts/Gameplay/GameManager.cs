@@ -85,9 +85,17 @@ namespace GamePlay
                 PlayerIndex = 0;
             } else if (PlayerIndex >= _players.Count)
             {
+                int playersToManage;
                 GameObject go = Instantiate(playerPrefabs);
                 var playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
-                go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                if (GameSettings.PlayerMode == PlayerMode.Online) {
+                    if (PlayerIndex == 0) {
+                        go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                    }
+                }
+                else {
+                    go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                }
                 _players.Add(go.GetComponent<PlayerManager>());
                 
             }

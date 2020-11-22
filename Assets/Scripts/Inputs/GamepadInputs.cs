@@ -1,4 +1,5 @@
 ﻿using Inputs;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Scenes {
@@ -49,6 +50,14 @@ namespace Scenes {
 
         public override void setNewControls(InputControl[] controls) {
             buttons = controls;
+        }
+
+        public override Vector3 getVerticalDirection() {
+            throw new System.NotImplementedException();
+        }
+
+        public override Vector3 getHorizontalDirection() {
+            throw new System.NotImplementedException();
         }
     }
 }

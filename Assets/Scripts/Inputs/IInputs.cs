@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Inputs {
@@ -7,9 +8,9 @@ namespace Inputs {
         public Dictionary<string, int> actionMap = new Dictionary<string, int>();
 
         public IInputs() {
-            actionMap.Add("Tirer", 1);
-            actionMap.Add("BougerCamera", 2);
-            actionMap.Add("ChangerDirection", 6);
+            actionMap.Add("Stroke", 1);
+            actionMap.Add("Modify Stroke Strength", 2);
+            actionMap.Add("Change Stroke Direction", 4);
         }
         
         public abstract bool isPressed(int code);
@@ -17,5 +18,7 @@ namespace Inputs {
         public abstract InputControl[] getAllControls();
 
         public abstract void setNewControls(InputControl[] controls);
+        public abstract Vector3 getVerticalDirection();
+        public abstract Vector3 getHorizontalDirection();
     }
 }

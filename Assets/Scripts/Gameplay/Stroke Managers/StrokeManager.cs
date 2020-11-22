@@ -38,19 +38,16 @@ public class StrokeManager : MonoBehaviour
         {
             return;
         }
-
-        // TODO : Change Strength Action
+        
         if (player.inputs.isPressed(player.inputs.actionMap["Modify Stroke Strength"])) {
             float verticalMov = player.inputs.getVerticalDirection().y * 100f * Time.deltaTime;
             UpdateStrokeForce(verticalMov);
         }
-
-        // TODO : Change Direction Action
+        
         if (player.inputs.isPressed(player.inputs.actionMap["Change Stroke Direction"])) {
             StrokeAngle += player.inputs.getHorizontalDirection().x * 100f * Time.deltaTime;
         }
-
-        // TODO : Fire Action
+        
         if (player.inputs.isPressed(player.inputs.actionMap["Stroke"])) {
             StrokeModeVar = StrokeMode.Stroke;
         }

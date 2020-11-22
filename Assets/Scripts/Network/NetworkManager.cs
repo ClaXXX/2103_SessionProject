@@ -32,22 +32,7 @@ namespace Network
             base.OnStartClient();
             GameSettings.PlayerMode = PlayerMode.Online;
         }
-        
-        public override void OnClientConnect(NetworkConnection conn)
-        {
-            base.OnClientConnect(conn);
 
-            if (mode == NetworkManagerMode.Host) 
-            {            
-                Debug.Log(FindObjectOfType<NetworkMenus>());
-                FindObjectOfType<NetworkMenus>().SetMenuActive(true, "Host");
-            }
-            else
-            {
-                FindObjectOfType<NetworkMenus>().SetMenuActive(true, "Client");
-            }
-        }
-        
         #endregion
     }
 }

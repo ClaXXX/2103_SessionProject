@@ -1,4 +1,5 @@
-﻿using UnityEngine.InputSystem;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Inputs {
     public class KeyboardInputs : IInputs {
@@ -6,15 +7,12 @@ namespace Inputs {
         private InputControl[] keys = new InputControl[8];
 
         public KeyboardInputs() : base() {
-            keys[1] = Keyboard.current.spaceKey;
+            keys[1] = Keyboard.current.spaceKey; // Tirer
             
-            keys[2] = Keyboard.current.wKey;
-            keys[3] = Keyboard.current.aKey;
-            keys[4] = Keyboard.current.sKey;
-            keys[5] = Keyboard.current.dKey;
-
-            keys[6] = Keyboard.current.leftArrowKey;
-            keys[7] = Keyboard.current.rightArrowKey;
+            keys[2] = Keyboard.current.wKey; // Augmenter force
+            keys[3] = Keyboard.current.sKey; // Réduire force
+            keys[4] = Keyboard.current.aKey; // Tourner à gauche
+            keys[5] = Keyboard.current.dKey; // Tourner à droite
         }
         
         public override bool isPressed(int code) {
@@ -33,19 +31,39 @@ namespace Inputs {
                 if (code == 2) {
                     // TODO : Check pour voir si W, A, S ou D sont appuyés
                     return keys[code].IsPressed() ||
-                           keys[code + 1].IsPressed() ||
-                           keys[code + 2].IsPressed() ||
-                           keys[code + 3].IsPressed();
+                           keys[code + 1].IsPressed();
                 }
             
                 // Changer direction
-                if (code == 6) {
+                if (code == 4) {
                     // TODO : Check pour voir si Left ou Right sont appuyés
                     return keys[code].IsPressed() ||
                            keys[code + 1].IsPressed();
                 }
             }
             return false;
+        }
+
+        public override Vector3 getVerticalDirection() {
+            if (keys[2].IsPressed()) {
+                return Vector3.up;
+            } else if (keys[3].IsPressed()) {
+                return Vector3.down;
+            }
+            else {
+                return Vector3.zero;
+            }
+        }
+
+        public override Vector3 getHorizontalDirection() {
+            if (keys[4].IsPressed()) {
+                return Vector3.left;
+            } else if (keys[5].IsPressed()) {
+                return Vector3.right;
+            }
+            else {
+                return Vector3.zero;
+            }
         }
 
         public override InputControl[] getAllControls() {

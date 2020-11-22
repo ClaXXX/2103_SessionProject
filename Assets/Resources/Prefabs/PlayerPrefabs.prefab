@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8545612668822355676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136509915927973739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &-7243682794122319743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136509915927973739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0070cdd7f90bf0c45a17b3a9e5af76b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1001 &957087378811904210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7,6 +37,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7944833609958078321, guid: bb9cf5dbd6ed99540947c7c5ec8a7d4d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: -7243682794122319743}
     - target: {fileID: 7944833610944049080, guid: bb9cf5dbd6ed99540947c7c5ec8a7d4d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.08636907
@@ -57,3 +91,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb9cf5dbd6ed99540947c7c5ec8a7d4d, type: 3}
+--- !u!1 &7136509915927973739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7944833610944049081, guid: bb9cf5dbd6ed99540947c7c5ec8a7d4d, type: 3}
+  m_PrefabInstance: {fileID: 957087378811904210}
+  m_PrefabAsset: {fileID: 0}

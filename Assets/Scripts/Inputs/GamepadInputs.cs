@@ -1,4 +1,6 @@
 ﻿using Inputs;
+using Mono.CecilX;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Scenes {
@@ -9,11 +11,9 @@ namespace Scenes {
         public GamepadInputs() : base(){
             buttons[1] = Gamepad.current.buttonWest;
             
-            buttons[2] = Gamepad.current.rightStick;
+            buttons[2] = Gamepad.current.leftStick;
 
-            buttons[5] = Gamepad.current.buttonEast;
-
-            buttons[6] = Gamepad.current.leftStick;
+            buttons[4] = Gamepad.current.leftStick;
         }
         
         public override bool isPressed(int code) {
@@ -28,15 +28,8 @@ namespace Scenes {
                     return buttons[code].IsPressed();
                 }
             
-                // Deplacer camera
-                if (code == 2) {
-                    // TODO : Check pour voir si W, A, S ou D sont appuyés
-                    return buttons[code].IsPressed();
-                }
-            
-                // Changer direction
-                if (code == 6) {
-                    // TODO : Check pour voir si Left ou Right sont appuyés
+                // Changer la puissance ou la direction
+                if (code == 2 || code == 4) {
                     return buttons[code].IsPressed();
                 }
             }
@@ -49,6 +42,28 @@ namespace Scenes {
 
         public override void setNewControls(InputControl[] controls) {
             buttons = controls;
+        }
+
+        public override Vector3 getVerticalDirection() {
+            if (Gamepad.current.leftStick.up.isPressed) {
+                return Vector3.up;
+            }
+
+            if (Gamepad.current.leftStick.down.isPressed) {
+                return Vector3.down;
+            }
+            return Vector3.zero;
+        }
+
+        public override Vector3 getHorizontalDirection() {
+            if (Gamepad.current.leftStick.right.isPressed) {
+                return Vector3.right;
+            }
+
+            if (Gamepad.current.leftStick.left.isPressed) {
+                return Vector3.left;
+            }
+            return Vector3.zero;
         }
     }
 }

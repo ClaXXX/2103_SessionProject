@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DefaultNamespace;
 using JetBrains.Annotations;
 using Mirror;
 using UnityEngine;
@@ -84,8 +85,19 @@ namespace GamePlay
                 PlayerIndex = 0;
             } else if (PlayerIndex >= _players.Count)
             {
+                int playersToManage;
                 GameObject go = Instantiate(playerPrefabs);
+                var playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
+                if (GameSettings.PlayerMode == PlayerMode.Online) {
+                    if (PlayerIndex == 0) {
+                        go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                    }
+                }
+                else {
+                    go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                }
                 _players.Add(go.GetComponent<PlayerManager>());
+                
             }
             
             _players[PlayerIndex].Play();

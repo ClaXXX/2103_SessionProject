@@ -4,7 +4,7 @@ using GamePlay;
 using TMPro;
 using UnityEngine;
 
-public class StrokePlayerUI : MonoBehaviour
+public class PlayerNumberUI : MonoBehaviour
 {
     private TextMeshProUGUI _textMeshProUGUI;
     private GameManager _gameManager;

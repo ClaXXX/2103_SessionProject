@@ -15,6 +15,8 @@ namespace GamePlay
         public int PlayerNbr { get; protected set; }
         public int PlayerIndex { get; protected set; }
 
+        public Action<GameObject, int> OnPlayerCreated;
+
         [Header("General")]
         public GameObject playerPrefabs; // to change to Network Player prefabs ?
         public Camera mainCamera;
@@ -97,7 +99,9 @@ namespace GamePlay
                     go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
                 }
                 _players.Add(go.GetComponent<PlayerManager>());
-                
+                // Player Creation Post Action called
+                OnPlayerCreated?.Invoke(go, PlayerIndex);
+
             }
             
             _players[PlayerIndex].Play();
@@ -118,7 +122,7 @@ namespace GamePlay
         public void GameOver()
         {
             GameModeVar = GameMode.Finished;
-            _players.ForEach(manager => Destroy(manager.gameObject));
+            _players.ForEach(manager => manager.Destroy());
             mainCamera.enabled = true;
             gameOverObj.SetActive(true);
         }

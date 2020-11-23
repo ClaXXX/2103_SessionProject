@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using GamePlay;
+using Gameplay.Stroke_Managers;
 using UnityEngine;
 
 
@@ -18,6 +19,11 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.LogError("Game Manager not found !");
         }
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 
     public void Pause()
@@ -42,7 +48,7 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator Playing()
     {
-        yield return new WaitUntil(() => (StrokeManager.StrokeModeVar == StrokeManager.StrokeMode.Waiting));
+        yield return new WaitUntil(() => (StrokeManager.StrokeModeVar == StrokeMode.Waiting));
         Camera.enabled = false;
         Interface.SetActive(false);
         _gameManager.Next();

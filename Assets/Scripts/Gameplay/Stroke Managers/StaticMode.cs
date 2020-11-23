@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Gameplay.Stroke_Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,6 +11,6 @@ public class StaticMode : MonoBehaviour
 
     void Update()
     {
-        target.SetActive(strokeManager.StrokeModeVar == StrokeManager.StrokeMode.Static);
+        target.SetActive(strokeManager.StrokeModeVar == StrokeMode.Static);
     }
 }

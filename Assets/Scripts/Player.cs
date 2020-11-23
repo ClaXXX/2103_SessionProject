@@ -3,7 +3,7 @@ using Inputs;
 using Mirror;
 using UnityEngine;
 
-public class Player : NetworkBehaviour
+public class Player: MonoBehaviour
 {
     public IInputs inputs;
     // TODO : Mettre la classe en charge du déplacement ici

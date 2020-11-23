@@ -7,7 +7,7 @@ namespace Scenes {
         
         private InputControl[] buttons = new InputControl[8];
 
-        public GamepadInputs() : base(){
+        public GamepadInputs(int playerId) : base(playerId){
             buttons[1] = Gamepad.current.buttonWest;
             
             buttons[2] = Gamepad.current.leftStick;
@@ -39,7 +39,7 @@ namespace Scenes {
             return buttons;
         }
 
-        public override void setNewControls(InputControl[] controls) {
+        public override void setControls(InputControl[] controls) {
             buttons = controls;
         }
 

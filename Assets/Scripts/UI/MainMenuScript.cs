@@ -33,10 +33,9 @@ namespace UI {
                 
                 PlayerDto[] players = new PlayerDto[2];
 
-                players[0] = playerAssembler.assemble(player1ControlsValue, 1);
-                players[1] = playerAssembler.assemble(player2ControlsValue, player2SelectValue);
-                
-                
+                players[0] = playerAssembler.assemble(player1ControlsValue, 1, 1);
+                players[1] = playerAssembler.assemble(player2ControlsValue, player2SelectValue, 2);
+            
                 _configManager.addPlayers(players);
             
             
@@ -48,7 +47,7 @@ namespace UI {
         public void configureOnlineGame() {
             int player1ControlsValue = onlinePlayerControls.value;
             PlayerDto[] players = new PlayerDto[1];
-            players[0] = playerAssembler.assemble(player1ControlsValue, 1);
+            players[0] = playerAssembler.assemble(player1ControlsValue, 1, 1);
             
             _configManager.addPlayers(players);
         }

@@ -8,10 +8,10 @@ namespace DefaultNamespace {
 
         public IInputs createInputs(PlayerDto playerDto) {
             if (playerDto.controlType == "Keyboard") {
-                return new KeyboardInputs();
+                return new KeyboardInputs(playerDto.playerId);
             }
             else { 
-                return new GamepadInputs();
+                return new GamepadInputs(playerDto.playerId);
             }
         }
     }

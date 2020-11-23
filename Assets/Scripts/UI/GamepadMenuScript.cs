@@ -63,27 +63,27 @@ public class GamepadMenuScript : MonoBehaviour {
             case "Tirer" :
                 inputControls[1] = control;
                 menuPanel.GetChild(0).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
             case "Tourner à droite" :
                 inputControls[2] = control;
                 menuPanel.GetChild(1).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
             case "Tourner à gauche" :
                 inputControls[5] = control;
                 menuPanel.GetChild(2).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
             case "Augmenter la puissance" :
                 inputControls[6] = control;
                 menuPanel.GetChild(3).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
             case "Réduire la puissance" :
                 inputControls[6] = control;
                 menuPanel.GetChild(4).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
         }
     }

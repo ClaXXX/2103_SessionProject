@@ -6,7 +6,7 @@ namespace Inputs {
 
         private InputControl[] keys = new InputControl[8];
 
-        public KeyboardInputs() : base() {
+        public KeyboardInputs(int playerId) : base(playerId) {
             keys[1] = Keyboard.current.spaceKey; // Tirer
             
             keys[2] = Keyboard.current.wKey; // Augmenter force
@@ -70,7 +70,7 @@ namespace Inputs {
             return keys;
         }
 
-        public override void setNewControls(InputControl[] controls) {
+        public override void setControls(InputControl[] controls) {
             keys = controls;
         }
     }

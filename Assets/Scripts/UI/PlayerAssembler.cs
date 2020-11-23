@@ -1,7 +1,7 @@
 ﻿namespace UI {
     public class PlayerAssembler {
 
-        public PlayerDto assemble(int chosenControls, int isBot) {
+        public PlayerDto assemble(int chosenControls, int isBot, int playerId) {
             string controlType;
             bool isPlayerABot;
 
@@ -19,7 +19,7 @@
                 isPlayerABot = false;
             }
             
-            return new PlayerDto(controlType, isPlayerABot);
+            return new PlayerDto(controlType, isPlayerABot, playerId);
         }
         
     }

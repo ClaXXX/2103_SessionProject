@@ -5,9 +5,13 @@ using UnityEngine.InputSystem;
 namespace Inputs {
     public abstract class IInputs {
 
+        public int playerId;
+        
         public Dictionary<string, int> actionMap = new Dictionary<string, int>();
 
-        public IInputs() {
+        public IInputs(int playerId) {
+            this.playerId = playerId;
+            
             actionMap.Add("Stroke", 1);
             actionMap.Add("Modify Stroke Strength", 2);
             actionMap.Add("Change Stroke Direction", 4);
@@ -17,7 +21,7 @@ namespace Inputs {
 
         public abstract InputControl[] getAllControls();
 
-        public abstract void setNewControls(InputControl[] controls);
+        public abstract void setControls(InputControl[] controls);
         public abstract Vector3 getVerticalDirection();
         public abstract Vector3 getHorizontalDirection();
     }

@@ -64,27 +64,27 @@ public class KeyboardMenuScript : MonoBehaviour {
             case "Tirer" :
                 inputControls[1] = keyControl;
                 menuPanel.GetChild(0).GetComponentInChildren<Text>().text = keyControl.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
             case "Tourner à droite" :
                 inputControls[2] = keyControl;
                 menuPanel.GetChild(1).GetComponentInChildren<Text>().text = keyControl.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
             case "Tourner à gauche" :
                 inputControls[3] = keyControl;
                 menuPanel.GetChild(2).GetComponentInChildren<Text>().text = keyControl.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
             case "Augmenter la puissance" :
                 inputControls[4] = keyControl;
                 menuPanel.GetChild(3).GetComponentInChildren<Text>().text = keyControl.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
             case "Réduire la puissance" :
                 inputControls[5] = keyControl;
                 menuPanel.GetChild(4).GetComponentInChildren<Text>().text = keyControl.name;
-                turnManager.getActivePlayer().inputs.setNewControls(inputControls);
+                turnManager.getActivePlayer().inputs.setControls(inputControls);
                 break;
         }
     }

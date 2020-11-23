@@ -41,7 +41,7 @@ namespace UI {
             
             
                 
-                LoadingData.sceneToLoad = "Game";
+                LoadingData.sceneToLoad = "NetworkGame";
                 SceneManager.LoadScene("Loading");
         }
 

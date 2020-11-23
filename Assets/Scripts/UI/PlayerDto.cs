@@ -1,6 +1,4 @@
-﻿using Mono.CecilX;
-
-namespace UI {
+﻿namespace UI {
     public class PlayerDto {
         public string controlType;
         public bool isBot;

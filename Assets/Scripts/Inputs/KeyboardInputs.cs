@@ -7,6 +7,9 @@ namespace Inputs {
         private InputControl[] keys = new InputControl[8];
 
         public KeyboardInputs(int playerId) : base(playerId) {
+            PlayerPrefs.SetString("Player" + playerId + "ControlType", "Keyboard");
+            PlayerPrefs.Save();
+
             keys[1] = Keyboard.current.spaceKey; // Tirer
             
             keys[2] = Keyboard.current.wKey; // Augmenter force

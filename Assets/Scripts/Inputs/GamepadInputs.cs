@@ -7,12 +7,22 @@ namespace Scenes {
         
         private InputControl[] buttons = new InputControl[8];
 
-        public GamepadInputs(int playerId) : base(playerId){
-            buttons[1] = Gamepad.current.buttonWest;
+        public GamepadInputs(int playerId) : base(playerId) {
+            PlayerPrefs.SetString("Player" + playerId + "ControlType", "Gamepad");
+            PlayerPrefs.Save();
             
-            buttons[2] = Gamepad.current.leftStick;
-
-            buttons[4] = Gamepad.current.leftStick;
+            if (PlayerPrefs.HasKey("Player" + playerId + "GamepadStroke")) {
+                buttons[1] = 
+                    Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadStroke"));
+                buttons[2] =
+                    Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadAddPower"));
+                buttons[4] = 
+                    Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadChangeDirection"));
+            } else {
+                buttons[1] = Gamepad.current.buttonWest;
+                buttons[2] = Gamepad.current.leftStick;
+                buttons[4] = Gamepad.current.leftStick;
+            }
         }
         
         public override bool isPressed(int code) {
@@ -41,6 +51,11 @@ namespace Scenes {
 
         public override void setControls(InputControl[] controls) {
             buttons = controls;
+            
+            PlayerPrefs.SetString("Player" + playerId + "GamepadStroke", buttons[1].name);
+            PlayerPrefs.SetString("Player" + playerId + "GamepadAddPower", buttons[2].name);
+            PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirection", buttons[3].name);
+            PlayerPrefs.Save();
         }
 
         public override Vector3 getVerticalDirection() {

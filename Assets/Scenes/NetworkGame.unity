@@ -463,16 +463,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 6b2c181cb9d6c13499d043922acb8731, type: 3}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
+      - m_Target: {fileID: 1055246272}
+        m_TargetAssemblyTypeName: KeyboardMenuScript, Assembly-CSharp
+        m_MethodName: onButtonClick
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Tirer
+          m_StringArgument: Stroke
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &72360402
@@ -1338,29 +1338,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1574155280}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
-        m_Mode: 6
+      - m_Target: {fileID: 1055246272}
+        m_TargetAssemblyTypeName: KeyboardMenuScript, Assembly-CSharp
+        m_MethodName: onButtonClick
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Reduce Stroke Strength
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &521260150
 MonoBehaviour:
@@ -1797,16 +1785,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 6b2c181cb9d6c13499d043922acb8731, type: 3}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
+      - m_Target: {fileID: 1055246272}
+        m_TargetAssemblyTypeName: KeyboardMenuScript, Assembly-CSharp
+        m_MethodName: onButtonClick
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: "Tourner \xE0 droite"
+          m_StringArgument: Turn right
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &558575120
@@ -1928,7 +1916,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 598862720}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1055246272}
+        m_TargetAssemblyTypeName: KeyboardMenuScript, Assembly-CSharp
+        m_MethodName: onButtonClick
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Turn left
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &598862720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2087,7 +2087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &676558580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2441,6 +2441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2c181cb9d6c13499d043922acb8731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 95201146}
 --- !u!114 &1055246273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4164,7 +4165,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1683004178}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1055246272}
+        m_TargetAssemblyTypeName: KeyboardMenuScript, Assembly-CSharp
+        m_MethodName: onButtonClick
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Add Stroke Strength
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1683004178
 MonoBehaviour:
   m_ObjectHideFlags: 0

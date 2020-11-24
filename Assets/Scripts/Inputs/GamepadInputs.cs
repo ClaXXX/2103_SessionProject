@@ -1,7 +1,6 @@
 ﻿using Inputs;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace Scenes {
     public class GamepadInputs : IInputs {  

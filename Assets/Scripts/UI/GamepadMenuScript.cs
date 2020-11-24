@@ -1,11 +1,7 @@
-﻿using System;
-using GamePlay;
-using Scenes;
+﻿using GamePlay;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.SceneManagement;
 
 public class GamepadMenuScript : MonoBehaviour {
 
@@ -77,7 +73,6 @@ public class GamepadMenuScript : MonoBehaviour {
     
     private InputControl getPressedKey() {
         var keyControls = Gamepad.current.allControls;
-        Debug.Log(Gamepad.current.buttonSouth.isPressed);
         for (var i = 0; i < keyControls.Count; ++i) {
             if (keyControls[i].IsPressed()) {
                 return keyControls[i];

@@ -10,7 +10,8 @@ namespace GamePlay
 {
     public class GameManager : NetworkBehaviour
     {
-        private List<PlayerManager> _players = new List<PlayerManager>();
+        private List<PlayerManager> _playersManagers = new List<PlayerManager>();
+        private List<Player> _players = new List<Player>(); // TODO : Player devrait être remplacé par PlayerManager
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
         public int PlayerIndex { get; protected set; }
@@ -54,7 +55,7 @@ namespace GamePlay
             {
                 GameModeVar = GameMode.Paused;
                 pauseObj.SetActive(true);
-                _players[PlayerIndex - 1].Pause();
+                _playersManagers[PlayerIndex - 1].Pause();
                 mainCamera.enabled = true;
             }
         }
@@ -85,7 +86,7 @@ namespace GamePlay
             if (PlayerIndex + 1 > PlayerNbr)
             {
                 PlayerIndex = 0;
-            } else if (PlayerIndex >= _players.Count)
+            } else if (PlayerIndex >= _playersManagers.Count)
             {
                 int playersToManage;
                 GameObject go = Instantiate(playerPrefabs);
@@ -93,18 +94,20 @@ namespace GamePlay
                 if (GameSettings.PlayerMode == PlayerMode.Online) {
                     if (PlayerIndex == 0) {
                         go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                        _players.Add(go.GetComponent<Player>());
                     }
                 }
                 else {
                     go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                    _players.Add(go.GetComponent<Player>());
                 }
-                _players.Add(go.GetComponent<PlayerManager>());
+                _playersManagers.Add(go.GetComponent<PlayerManager>());
                 // Player Creation Post Action called
                 OnPlayerCreated?.Invoke(go, PlayerIndex);
 
             }
             
-            _players[PlayerIndex].Play();
+            _playersManagers[PlayerIndex].Play();
             PlayerIndex++;
         }
         
@@ -116,13 +119,13 @@ namespace GamePlay
         {
             GameModeVar = GameMode.Running;
             mainCamera.enabled = false;
-            _players[PlayerIndex - 1].Continue();
+            _playersManagers[PlayerIndex - 1].Continue();
         }
         
         public void GameOver()
         {
             GameModeVar = GameMode.Finished;
-            _players.ForEach(manager => manager.Destroy());
+            _playersManagers.ForEach(manager => manager.Destroy());
             mainCamera.enabled = true;
             gameOverObj.SetActive(true);
         }
@@ -135,6 +138,10 @@ namespace GamePlay
         public void Quit()
         {
             LoadScene.LoadTo("Main");
+        }
+
+        public Player getCurrentPlayer() {
+            return _players[PlayerIndex - 1];
         }
         
         #endregion

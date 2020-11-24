@@ -73,7 +73,6 @@ namespace Scenes {
             if (Gamepad.current.leftStick.right.isPressed) {
                 return Vector3.right;
             }
-
             if (Gamepad.current.leftStick.left.isPressed) {
                 return Vector3.left;
             }

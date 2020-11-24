@@ -14,6 +14,7 @@ namespace Scenes {
             if (PlayerPrefs.HasKey("Player" + playerId + "GamepadStroke")) {
                 buttons[1] = 
                     Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadStroke"));
+                Debug.Log(PlayerPrefs.GetString("Player" + playerId + "GamepadAddPower"));
                 buttons[2] =
                     Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadAddPower"));
                 buttons[2] =
@@ -49,11 +50,43 @@ namespace Scenes {
 
         public override void setControls(InputControl[] controls) {
             buttons = controls;
-            PlayerPrefs.SetString("Player" + playerId + "GamepadStroke", buttons[1].name);
-            PlayerPrefs.SetString("Player" + playerId + "GamepadAddPower", buttons[2].name);
-            PlayerPrefs.SetString("Player" + playerId + "GamepadReducePower", buttons[3].name);
-            PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirectionLeft", buttons[4].name);
-            PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirectionRight", buttons[5].name);
+            string name;
+            
+            name = buttons[1].parent.name;
+            if (name != "leftStick" && name != "rightStick") {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadStroke", buttons[1].name);   
+            } else {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadStroke", buttons[1].parent.name + "/" + buttons[1].name);
+            }
+
+            name = buttons[2].parent.name;
+            if (name != "leftStick" && name != "rightStick") {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadAddPower", buttons[2].name);
+            } else {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadAddPower", buttons[2].parent.name + "/" + buttons[2].name);
+            }
+
+            name = buttons[3].parent.name;
+            if (name != "leftStick" && name != "rightStick") {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadReducePower", buttons[2].name);
+            } else {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadReducePower", buttons[3].parent.name + "/" + buttons[3].name);
+            }
+            
+            name = buttons[4].parent.name;
+            if (name != "leftStick" && name != "rightStick") {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirectionLeft", buttons[2].name);
+            } else {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirectionLeft", buttons[4].parent.name + "/" + buttons[4].name);
+            }
+            
+            name = buttons[4].parent.name;
+            if (name != "leftStick" && name != "rightStick") {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirectionRight", buttons[2].name);
+            }
+            else {
+                PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirectionRight", buttons[5].parent.name + "/" + buttons[5].name);
+            }
             PlayerPrefs.Save();
         }
 

@@ -12,6 +12,7 @@ namespace Inputs {
         public IInputs(int playerId) {
             this.playerId = playerId;
             
+            // TODO : Doit devenir plus exhaustif
             actionMap.Add("Stroke", 1);
             actionMap.Add("Modify Stroke Strength", 2);
             actionMap.Add("Change Stroke Direction", 4);

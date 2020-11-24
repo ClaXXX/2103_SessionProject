@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gameplay.Stroke_Managers
 {
@@ -30,10 +31,18 @@ namespace Gameplay.Stroke_Managers
             {
                 return;
             }
-        
-            if (player.inputs.isPressed(player.inputs.actionMap["Modify Stroke Strength"])) {
-                float verticalMov = player.inputs.getVerticalDirection().y * 100f * Time.deltaTime;
-                UpdateStrokeForce(verticalMov);
+
+            try
+            {
+                if (player.inputs.isPressed(player.inputs.actionMap["Modify Stroke Strength"])) {
+                    float verticalMov = player.inputs.getVerticalDirection().y * 100f * Time.deltaTime;
+                    UpdateStrokeForce(verticalMov);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return;
             }
         
             if (player.inputs.isPressed(player.inputs.actionMap["Change Stroke Direction"])) {

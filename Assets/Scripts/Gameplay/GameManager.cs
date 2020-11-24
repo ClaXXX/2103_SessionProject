@@ -5,16 +5,18 @@ using JetBrains.Annotations;
 using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using NetworkManager = Network.NetworkManager;
 
 namespace GamePlay
 {
-    public class GameManager : NetworkBehaviour
+    public class GameManager : MonoBehaviour
     {
-        private List<PlayerManager> _players = new List<PlayerManager>();
+        private readonly List<PlayerManager> _players = new List<PlayerManager>();
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
         public int PlayerIndex { get; protected set; }
-
+        
+        // Events
         public Action<GameObject, int> OnPlayerCreated;
 
         [Header("General")]
@@ -29,18 +31,20 @@ namespace GamePlay
         {
             Running,
             Paused,
-            Finished
+            Finished,
+            Undefined
         }
 
         public GameMode GameModeVar { get; protected set; }
 
         void Start()
         {
-            // if (GameSettings.PlayerMode == PlayerMode.Local)
-            // {
-            //     LaunchGame(2);
-            // }
-            LaunchGame(2);
+            GameModeVar = GameMode.Undefined;
+            if (GameSettings.PlayerMode == PlayerMode.Local)
+            {
+                OnPlayerCreated = onLocalPlayerCreated;
+                LaunchGame(2);
+            }
         }
 
         void Update()
@@ -63,6 +67,12 @@ namespace GamePlay
 
         public void LaunchGame(int playerNbr)
         {
+            Debug.Log("On the Launch method beginning");
+            if (GameModeVar == GameMode.Running)
+            {
+                Debug.Log("Game Already running");
+                return;
+            }
             if (playerNbr >= MAXPlayerNbr)
             {
                 Debug.LogError("Une erreur est survenue avec le nombre de joueur, le nombre maximal est 4");
@@ -73,35 +83,43 @@ namespace GamePlay
             PlayerNbr = playerNbr;
             PlayerIndex = 0;
             mainCamera.enabled = false;
+            Debug.Log("Call Launcg method");
             Next();
+        }
+
+        void onLocalPlayerCreated(GameObject go, int index)
+        {
+            PlayerConfigs[] playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
+
+            go.GetComponent<Player>().initializeConfigs(playerConfigs[index]);
+        }
+
+        void CreatePlayer()
+        {
+            GameObject go = Instantiate(playerPrefabs);
+
+            // GameManager
+            _players.Add(go.GetComponent<PlayerManager>());
+            
+            // Player Creation Post Action called
+            Debug.Log("Call OnPlayerCreated method");
+            OnPlayerCreated?.Invoke(go, PlayerIndex);
         }
 
         public void Next()
         {
+            Debug.Log("Enter the Next GameManager method");
             if (GameModeVar == GameMode.Finished)
             {
                 return;
             }
+            
             if (PlayerIndex + 1 > PlayerNbr)
             {
                 PlayerIndex = 0;
             } else if (PlayerIndex >= _players.Count)
             {
-                int playersToManage;
-                GameObject go = Instantiate(playerPrefabs);
-                var playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
-                if (GameSettings.PlayerMode == PlayerMode.Online) {
-                    if (PlayerIndex == 0) {
-                        go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
-                    }
-                }
-                else {
-                    go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
-                }
-                _players.Add(go.GetComponent<PlayerManager>());
-                // Player Creation Post Action called
-                OnPlayerCreated?.Invoke(go, PlayerIndex);
-
+                CreatePlayer();
             }
             
             _players[PlayerIndex].Play();

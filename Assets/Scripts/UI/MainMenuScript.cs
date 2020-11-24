@@ -1,4 +1,5 @@
 ﻿using DefaultNamespace;
+using GamePlay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -50,7 +51,13 @@ namespace UI {
             PlayerDto[] players = new PlayerDto[1];
             players[0] = playerAssembler.assemble(player1ControlsValue, 1);
             
+            Debug.Log("Player Configuration added");
             _configManager.addPlayers(players);
+        }
+
+        public void GoOnline()
+        {
+            GameSettings.PlayerMode = PlayerMode.Online;
         }
     }
 }

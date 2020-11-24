@@ -35,22 +35,8 @@ namespace Network
             GameSettings.PlayerMode = PlayerMode.Online;
         }
 
-        public override void OnClientConnect(NetworkConnection conn)
-        {
-            base.OnClientConnect(conn);
-            if (mode == NetworkManagerMode.Host) 
-            {
-                // Instantiate Host Menu
-            }
-            else
-            {
-                // Instantiate Client Menu
-            }
-        }
-
         public override void OnRoomServerSceneChanged(string sceneName)
         {
-            base.OnRoomServerSceneChanged(sceneName);
             if (sceneName != GameplayScene)
             {
                 return;
@@ -61,10 +47,10 @@ namespace Network
                 Debug.LogError("GameManager not found");
                 return;
             }
-            _gameManager.playerPrefabs = playerPrefab; // Get the network prefabs
-            _gameManager.OnPlayerCreated += OnPlayerCreated;
+            
+            _gameManager.OnPlayerCreated = OnPlayerCreated;
+            _gameManager.playerPrefabs = playerPrefab;
             _gameManager.LaunchGame(_connections.Count);
-
         }
 
         public override void OnServerConnect(NetworkConnection conn)
@@ -78,11 +64,7 @@ namespace Network
 
                 allPlayersReady = false;
 
-                //if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "NetworkRoomManager.OnServerAddPlayer playerPrefab:{0}", roomPlayerPrefab.name);
-
-                GameObject newRoomGameObject = OnRoomServerCreateRoomPlayer(conn);
-                if (newRoomGameObject == null)
-                    newRoomGameObject = Instantiate(roomPlayerPrefab.gameObject, clientIndex * new Vector3(140f/4, 30f), Quaternion.identity);
+                GameObject newRoomGameObject = Instantiate(roomPlayerPrefab.gameObject, clientIndex * new Vector3(140f/4, 30f), Quaternion.identity);
 
                 NetworkServer.AddPlayerForConnection(conn, newRoomGameObject);
                 RecalculateRoomPlayerIndices();
@@ -91,13 +73,19 @@ namespace Network
             _connections.Add(conn);
         }
 
-        void OnPlayerCreated(GameObject player, int index)
+        public void OnPlayerCreated(GameObject player, int index)
         {
             if (index >= _connections.Count)
             {
                 Debug.LogError("Index of player out of range", this);
             }
-            NetworkServer.Spawn(player, _connections[index]);
+            player.GetComponent<PlayerManager>().setPlayerName((roomSlots[index] as Network.NetworkRoomPlayer).PlayerName);
+            Debug.Log((roomSlots[index] as Network.NetworkRoomPlayer).PlayerName + " is the true name");
+
+            if (NetworkServer.active)
+            {
+                NetworkServer.ReplacePlayerForConnection(_connections[index], player.gameObject);
+            }
         }
 
         #endregion

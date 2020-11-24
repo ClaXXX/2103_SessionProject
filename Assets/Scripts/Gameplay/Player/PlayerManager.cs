@@ -1,15 +1,24 @@
 ﻿using System.Collections;
 using GamePlay;
 using Gameplay.Stroke_Managers;
+using Mirror;
 using UnityEngine;
 
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : NetworkBehaviour
 {
     public StrokeManager StrokeManager;
     public Camera Camera;
     public GameObject Interface;
     private GameManager _gameManager;
+    public string PlayerName { get; protected set; } = "Player"; // default name set
+
+    public void setPlayerName(string playerName)
+    {
+        if (string.IsNullOrEmpty(playerName)) // Checkout that we don't set player name to a null or empty string
+            return;
+        PlayerName = playerName;
+    }
 
     private void Start()
     {

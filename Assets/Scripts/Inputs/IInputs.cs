@@ -14,8 +14,10 @@ namespace Inputs {
             
             // TODO : Doit devenir plus exhaustif
             actionMap.Add("Stroke", 1);
-            actionMap.Add("Modify Stroke Strength", 2);
-            actionMap.Add("Change Stroke Direction", 4);
+            actionMap.Add("Add Stroke Strength", 2);
+            actionMap.Add("Reduce Stroke Strength", 3);
+            actionMap.Add("Turn Stroke Direction Left", 4);
+            actionMap.Add("Turn Stroke Direction Right", 5);
         }
         
         public abstract bool isPressed(int code);

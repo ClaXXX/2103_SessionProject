@@ -16,12 +16,18 @@ namespace Scenes {
                     Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadStroke"));
                 buttons[2] =
                     Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadAddPower"));
+                buttons[2] =
+                    Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadReducePower"));
                 buttons[4] = 
-                    Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadChangeDirection"));
+                    Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadChangeDirectionLeft"));
+                buttons[4] = 
+                    Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadChangeDirectionRight"));
             } else {
-                buttons[1] = Gamepad.current.buttonWest;
-                buttons[2] = Gamepad.current.leftStick;
-                buttons[4] = Gamepad.current.leftStick;
+                buttons[1] = Gamepad.current.buttonWest; //Tirer
+                buttons[2] = Gamepad.current.leftStick.up; // Augmenter puissance
+                buttons[3] = Gamepad.current.leftStick.down; // Reduire puissance
+                buttons[4] = Gamepad.current.leftStick.left; // Tourner à gauche
+                buttons[5] = Gamepad.current.leftStick.right; // Tourner à droite
             }
         }
         
@@ -29,18 +35,10 @@ namespace Scenes {
             if (buttons[code] != null) {
                 // Ouvrir menu pause
                 if (code == 0) {
+                    // TODO : À IMPLÉMENTER
                     return Keyboard.current.escapeKey.isPressed;
                 }
-                
-                // Tirer
-                if (code == 1) {
-                    return buttons[code].IsPressed();
-                }
-            
-                // Changer la puissance ou la direction
-                if (code == 2 || code == 4) {
-                    return buttons[code].IsPressed();
-                }
+                return buttons[code].IsPressed();
             }
             return false;
         }
@@ -54,7 +52,9 @@ namespace Scenes {
             
             PlayerPrefs.SetString("Player" + playerId + "GamepadStroke", buttons[1].name);
             PlayerPrefs.SetString("Player" + playerId + "GamepadAddPower", buttons[2].name);
-            PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirection", buttons[4].name);
+            PlayerPrefs.SetString("Player" + playerId + "GamepadReducePower", buttons[3].name);
+            PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirectionLeft", buttons[4].name);
+            PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirectionRight", buttons[5].name);
             PlayerPrefs.Save();
         }
 

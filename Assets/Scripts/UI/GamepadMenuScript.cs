@@ -31,7 +31,9 @@ public class GamepadMenuScript : MonoBehaviour {
             inputControls = player.inputs.getAllControls();
             transform.GetChild(0).GetComponentInChildren<Text>().text = inputControls[1].name;
             transform.GetChild(1).GetComponentInChildren<Text>().text = inputControls[2].name;
-            transform.GetChild(2).GetComponentInChildren<Text>().text = inputControls[4].name;
+            transform.GetChild(2).GetComponentInChildren<Text>().text = inputControls[3].name;
+            transform.GetChild(3).GetComponentInChildren<Text>().text = inputControls[4].name;
+            transform.GetChild(4).GetComponentInChildren<Text>().text = inputControls[5].name;
         }
     }
 
@@ -53,19 +55,28 @@ public class GamepadMenuScript : MonoBehaviour {
     private void assignNewKey(InputControl control) {
         switch (actionName) {
             case "Stroke" :
-                Debug.Log("stroke");
                 inputControls[1] = control;
                 transform.GetChild(0).GetComponentInChildren<Text>().text = control.name;
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
-            case "Modify Stroke Strength" :
+            case "Add Stroke Strength" :
                 inputControls[2] = control;
                 transform.GetChild(1).GetComponentInChildren<Text>().text = control.name;
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
-            case "Change Stroke Direction" :
-                inputControls[4] = control;
+            case "Reduce Stroke Strength" :
+                inputControls[3] = control;
                 transform.GetChild(2).GetComponentInChildren<Text>().text = control.name;
+                gameManager.getCurrentPlayer().inputs.setControls(inputControls);
+                break;
+            case "Turn Stroke Direction Left" :
+                inputControls[4] = control;
+                transform.GetChild(3).GetComponentInChildren<Text>().text = control.name;
+                gameManager.getCurrentPlayer().inputs.setControls(inputControls);
+                break;
+            case "Turn Stroke Direction Right" :
+                inputControls[5] = control;
+                transform.GetChild(4).GetComponentInChildren<Text>().text = control.name;
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
         }

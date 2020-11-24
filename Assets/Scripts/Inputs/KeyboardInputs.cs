@@ -36,25 +36,8 @@ namespace Inputs {
                 if (code == 0) {
                     return Keyboard.current.escapeKey.isPressed;
                 }
-                
-                // Tirer
-                if (code == 1) {
-                    return keys[code].IsPressed();
-                }
-            
-                // Deplacer camera
-                if (code == 2) {
-                    // TODO : Check pour voir si W, A, S ou D sont appuyés
-                    return keys[code].IsPressed() ||
-                           keys[code + 1].IsPressed();
-                }
-            
-                // Changer direction
-                if (code == 4) {
-                    // TODO : Check pour voir si Left ou Right sont appuyés
-                    return keys[code].IsPressed() ||
-                           keys[code + 1].IsPressed();
-                }
+
+                return keys[code].IsPressed();
             }
             return false;
         }

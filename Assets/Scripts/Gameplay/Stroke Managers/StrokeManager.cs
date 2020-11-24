@@ -31,15 +31,24 @@ namespace Gameplay.Stroke_Managers
                 return;
             }
         
-            if (player.inputs.isPressed(player.inputs.actionMap["Modify Stroke Strength"])) {
-                float verticalMov = player.inputs.getVerticalDirection().y * 100f * Time.deltaTime;
+            if (player.inputs.isPressed(player.inputs.actionMap["Add Stroke Strength"])) {
+                float verticalMov = 1 * 100f * Time.deltaTime;
+                UpdateStrokeForce(verticalMov);
+            }
+            
+            if (player.inputs.isPressed(player.inputs.actionMap["Reduce Stroke Strength"])) {
+                float verticalMov = -1 * 100f * Time.deltaTime;
                 UpdateStrokeForce(verticalMov);
             }
         
-            if (player.inputs.isPressed(player.inputs.actionMap["Change Stroke Direction"])) {
-                StrokeAngle += player.inputs.getHorizontalDirection().x * 100f * Time.deltaTime;
+            if (player.inputs.isPressed(player.inputs.actionMap["Turn Stroke Direction Left"])) {
+                StrokeAngle += -1 * 100f * Time.deltaTime;
             }
         
+            if (player.inputs.isPressed(player.inputs.actionMap["Turn Stroke Direction Right"])) {
+                StrokeAngle += 1 * 100f * Time.deltaTime;
+            }
+            
             if (player.inputs.isPressed(player.inputs.actionMap["Stroke"])) {
                 StrokeModeVar = StrokeMode.Stroke;
             }

@@ -49,7 +49,6 @@ namespace Scenes {
 
         public override void setControls(InputControl[] controls) {
             buttons = controls;
-            
             PlayerPrefs.SetString("Player" + playerId + "GamepadStroke", buttons[1].name);
             PlayerPrefs.SetString("Player" + playerId + "GamepadAddPower", buttons[2].name);
             PlayerPrefs.SetString("Player" + playerId + "GamepadReducePower", buttons[3].name);

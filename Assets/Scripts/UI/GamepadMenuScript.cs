@@ -1,4 +1,6 @@
-﻿using GamePlay;
+﻿using System;
+using GamePlay;
+using UnityEditor.Animations;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -53,6 +55,7 @@ public class GamepadMenuScript : MonoBehaviour {
     }
 
     private void assignNewKey(InputControl control) {
+        control = mapButton(control);
         switch (actionName) {
             case "Stroke" :
                 inputControls[1] = control;
@@ -60,7 +63,7 @@ public class GamepadMenuScript : MonoBehaviour {
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
             case "Add Stroke Strength" :
-                inputControls[2] = control;
+                inputControls[2] = mapButton(control);;
                 transform.GetChild(1).GetComponentInChildren<Text>().text = control.name;
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
@@ -90,5 +93,21 @@ public class GamepadMenuScript : MonoBehaviour {
             }
         }
         return null;
+    }
+
+    private InputControl mapButton(InputControl inputControl) { 
+        InputControl[] children = inputControl.children.ToArray();
+
+        if (children.Length > 0) {
+            foreach (var child in children) {
+                if (!(child.name == "x" || child.name == "y")) {
+                    if (child.IsPressed()) {
+                        return child;
+                    }
+                }
+            }
+            return null;
+        }
+        return inputControl;
     }
 }

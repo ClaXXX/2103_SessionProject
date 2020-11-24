@@ -1,45 +1,42 @@
-﻿using UnityEngine.UI;
+﻿using System;
+using GamePlay;
+using Scenes;
+using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
 public class GamepadMenuScript : MonoBehaviour {
-    private Transform menuPanel;
+
+    [SerializeField] private GameManager gameManager;
+    
     private Event keyEvent;
     private Text buttonText;
-
-    // TODO : À CHANGER
+    
     private InputControl inputControl;
     private KeyCode newKey;
     
     private string actionName;
 
     private InputControl[] inputControls;
-    
-    private TurnManager turnManager;
-    
+
     private bool isWaitingForInput;
 
 
     void Start() {
-        menuPanel = transform.Find("Gamepad Controls Panel");
-        //menuPanel.gameObject.SetActive(false);
-        menuPanel.gameObject.SetActive(true); // TODO : Seulement pour tester
         isWaitingForInput = false;
-
-        //turnManager = TurnManager.getInstance();
-
-        Player player = turnManager.getActivePlayer();
-
         inputControls = new InputControl[8];
-        inputControls = player.inputs.getAllControls();
+    }
 
-        menuPanel.GetChild(0).GetComponentInChildren<Text>().text = inputControls[1].name;
-        menuPanel.GetChild(1).GetComponentInChildren<Text>().text = inputControls[2].name;
-        menuPanel.GetChild(2).GetComponentInChildren<Text>().text = inputControls[5].name;
-        menuPanel.GetChild(3).GetComponentInChildren<Text>().text = inputControls[6].name;
-        menuPanel.GetChild(4).GetComponentInChildren<Text>().text = "TEST SWITCH PAGE";
+    private void Update() {
+        if (!isWaitingForInput) {
+            Player player = gameManager.getCurrentPlayer();
+            inputControls = player.inputs.getAllControls();
+            transform.GetChild(0).GetComponentInChildren<Text>().text = inputControls[1].name;
+            transform.GetChild(1).GetComponentInChildren<Text>().text = inputControls[2].name;
+            transform.GetChild(2).GetComponentInChildren<Text>().text = inputControls[4].name;
+        }
     }
 
     public void onButtonClick(string action) {
@@ -48,48 +45,39 @@ public class GamepadMenuScript : MonoBehaviour {
     }
     
     void OnGUI() {
-        if (Gamepad.current.IsPressed() && isWaitingForInput) {
+        if (isWaitingForInput) {
             inputControl = getPressedKey();
             if (inputControl != null) {
                 assignNewKey(inputControl);
                 isWaitingForInput = false;
-                SceneManager.LoadScene("Game");
             }
         }
     }
 
     private void assignNewKey(InputControl control) {
         switch (actionName) {
-            case "Tirer" :
+            case "Stroke" :
+                Debug.Log("stroke");
                 inputControls[1] = control;
-                menuPanel.GetChild(0).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setControls(inputControls);
+                transform.GetChild(0).GetComponentInChildren<Text>().text = control.name;
+                gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
-            case "Tourner à droite" :
+            case "Modify Stroke Strength" :
                 inputControls[2] = control;
-                menuPanel.GetChild(1).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setControls(inputControls);
+                transform.GetChild(1).GetComponentInChildren<Text>().text = control.name;
+                gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
-            case "Tourner à gauche" :
-                inputControls[5] = control;
-                menuPanel.GetChild(2).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setControls(inputControls);
-                break;
-            case "Augmenter la puissance" :
-                inputControls[6] = control;
-                menuPanel.GetChild(3).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setControls(inputControls);
-                break;
-            case "Réduire la puissance" :
-                inputControls[6] = control;
-                menuPanel.GetChild(4).GetComponentInChildren<Text>().text = control.name;
-                turnManager.getActivePlayer().inputs.setControls(inputControls);
+            case "Change Stroke Direction" :
+                inputControls[4] = control;
+                transform.GetChild(2).GetComponentInChildren<Text>().text = control.name;
+                gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
         }
     }
     
     private InputControl getPressedKey() {
         var keyControls = Gamepad.current.allControls;
+        Debug.Log(Gamepad.current.buttonSouth.isPressed);
         for (var i = 0; i < keyControls.Count; ++i) {
             if (keyControls[i].IsPressed()) {
                 return keyControls[i];

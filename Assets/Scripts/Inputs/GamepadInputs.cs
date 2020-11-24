@@ -1,6 +1,7 @@
 ﻿using Inputs;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace Scenes {
     public class GamepadInputs : IInputs {  
@@ -54,13 +55,13 @@ namespace Scenes {
             
             PlayerPrefs.SetString("Player" + playerId + "GamepadStroke", buttons[1].name);
             PlayerPrefs.SetString("Player" + playerId + "GamepadAddPower", buttons[2].name);
-            PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirection", buttons[3].name);
+            PlayerPrefs.SetString("Player" + playerId + "GamepadChangeDirection", buttons[4].name);
             PlayerPrefs.Save();
         }
 
         public override Vector3 getVerticalDirection() {
             if (Gamepad.current.leftStick.up.isPressed) {
-                return Vector3.up;
+            return Vector3.up;
             }
 
             if (Gamepad.current.leftStick.down.isPressed) {

@@ -4110,6 +4110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenu: {fileID: 1761303091}
+  SettingsMenu: {fileID: 1574155280}
   KeyboardMenu: {fileID: 1055246270}
   GamepadMenu: {fileID: 676558579}
   gameManager: {fileID: 95201146}

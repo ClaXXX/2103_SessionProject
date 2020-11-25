@@ -345,9 +345,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ce673f9a6cded47a05905ab133ee89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefabs: {fileID: 7136509915927973739, guid: 263e54a6b1fa80b47971ca984c86d521, type: 3}
   mainCamera: {fileID: 46827637}
   position: {fileID: 1412393959}
+  playerPrefabs: {fileID: 7136509915927973739, guid: 263e54a6b1fa80b47971ca984c86d521, type: 3}
+  botPlayerPrefabs: {fileID: 4036350990744983373, guid: 5d2513462dd29d549a2b35341ad08b1e, type: 3}
   gameOverObj: {fileID: 1280544844180110524}
   pauseObj: {fileID: 1761303091}
   networkGameOverObj: {fileID: 1186466372}
@@ -811,6 +812,10 @@ PrefabInstance:
     - target: {fileID: 3602250058457704982, guid: 4cdd472113a390e42a1a9182e9a61856, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3602250058457704982, guid: 4cdd472113a390e42a1a9182e9a61856, type: 3}
+      propertyPath: m_TagString
+      value: Finish
       objectReference: {fileID: 0}
     - target: {fileID: 4817776561164517499, guid: 4cdd472113a390e42a1a9182e9a61856, type: 3}
       propertyPath: m_Layer
@@ -1843,7 +1848,7 @@ GameObject:
   - component: {fileID: 1412393959}
   m_Layer: 0
   m_Name: Position
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

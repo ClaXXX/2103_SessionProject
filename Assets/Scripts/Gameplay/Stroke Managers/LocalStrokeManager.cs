@@ -1,32 +1,26 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gameplay.Stroke_Managers
 {
     public class LocalStrokeManager : MonoBehaviour
     {
-        public StrokeManager StrokeManager;
+        public StrokeManager strokeManager;
 
         private void Start()
         {
-            StrokeManager.Stroke += Stroke;
+            strokeManager.Stroke += strokeManager.StrokeTheBall;
         }
 
         private void Update()
         {
-            StrokeManager.UpdateFrame();
+            strokeManager.UpdateFrame();
         }
 
         private void FixedUpdate()
         {
-            StrokeManager.FixedUpdatePhysic();
-        }
-
-        void Stroke()
-        {
-            Vector3 direction = new Vector3(0,0,StrokeManager.StrokeForce);
-
-            StrokeManager.playerBall.AddForce(Quaternion.Euler(0f, StrokeManager.StrokeAngle, 0f) * direction, ForceMode.Impulse);
+            strokeManager.FixedUpdatePhysic();
         }
     }
 }

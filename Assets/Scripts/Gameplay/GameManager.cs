@@ -9,7 +9,7 @@ namespace GamePlay
     public class GameManager : MonoBehaviour
     {
         private readonly List<PlayerManager> _playersManagers = new List<PlayerManager>();
-        private List<Player> _players = new List<Player>(); // TODO : Player devrait être remplacé par PlayerManager
+        private List<global::Player> _players = new List<global::Player>(); // TODO : Player devrait être remplacé par PlayerManager
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
         public int PlayerIndex { get; protected set; }
@@ -108,32 +108,24 @@ namespace GamePlay
         void CreatePlayer()
         {
             GameObject go = Instantiate(playerPrefabs, position);
+            var playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
+            
+            if (GameSettings.PlayerMode == PlayerMode.Online) {
+                if (PlayerIndex == 0) {
+                    go.GetComponent<global::Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                    _players.Add(go.GetComponent<global::Player>());
+                }
+            }
+            else {
+                go.GetComponent<global::Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                _players.Add(go.GetComponent<global::Player>());
+            }
             
             // Player Creation Post Action called
             OnPlayerCreated?.Invoke(go, PlayerIndex);
 
             // GameManager
-            _players.Add(go.GetComponent<PlayerManager>());
-            
-            
-            /*
-             *                 int playersToManage;
-                GameObject go = Instantiate(playerPrefabs);
-                var playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
-                if (GameSettings.PlayerMode == PlayerMode.Online) {
-                    if (PlayerIndex == 0) {
-                        go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
-                        _players.Add(go.GetComponent<Player>());
-                    }
-                }
-                else {
-                    go.GetComponent<Player>().initializeConfigs(playerConfigs[PlayerIndex]);
-                    _players.Add(go.GetComponent<Player>());
-                }
-                _playersManagers.Add(go.GetComponent<PlayerManager>());
-                // Player Creation Post Action called
-                OnPlayerCreated?.Invoke(go, PlayerIndex);
-             */
+            _playersManagers.Add(go.GetComponent<PlayerManager>());
         }
 
         /**
@@ -180,7 +172,7 @@ namespace GamePlay
 
         void onLocalGameOver()
         {
-            _players.ForEach(manager => manager.Destroy());
+            _playersManagers.ForEach(manager => manager.Destroy());
             mainCamera.enabled = true;
             gameOverObj.SetActive(true);
         }
@@ -212,7 +204,7 @@ namespace GamePlay
             LoadScene.LoadTo("Main");
         }
 
-        public Player getCurrentPlayer() {
+        public global::Player getCurrentPlayer() {
             return _players[PlayerIndex - 1];
         }
         

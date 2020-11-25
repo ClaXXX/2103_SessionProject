@@ -63,7 +63,7 @@ namespace GamePlay
                 FindObjectOfType<ScoringCollider>().OnGameWin = GameOver;
 
                 // then launch the game
-                LaunchGame(2);
+                LaunchGame(1, 1);
             }
         }
 

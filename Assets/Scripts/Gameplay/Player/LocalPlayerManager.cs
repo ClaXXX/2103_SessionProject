@@ -15,7 +15,6 @@ namespace GamePlay.Player
         {
             _gameManager = FindObjectOfType<GameManager>();
 
-            Debug.Log("Hello world just Started");
             playerManager.OnPlay += OnPlay;
             playerManager.AfterPlaying += AfterPlaying;
             playerManager.OnPause += OnPause;

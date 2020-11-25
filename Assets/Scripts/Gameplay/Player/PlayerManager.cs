@@ -42,15 +42,12 @@ public class PlayerManager : MonoBehaviour
 
     public void Play()
     {
-        Debug.Log("Player is playing");
         if (!readyToPlay)
         {
             StartCoroutine(TryToPlay());
+            return; // faster than an else
         }
-        else
-        {
-            OnPlay?.Invoke();
-        }
+        OnPlay?.Invoke();
     }
 
     IEnumerator TryToPlay()

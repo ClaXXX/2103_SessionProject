@@ -133,7 +133,6 @@ namespace Gameplay.Stroke_Managers
             StrokeModeVar = _lastMode;
         }
         
-
         #endregion
     }
 }

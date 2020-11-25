@@ -8,7 +8,8 @@ namespace GamePlay
 {
     public class GameManager : MonoBehaviour
     {
-        private readonly List<PlayerManager> _players = new List<PlayerManager>();
+        private readonly List<PlayerManager> _playersManagers = new List<PlayerManager>();
+        private List<global::Player> _players = new List<global::Player>(); // TODO : Player devrait être remplacé par PlayerManager
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
 
@@ -76,7 +77,7 @@ namespace GamePlay
             {
                 GameModeVar = GameMode.Paused;
                 pauseObj.SetActive(true);
-                _players[PlayerIndex - 1].Pause();
+                _playersManagers[PlayerIndex - 1].Pause();
                 mainCamera.enabled = true;
             }
         }
@@ -117,14 +118,24 @@ namespace GamePlay
 
         void CreatePlayer()
         {
+            // TODO : Vérifier que j'ai pas add de bugs ici
             GameObject go;
             
-            if (PlayerIndex < BotIndex)
-            {
-               go = Instantiate(playerPrefabs, position);
-            
-               // Player Creation Post Action called
-               OnPlayerCreated?.Invoke(go, PlayerIndex);
+            if (PlayerIndex < BotIndex) { 
+                go = Instantiate(playerPrefabs, position);
+                var playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
+                if (GameSettings.PlayerMode == PlayerMode.Online) {
+                    if (PlayerIndex == 0) {
+                        go.GetComponent<global::Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                        _players.Add(go.GetComponent<global::Player>());
+                    }
+                }
+                else {
+                    go.GetComponent<global::Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                    _players.Add(go.GetComponent<global::Player>());
+                }
+                // Player Creation Post Action called
+                OnPlayerCreated?.Invoke(go, PlayerIndex);
             }
             else
             {
@@ -132,7 +143,7 @@ namespace GamePlay
             }
 
             // GameManager
-            _players.Add(go.GetComponent<PlayerManager>());
+            _playersManagers.Add(go.GetComponent<PlayerManager>());
         }
 
         /**
@@ -150,14 +161,14 @@ namespace GamePlay
             if (PlayerIndex + 1 > PlayerNbr)
             {
                 PlayerIndex = 0;
-            } else if (PlayerIndex >= _players.Count)
+            } else if (PlayerIndex >= _playersManagers.Count)
             {
                 CreatePlayer();
             }
             Debug.Log("Player about to play");
 
             // Let's play the next player
-            _players[PlayerIndex].Play();
+            _playersManagers[PlayerIndex].Play();
             PlayerIndex++;
         }
         
@@ -179,7 +190,7 @@ namespace GamePlay
 
         void onLocalGameOver()
         {
-            _players.ForEach(manager => manager.Destroy());
+            _playersManagers.ForEach(manager => manager.Destroy());
             mainCamera.enabled = true;
             gameOverObj.SetActive(true);
         }
@@ -192,7 +203,7 @@ namespace GamePlay
         {
             GameModeVar = GameMode.Running;
             mainCamera.enabled = false;
-            _players[PlayerIndex - 1].Continue();
+            _playersManagers[PlayerIndex - 1].Continue();
         }
         
         public void GameOver()
@@ -209,6 +220,10 @@ namespace GamePlay
         public void Quit()
         {
             LoadScene.LoadTo("Main");
+        }
+
+        public global::Player getCurrentPlayer() {
+            return _players[PlayerIndex - 1];
         }
         
         #endregion

@@ -27,10 +27,14 @@ namespace Gameplay.Stroke_Managers
             StrokeModeVar = StrokeMode.Waiting;
             
             // Set all existing reaction
-            Reactions.Add("Modify Stroke Strength", 
-                () => UpdateStrokeForce(player.inputs.getVerticalDirection().y * 100f * Time.deltaTime));
-            Reactions.Add("Change Stroke Direction", 
-                () => UpdateStrokeAngle(player.inputs.getHorizontalDirection().x * 100f * Time.deltaTime));
+            Reactions.Add("Add Stroke Strength", 
+                () => UpdateStrokeForce(1 * 100f * Time.deltaTime));
+            Reactions.Add("Reduce Stroke Strength", 
+                () => UpdateStrokeForce(-1 * 100f * Time.deltaTime));
+            Reactions.Add("Turn Stroke Direction Left", 
+                () => UpdateStrokeAngle(-1 * 100f * Time.deltaTime));
+            Reactions.Add("Turn Stroke Direction Right", 
+                () => UpdateStrokeAngle(1 * 100f * Time.deltaTime));
             Reactions.Add("Stroke", () => StrokeModeVar = StrokeMode.Stroke);
         }
         

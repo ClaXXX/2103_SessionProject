@@ -2,12 +2,13 @@ using System;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GamePlay
 {
     public class PlayerIdentity : MonoBehaviour
     {
-        [SerializeField] private TMP_InputField _name;
+        public TMP_InputField inputName;
         private const string PlayerNameKey = "PlayerName";
         public static string PlayerName { get; protected set; } = "";
 
@@ -18,7 +19,7 @@ namespace GamePlay
                 return;
             }
             PlayerName = PlayerPrefs.GetString(PlayerNameKey);
-            _name.text = PlayerName;
+            inputName.text = PlayerName;
         }
         
         public void SavePlayerName()

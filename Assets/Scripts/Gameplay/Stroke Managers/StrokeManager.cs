@@ -18,10 +18,12 @@ namespace Gameplay.Stroke_Managers
         private StrokeMode LastMode;
         public StrokeMode StrokeModeVar { get; protected set;  }
 
+        public Action Stroke;
+
         private void Start() 
         {
             StrokeForce = 1f;
-            StrokeModeVar = StrokeMode.Static;
+            StrokeModeVar = StrokeMode.Waiting;
         }
 
         // Update is called once per frame per visual frame -- use this for input
@@ -69,9 +71,7 @@ namespace Gameplay.Stroke_Managers
                     UpdateStrokeMode();
                     return;
                 default:
-                    Vector3 direction = new Vector3(0,0,StrokeForce);
-
-                    playerBall.AddForce(Quaternion.Euler(0f, StrokeAngle, 0f) * direction, ForceMode.Impulse);
+                    Stroke?.Invoke();
                     StrokeModeVar = StrokeMode.Rolling;
                     break;
             }
@@ -97,6 +97,11 @@ namespace Gameplay.Stroke_Managers
             {
                 StrokeForce = MAXStrokeForce;
             }
+        }
+
+        public void Wait()
+        {
+            StrokeModeVar = StrokeMode.Waiting;
         }
 
         public void StopWait()

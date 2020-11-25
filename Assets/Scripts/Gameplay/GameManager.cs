@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using DefaultNamespace;
-using JetBrains.Annotations;
-using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using NetworkManager = Network.NetworkManager;
 
 namespace GamePlay
 {
@@ -18,14 +15,20 @@ namespace GamePlay
         
         // Events
         public Action<GameObject, int> OnPlayerCreated;
+        public Action OnGameLaunched;
+        public Action OnGameOver;
 
         [Header("General")]
         public GameObject playerPrefabs; // to change to Network Player prefabs ?
         public Camera mainCamera;
+        public Transform position;
         
         [Header("Menus")]
         public GameObject gameOverObj;
         public GameObject pauseObj;
+
+        [Header("Network")]
+        public GameObject networkGameOverObj;
 
         public enum GameMode
         {
@@ -37,12 +40,22 @@ namespace GamePlay
 
         public GameMode GameModeVar { get; protected set; }
 
+        /**
+         * <summary>Function called when the Game scene is loaded</summary>
+         */
         void Start()
         {
             GameModeVar = GameMode.Undefined;
+            // Local game setting init
             if (GameSettings.PlayerMode == PlayerMode.Local)
             {
+                // Set all local events
                 OnPlayerCreated = onLocalPlayerCreated;
+                OnGameLaunched = onLocalGameLaunched;
+                OnGameOver = onLocalGameOver;
+                FindObjectOfType<ScoringCollider>().OnGameWin = GameOver;
+
+                // then launch the game
                 LaunchGame(2);
             }
         }
@@ -65,14 +78,18 @@ namespace GamePlay
 
         #region GamePlay
 
+        /**
+         * <param name="playerNbr">Number of player to play for the game</param>
+         * <summary>Launch the game process</summary>
+         */
         public void LaunchGame(int playerNbr)
         {
-            Debug.Log("On the Launch method beginning");
+            // Cannot launch the game twice
             if (GameModeVar == GameMode.Running)
             {
-                Debug.Log("Game Already running");
                 return;
             }
+            // if too much player, reset the player number to the maximum
             if (playerNbr >= MAXPlayerNbr)
             {
                 Debug.LogError("Une erreur est survenue avec le nombre de joueur, le nombre maximal est 4");
@@ -82,38 +99,34 @@ namespace GamePlay
             GameModeVar = GameMode.Running;
             PlayerNbr = playerNbr;
             PlayerIndex = 0;
-            mainCamera.enabled = false;
-            Debug.Log("Call Launcg method");
+            OnGameLaunched?.Invoke();
+            Debug.Log("Game Launched");
             Next();
-        }
-
-        void onLocalPlayerCreated(GameObject go, int index)
-        {
-            PlayerConfigs[] playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
-
-            go.GetComponent<Player>().initializeConfigs(playerConfigs[index]);
         }
 
         void CreatePlayer()
         {
-            GameObject go = Instantiate(playerPrefabs);
+            GameObject go = Instantiate(playerPrefabs, position);
+            
+            // Player Creation Post Action called
+            OnPlayerCreated?.Invoke(go, PlayerIndex);
 
             // GameManager
             _players.Add(go.GetComponent<PlayerManager>());
-            
-            // Player Creation Post Action called
-            Debug.Log("Call OnPlayerCreated method");
-            OnPlayerCreated?.Invoke(go, PlayerIndex);
         }
 
+        /**
+         * <summary>Pass to the next player if it exist, otherwise create it</summary>
+         */
         public void Next()
         {
-            Debug.Log("Enter the Next GameManager method");
+            // If the game is finished then stop the game
             if (GameModeVar == GameMode.Finished)
             {
                 return;
             }
             
+            // pass to first player turn
             if (PlayerIndex + 1 > PlayerNbr)
             {
                 PlayerIndex = 0;
@@ -121,11 +134,36 @@ namespace GamePlay
             {
                 CreatePlayer();
             }
-            
+            Debug.Log("Player about to play");
+
+            // Let's play the next player
             _players[PlayerIndex].Play();
             PlayerIndex++;
         }
         
+        #endregion
+
+        #region Events
+
+        void onLocalPlayerCreated(GameObject go, int index)
+        {
+            PlayerConfigs[] playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
+
+            go.GetComponent<global::Player>().initializeConfigs(playerConfigs[index]);
+        }
+
+        void onLocalGameLaunched()
+        {
+            mainCamera.enabled = true;
+        }
+
+        void onLocalGameOver()
+        {
+            _players.ForEach(manager => manager.Destroy());
+            mainCamera.enabled = true;
+            gameOverObj.SetActive(true);
+        }
+
         #endregion
         
         #region Menus
@@ -140,9 +178,7 @@ namespace GamePlay
         public void GameOver()
         {
             GameModeVar = GameMode.Finished;
-            _players.ForEach(manager => manager.Destroy());
-            mainCamera.enabled = true;
-            gameOverObj.SetActive(true);
+            OnGameOver?.Invoke();
         }
 
         public void Replay()

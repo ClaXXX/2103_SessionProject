@@ -566,6 +566,7 @@ GameObject:
   - component: {fileID: 7136509915927973738}
   - component: {fileID: 5400353417853161421}
   - component: {fileID: 1979689242732456065}
+  - component: {fileID: 2426614024956472952}
   m_Layer: 0
   m_Name: PlayerPrefabs
   m_TagString: Untagged
@@ -603,9 +604,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ae1c9ee9df9544183a654094120da8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   StrokeManager: {fileID: 7136509916553238435}
-  Camera: {fileID: 7136509915256447385}
-  Interface: {fileID: 7136509917310172830}
 --- !u!114 &1979689242732456065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,6 +619,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0070cdd7f90bf0c45a17b3a9e5af76b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2426614024956472952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7136509915927973739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e003555d6f4de3af735995bd742462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Camera: {fileID: 7136509915256447385}
+  Interface: {fileID: 7136509917310172830}
+  playerManager: {fileID: 5400353417853161421}
 --- !u!1 &7136509916252325597
 GameObject:
   m_ObjectHideFlags: 0

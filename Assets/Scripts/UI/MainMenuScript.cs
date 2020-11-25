@@ -42,7 +42,7 @@ namespace UI {
             
             
                 
-                LoadingData.sceneToLoad = "Game";
+                LoadingData.sceneToLoad = "NetworkGame";
                 SceneManager.LoadScene("Loading");
         }
 
@@ -53,11 +53,6 @@ namespace UI {
             
             Debug.Log("Player Configuration added");
             _configManager.addPlayers(players);
-        }
-
-        public void GoOnline()
-        {
-            GameSettings.PlayerMode = PlayerMode.Online;
         }
     }
 }

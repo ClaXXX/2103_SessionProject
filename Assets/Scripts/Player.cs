@@ -1,6 +1,5 @@
 ﻿using DefaultNamespace;
 using Inputs;
-using Mirror;
 using UnityEngine;
 
 public class Player: MonoBehaviour

@@ -1,33 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using GamePlay;
 using Gameplay.Stroke_Managers;
 using Mirror;
 using UnityEngine;
 
 
-public class PlayerManager : NetworkBehaviour
+public class PlayerManager : MonoBehaviour
 {
     public StrokeManager StrokeManager;
-    public Camera Camera;
-    public GameObject Interface;
-    private GameManager _gameManager;
     public string PlayerName { get; protected set; } = "Player"; // default name set
+    public Action OnPlay;
+    public Action AfterPlaying;
+    public Action OnPause;
+    public Action OnContinue;
+    public bool readyToPlay = false;
 
     public void setPlayerName(string playerName)
     {
         if (string.IsNullOrEmpty(playerName)) // Checkout that we don't set player name to a null or empty string
             return;
         PlayerName = playerName;
-    }
-
-    private void Start()
-    {
-        _gameManager = FindObjectOfType<GameManager>();
-
-        if (!_gameManager)
-        {
-            Debug.LogError("Game Manager not found !");
-        }
     }
 
     public void Destroy()
@@ -37,29 +30,39 @@ public class PlayerManager : NetworkBehaviour
 
     public void Pause()
     {
-        Camera.enabled = false;
+        OnPause?.Invoke();
         StrokeManager.Paused();
     }
 
     public void Continue()
     {
-        Camera.enabled = true;
+        OnContinue?.Invoke();
         StrokeManager.Continue();
     }
 
     public void Play()
     {
-        Camera.enabled = true;
-        StrokeManager.StopWait();
-        Interface.SetActive(true);
-        StartCoroutine(Playing());
+        Debug.Log("Player is playing");
+        if (!readyToPlay)
+        {
+            StartCoroutine(TryToPlay());
+        }
+        else
+        {
+            OnPlay?.Invoke();
+        }
     }
 
-    IEnumerator Playing()
+    IEnumerator TryToPlay()
+    {
+        yield return new WaitUntil((() => readyToPlay));
+        OnPlay?.Invoke();
+    }
+
+    public IEnumerator Playing()
     {
         yield return new WaitUntil(() => (StrokeManager.StrokeModeVar == StrokeMode.Waiting));
-        Camera.enabled = false;
-        Interface.SetActive(false);
-        _gameManager.Next();
+        Debug.Log("Player has playing");
+        AfterPlaying?.Invoke();
     }
 }

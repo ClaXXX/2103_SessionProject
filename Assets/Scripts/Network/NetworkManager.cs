@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using GamePlay;
 using Mirror;
+using TMPro;
 using UnityEngine;
 
 namespace Network
@@ -11,6 +11,15 @@ namespace Network
     {
         private List<NetworkConnection> _connections = new List<NetworkConnection>();
         private GameManager _gameManager;
+
+        public static NetworkManager instance;
+
+        void Awake() {
+            if (instance == null) {
+                instance = this;
+                DontDestroyOnLoad(instance);
+            }
+        }
 
         #region HUD
 
@@ -35,36 +44,31 @@ namespace Network
             GameSettings.PlayerMode = PlayerMode.Online;
         }
 
-        public override void OnClientConnect(NetworkConnection conn)
+        public override void OnStartServer()
         {
-            base.OnClientConnect(conn);
-            if (mode == NetworkManagerMode.Host) 
-            {
-                // Instantiate Host Menu
-            }
-            else
-            {
-                // Instantiate Client Menu
-            }
+            base.OnStartServer();
+            GameSettings.PlayerMode = PlayerMode.Online;
         }
 
         public override void OnRoomServerSceneChanged(string sceneName)
         {
-            base.OnRoomServerSceneChanged(sceneName);
             if (sceneName != GameplayScene)
             {
                 return;
             }
+
             _gameManager = FindObjectOfType<GameManager>();
             if (!_gameManager)
             {
                 Debug.LogError("GameManager not found");
                 return;
             }
-            _gameManager.playerPrefabs = playerPrefab; // Get the network prefabs
-            _gameManager.OnPlayerCreated += OnPlayerCreated;
+            
+            _gameManager.OnPlayerCreated = OnPlayerCreated;
+            _gameManager.playerPrefabs = playerPrefab;
+            FindObjectOfType<ScoringCollider>().OnGameWin = () => { StopHost(); LoadScene.LoadTo("Main"); };
+            Debug.Log("Launched game");
             _gameManager.LaunchGame(_connections.Count);
-
         }
 
         public override void OnServerConnect(NetworkConnection conn)
@@ -75,29 +79,28 @@ namespace Network
             {
                 if (roomSlots.Count == maxConnections)
                     return;
-
-                allPlayersReady = false;
-
-                //if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "NetworkRoomManager.OnServerAddPlayer playerPrefab:{0}", roomPlayerPrefab.name);
-
-                GameObject newRoomGameObject = OnRoomServerCreateRoomPlayer(conn);
-                if (newRoomGameObject == null)
-                    newRoomGameObject = Instantiate(roomPlayerPrefab.gameObject, clientIndex * new Vector3(140f/4, 30f), Quaternion.identity);
+                GameObject newRoomGameObject = Instantiate(roomPlayerPrefab.gameObject, clientIndex * new Vector3(140f/4, 30f), Quaternion.identity);
 
                 NetworkServer.AddPlayerForConnection(conn, newRoomGameObject);
                 RecalculateRoomPlayerIndices();
             }
-            clientIndex++;
             _connections.Add(conn);
         }
 
-        void OnPlayerCreated(GameObject player, int index)
+        public void OnPlayerCreated(GameObject player, int index)
         {
             if (index >= _connections.Count)
             {
                 Debug.LogError("Index of player out of range", this);
             }
-            NetworkServer.Spawn(player, _connections[index]);
+            player.GetComponent<PlayerManager>().setPlayerName((roomSlots[index] as Network.NetworkRoomPlayer).PlayerName);
+            player.GetComponent<NetworkPlayer>().gameManager = _gameManager;
+            Debug.Log(index + ": Set player once");
+
+            if (NetworkServer.active)
+            {
+                NetworkServer.ReplacePlayerForConnection(_connections[index], player.gameObject, true);
+            }
         }
 
         #endregion

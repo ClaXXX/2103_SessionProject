@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class ScoringCollider : MonoBehaviour
 {
+    public Action OnGameWin;
     private void OnTriggerEnter(Collider other)
     {
-        FindObjectOfType<GameManager>().GameOver();
+        OnGameWin?.Invoke();
     }
 }

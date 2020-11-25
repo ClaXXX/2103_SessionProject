@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GamePlay;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
@@ -11,12 +12,14 @@ namespace Gameplay.Stroke_Managers
     public class BotStrokeManager : MonoBehaviour
     {
         public StrokeManager strokeManager;
-        public float errorPercentage = 2f;
+        public float errorPercentage = 0.25f;
         private GameObject _hole;
         private List<GameObject> _players;
 
         private void Start()
         {
+            // Set the difficulty 
+            SetDifficulty();
             // Set the random seed
             strokeManager.Stroke += StrokeTheBall;
             _hole = GameObject.FindGameObjectWithTag("Finish"); // Find the end
@@ -30,6 +33,17 @@ namespace Gameplay.Stroke_Managers
                     _players.Remove(player);
                     break;
                 }
+            }
+        }
+
+        void SetDifficulty()
+        {
+            switch (GameSettings.Diffulty)
+            {
+                case BotDifficulties.Normal:
+                    errorPercentage = 0.25f; break;
+                case BotDifficulties.Hard:
+                    errorPercentage = 0.10f; break;
             }
         }
 
@@ -72,7 +86,9 @@ namespace Gameplay.Stroke_Managers
 
             foreach (GameObject player in _players)
             {
-                if (vector.z > target.z - player.transform.position.z && vector.z > player.transform.position.z - origin.z)
+                if (vector.z + vector.x > (target.z - player.transform.position.z) +
+                    (target.x - player.transform.position.x)  && vector.z + vector.x >
+                    (player.transform.position.z - origin.z) + (player.transform.position.x - origin.x))
                 {
                     vector = player.transform.position - origin;
                 }

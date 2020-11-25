@@ -15,7 +15,6 @@ namespace GamePlay
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
         public int PlayerIndex { get; protected set; }
-        public int BotIndex { get; protected set; }
 
         // Events
         public Action<GameObject, int> OnPlayerCreated;
@@ -63,7 +62,7 @@ namespace GamePlay
                 FindObjectOfType<ScoringCollider>().OnGameWin = GameOver;
 
                 // then launch the game
-                LaunchGame(1, 1);
+                LaunchGame(2, GameSettings.BotNumber);
             }
         }
 
@@ -113,7 +112,6 @@ namespace GamePlay
             GameModeVar = GameMode.Running;
             PlayerNbr = playerNbr + botNbr;
             PlayerIndex = 0;
-            BotIndex = playerNbr;
             OnGameLaunched?.Invoke();
             Next();
         }
@@ -122,7 +120,7 @@ namespace GamePlay
         {
             GameObject go;
             
-            if (PlayerIndex < BotIndex) { 
+            if (PlayerNbr - PlayerIndex > GameSettings.BotNumber) { 
                 go = Instantiate(playerPrefabs, position);
 
                 // Player Creation Post Action called

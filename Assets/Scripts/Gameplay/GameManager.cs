@@ -11,17 +11,22 @@ namespace GamePlay
         private readonly List<PlayerManager> _players = new List<PlayerManager>();
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
+
         public int PlayerIndex { get; protected set; }
-        
+        public int BotIndex { get; protected set; }
+
         // Events
         public Action<GameObject, int> OnPlayerCreated;
         public Action OnGameLaunched;
         public Action OnGameOver;
 
         [Header("General")]
-        public GameObject playerPrefabs; // to change to Network Player prefabs ?
         public Camera mainCamera;
         public Transform position;
+        
+        [Header("Prefabs")]
+        public GameObject playerPrefabs; // to change to Network Player prefabs ?
+        public GameObject botPlayerPrefabs;
         
         [Header("Menus")]
         public GameObject gameOverObj;
@@ -80,9 +85,10 @@ namespace GamePlay
 
         /**
          * <param name="playerNbr">Number of player to play for the game</param>
+         * <param name="botNbr">Number of bots to play against players (default: 0)</param>
          * <summary>Launch the game process</summary>
          */
-        public void LaunchGame(int playerNbr)
+        public void LaunchGame(int playerNbr, int botNbr = 0)
         {
             // Cannot launch the game twice
             if (GameModeVar == GameMode.Running)
@@ -90,26 +96,40 @@ namespace GamePlay
                 return;
             }
             // if too much player, reset the player number to the maximum
-            if (playerNbr >= MAXPlayerNbr)
+            if (playerNbr > MAXPlayerNbr)
             {
                 Debug.LogError("Une erreur est survenue avec le nombre de joueur, le nombre maximal est 4");
                 playerNbr = 4;
             }
+
+            if (playerNbr + botNbr > MAXPlayerNbr)
+            {
+                botNbr = MAXPlayerNbr - playerNbr;
+            }
             
             GameModeVar = GameMode.Running;
-            PlayerNbr = playerNbr;
+            PlayerNbr = playerNbr + botNbr;
             PlayerIndex = 0;
+            BotIndex = playerNbr;
             OnGameLaunched?.Invoke();
-            Debug.Log("Game Launched");
             Next();
         }
 
         void CreatePlayer()
         {
-            GameObject go = Instantiate(playerPrefabs, position);
+            GameObject go;
             
-            // Player Creation Post Action called
-            OnPlayerCreated?.Invoke(go, PlayerIndex);
+            if (PlayerIndex < BotIndex)
+            {
+               go = Instantiate(playerPrefabs, position);
+            
+               // Player Creation Post Action called
+               OnPlayerCreated?.Invoke(go, PlayerIndex);
+            }
+            else
+            {
+                go = Instantiate(botPlayerPrefabs, position);
+            }
 
             // GameManager
             _players.Add(go.GetComponent<PlayerManager>());

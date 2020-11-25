@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.Stroke_Managers
@@ -6,7 +7,7 @@ namespace Gameplay.Stroke_Managers
     public class StrokeManager : MonoBehaviour
     {
         private const float MAXStrokeForce = 15f;
-
+        public readonly Dictionary<String, Action> Reactions = new Dictionary<string, Action>();
         public Player player;
         
         public Rigidbody playerBall;
@@ -15,7 +16,7 @@ namespace Gameplay.Stroke_Managers
         public float StrokeForce { get; protected set; }
         public float StrokeForcePercentage => (StrokeForce / MAXStrokeForce);
 
-        private StrokeMode LastMode;
+        private StrokeMode _lastMode;
         public StrokeMode StrokeModeVar { get; protected set;  }
 
         public Action Stroke;
@@ -24,7 +25,23 @@ namespace Gameplay.Stroke_Managers
         {
             StrokeForce = 1f;
             StrokeModeVar = StrokeMode.Waiting;
+            
+            // Set all existing reaction
+            Reactions.Add("Modify Stroke Strength", 
+                () => UpdateStrokeForce(player.inputs.getVerticalDirection().y * 100f * Time.deltaTime));
+            Reactions.Add("Change Stroke Direction", 
+                () => UpdateStrokeAngle(player.inputs.getHorizontalDirection().x * 100f * Time.deltaTime));
+            Reactions.Add("Stroke", () => StrokeModeVar = StrokeMode.Stroke);
         }
+        
+        public void StrokeTheBall()
+        {
+            playerBall.AddForce(
+                Quaternion.Euler(0f, StrokeAngle, 0f)
+                * new Vector3(0,0,StrokeForce), ForceMode.Impulse);
+        }
+
+        #region Updates
 
         // Update is called once per frame per visual frame -- use this for input
         public void UpdateFrame()
@@ -33,47 +50,26 @@ namespace Gameplay.Stroke_Managers
             {
                 return;
             }
-
-            try
+            
+            foreach (KeyValuePair<string,Action> pair in Reactions)
             {
-                if (player.inputs.isPressed(player.inputs.actionMap["Modify Stroke Strength"])) {
-                    float verticalMov = player.inputs.getVerticalDirection().y * 100f * Time.deltaTime;
-                    UpdateStrokeForce(verticalMov);
+                if (player.inputs.isPressed(player.inputs.actionMap[pair.Key]))
+                {
+                    pair.Value?.Invoke();
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return;
-            }
-        
-            if (player.inputs.isPressed(player.inputs.actionMap["Change Stroke Direction"])) {
-                StrokeAngle += player.inputs.getHorizontalDirection().x * 100f * Time.deltaTime;
-            }
-        
-            if (player.inputs.isPressed(player.inputs.actionMap["Stroke"])) {
-                StrokeModeVar = StrokeMode.Stroke;
             }
         }
 
         // Fixed Update run on every tick of the physics engine, use this for manipulation
         public void FixedUpdatePhysic()
         {
-            switch (StrokeModeVar)
+            if (StrokeModeVar == StrokeMode.Rolling)
             {
-                case StrokeMode.Paused:
-                    return;
-                case StrokeMode.Waiting:
-                    return;
-                case StrokeMode.Static:
-                    return; // Could be break, question of performances
-                case StrokeMode.Rolling:
-                    UpdateStrokeMode();
-                    return;
-                default:
-                    Stroke?.Invoke();
-                    StrokeModeVar = StrokeMode.Rolling;
-                    break;
+                UpdateStrokeMode();
+            } else if (StrokeModeVar == StrokeMode.Stroke)
+            {
+                Stroke?.Invoke();
+                StrokeModeVar = StrokeMode.Rolling;
             }
         }
 
@@ -86,7 +82,7 @@ namespace Gameplay.Stroke_Managers
             }
         }
 
-        void UpdateStrokeForce(float verticalMov)
+        public void UpdateStrokeForce(float verticalMov)
         {
             StrokeForce += verticalMov;
             if (StrokeForce < 1f)
@@ -98,6 +94,15 @@ namespace Gameplay.Stroke_Managers
                 StrokeForce = MAXStrokeForce;
             }
         }
+
+        public void UpdateStrokeAngle(float angle)
+        {
+            StrokeAngle += angle;
+        }
+
+        #endregion
+
+        #region GeneralGame
 
         public void Wait()
         {
@@ -115,13 +120,16 @@ namespace Gameplay.Stroke_Managers
             {
                 return;
             }
-            LastMode = StrokeModeVar;
+            _lastMode = StrokeModeVar;
             StrokeModeVar = StrokeMode.Paused;
         }
 
         public void Continue()
         {
-            StrokeModeVar = LastMode;
+            StrokeModeVar = _lastMode;
         }
+        
+
+        #endregion
     }
 }

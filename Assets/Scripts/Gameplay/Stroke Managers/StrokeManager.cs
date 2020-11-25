@@ -7,7 +7,7 @@ namespace Gameplay.Stroke_Managers
     public class StrokeManager : MonoBehaviour
     {
         private const float MAXStrokeForce = 15f;
-        public readonly Dictionary<String, Action> Reactions = new Dictionary<string, Action>();
+        public Dictionary<String, Action> Reactions = new Dictionary<string, Action>();
         public Player player;
         
         public Rigidbody playerBall;

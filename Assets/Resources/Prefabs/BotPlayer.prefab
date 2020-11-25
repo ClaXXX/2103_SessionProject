@@ -792,6 +792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strokeManager: {fileID: 4036350991193558917}
+  errorPercentage: 0.1
 --- !u!1 &4036350991673927352
 GameObject:
   m_ObjectHideFlags: 0

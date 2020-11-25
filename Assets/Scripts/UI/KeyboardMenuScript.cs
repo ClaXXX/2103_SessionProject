@@ -59,22 +59,22 @@ public class KeyboardMenuScript : MonoBehaviour {
                 transform.GetChild(0).GetComponentInChildren<Text>().text = keyControl.name;
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
-            case "Turn right" :
+            case "Add Stroke Strength" :
                 inputControls[2] = keyControl;
                 transform.GetChild(1).GetComponentInChildren<Text>().text = keyControl.name;
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
-            case "Turn left" :
+            case "Reduce Stroke Strength" :
                 inputControls[3] = keyControl;
                 transform.GetChild(2).GetComponentInChildren<Text>().text = keyControl.name;
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
-            case "Add Stroke Strength" :
+            case "Turn left" :
                 inputControls[4] = keyControl;
                 transform.GetChild(3).GetComponentInChildren<Text>().text = keyControl.name;
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);
                 break;
-            case "Reduce Stroke Strength" :
+            case "Turn right" :
                 inputControls[5] = keyControl;
                 transform.GetChild(4).GetComponentInChildren<Text>().text = keyControl.name;
                 gameManager.getCurrentPlayer().inputs.setControls(inputControls);

@@ -118,27 +118,24 @@ namespace GamePlay
 
         void CreatePlayer()
         {
+            // TODO : Vérifier que j'ai pas add de bugs ici
             GameObject go;
             
-            if (PlayerIndex < BotIndex)
-            {
-               go = Instantiate(playerPrefabs, position);
-            GameObject go = Instantiate(playerPrefabs, position);
-            var playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
-            
-            if (GameSettings.PlayerMode == PlayerMode.Online) {
-                if (PlayerIndex == 0) {
+            if (PlayerIndex < BotIndex) { 
+                go = Instantiate(playerPrefabs, position);
+                var playerConfigs = ConfigManager.instance.getPlayerConfigs().ToArray();
+                if (GameSettings.PlayerMode == PlayerMode.Online) {
+                    if (PlayerIndex == 0) {
+                        go.GetComponent<global::Player>().initializeConfigs(playerConfigs[PlayerIndex]);
+                        _players.Add(go.GetComponent<global::Player>());
+                    }
+                }
+                else {
                     go.GetComponent<global::Player>().initializeConfigs(playerConfigs[PlayerIndex]);
                     _players.Add(go.GetComponent<global::Player>());
                 }
-            }
-            else {
-                go.GetComponent<global::Player>().initializeConfigs(playerConfigs[PlayerIndex]);
-                _players.Add(go.GetComponent<global::Player>());
-            }
-            
-               // Player Creation Post Action called
-               OnPlayerCreated?.Invoke(go, PlayerIndex);
+                // Player Creation Post Action called
+                OnPlayerCreated?.Invoke(go, PlayerIndex);
             }
             else
             {

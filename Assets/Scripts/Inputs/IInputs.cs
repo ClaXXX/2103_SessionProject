@@ -25,7 +25,5 @@ namespace Inputs {
         public abstract InputControl[] getAllControls();
 
         public abstract void setControls(InputControl[] controls);
-        public abstract Vector3 getVerticalDirection();
-        public abstract Vector3 getHorizontalDirection();
     }
 }

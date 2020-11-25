@@ -90,26 +90,5 @@ namespace Scenes {
             }
             PlayerPrefs.Save();
         }
-
-        public override Vector3 getVerticalDirection() {
-            if (Gamepad.current.leftStick.up.isPressed) {
-            return Vector3.up;
-            }
-
-            if (Gamepad.current.leftStick.down.isPressed) {
-                return Vector3.down;
-            }
-            return Vector3.zero;
-        }
-
-        public override Vector3 getHorizontalDirection() {
-            if (Gamepad.current.leftStick.right.isPressed) {
-                return Vector3.right;
-            }
-            if (Gamepad.current.leftStick.left.isPressed) {
-                return Vector3.left;
-            }
-            return Vector3.zero;
-        }
     }
 }

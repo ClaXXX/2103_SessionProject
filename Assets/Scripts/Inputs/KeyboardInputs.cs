@@ -42,28 +42,6 @@ namespace Inputs {
             return false;
         }
 
-        public override Vector3 getVerticalDirection() {
-            if (keys[2].IsPressed()) {
-                return Vector3.up;
-            } else if (keys[3].IsPressed()) {
-                return Vector3.down;
-            }
-            else {
-                return Vector3.zero;
-            }
-        }
-
-        public override Vector3 getHorizontalDirection() {
-            if (keys[4].IsPressed()) {
-                return Vector3.left;
-            } else if (keys[5].IsPressed()) {
-                return Vector3.right;
-            }
-            else {
-                return Vector3.zero;
-            }
-        }
-
         public override InputControl[] getAllControls() {
             return keys;
         }

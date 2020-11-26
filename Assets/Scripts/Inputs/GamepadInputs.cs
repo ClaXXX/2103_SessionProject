@@ -11,7 +11,7 @@ namespace Scenes {
             PlayerPrefs.SetString("Player" + playerId + "ControlType", "Gamepad");
             PlayerPrefs.Save();
             
-            if (!PlayerPrefs.HasKey("Player" + playerId + "GamepadStroke")) {
+            if (PlayerPrefs.HasKey("Player" + playerId + "GamepadStroke")) {
                 buttons[1] = 
                     Gamepad.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "GamepadStroke"));
                 Debug.Log(PlayerPrefs.GetString("Player" + playerId + "GamepadAddPower"));
@@ -29,7 +29,6 @@ namespace Scenes {
                 buttons[3] = Gamepad.current.leftStick.down; // Reduire puissance
                 buttons[4] = Gamepad.current.leftStick.left; // Tourner à gauche
                 buttons[5] = Gamepad.current.leftStick.right; // Tourner à droite
-                setControls(buttons);
             }
         }
         

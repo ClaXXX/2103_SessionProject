@@ -22,7 +22,8 @@ namespace DefaultNamespace {
 
         public void addPlayers(PlayerDto[] sentPlayerDtos) {
             for (int i = 0; i < sentPlayerDtos.Length; i++) {
-                playerConfigs.Add(new PlayerConfigs(inputsFactory.createInputs(sentPlayerDtos[i])));
+                playerConfigs.Add(new PlayerConfigs(inputsFactory.createInputs(sentPlayerDtos[i]), 
+                    sentPlayerDtos[i].playerId));
             }
         }
 

@@ -1,20 +1,33 @@
-﻿using UnityEngine.InputSystem;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Inputs {
     public class KeyboardInputs : IInputs {
 
         private InputControl[] keys = new InputControl[8];
 
-        public KeyboardInputs() : base() {
-            keys[1] = Keyboard.current.spaceKey;
-            
-            keys[2] = Keyboard.current.wKey;
-            keys[3] = Keyboard.current.aKey;
-            keys[4] = Keyboard.current.sKey;
-            keys[5] = Keyboard.current.dKey;
+        public KeyboardInputs(int playerId) : base(playerId) {
+            PlayerPrefs.SetString("Player" + playerId + "ControlType", "Keyboard");
+            PlayerPrefs.Save();
 
-            keys[6] = Keyboard.current.leftArrowKey;
-            keys[7] = Keyboard.current.rightArrowKey;
+            if (PlayerPrefs.HasKey("Player" + playerId + "KeyboardStroke")) {
+                keys[1] = 
+                    Keyboard.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "KeyboardStroke"));
+                keys[2] = 
+                    Keyboard.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "KeyboardAddPower"));
+                keys[3] = 
+                    Keyboard.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "KeyboardReducePower"));
+                keys[4] = 
+                    Keyboard.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "KeyboardTurnLeft"));
+                keys[5] = 
+                    Keyboard.current.GetChildControl(PlayerPrefs.GetString("Player" + playerId + "KeyboardTurnRight"));
+            } else {
+                keys[1] = Keyboard.current.spaceKey; // Tirer
+                keys[2] = Keyboard.current.wKey; // Augmenter force
+                keys[3] = Keyboard.current.sKey; // Réduire force
+                keys[4] = Keyboard.current.aKey; // Tourner à gauche
+                keys[5] = Keyboard.current.dKey; // Tourner à droite
+            }
         }
         
         public override bool isPressed(int code) {
@@ -23,27 +36,8 @@ namespace Inputs {
                 if (code == 0) {
                     return Keyboard.current.escapeKey.isPressed;
                 }
-                
-                // Tirer
-                if (code == 1) {
-                    return keys[code].IsPressed();
-                }
-            
-                // Deplacer camera
-                if (code == 2) {
-                    // TODO : Check pour voir si W, A, S ou D sont appuyés
-                    return keys[code].IsPressed() ||
-                           keys[code + 1].IsPressed() ||
-                           keys[code + 2].IsPressed() ||
-                           keys[code + 3].IsPressed();
-                }
-            
-                // Changer direction
-                if (code == 6) {
-                    // TODO : Check pour voir si Left ou Right sont appuyés
-                    return keys[code].IsPressed() ||
-                           keys[code + 1].IsPressed();
-                }
+
+                return keys[code].IsPressed();
             }
             return false;
         }
@@ -52,8 +46,15 @@ namespace Inputs {
             return keys;
         }
 
-        public override void setNewControls(InputControl[] controls) {
+        public override void setControls(InputControl[] controls) {
             keys = controls;
+            
+            PlayerPrefs.SetString("Player" + playerId + "KeyboardStroke", keys[1].name);
+            PlayerPrefs.SetString("Player" + playerId + "KeyboardAddPower", keys[2].name);
+            PlayerPrefs.SetString("Player" + playerId + "KeyboardReducePower", keys[3].name);
+            PlayerPrefs.SetString("Player" + playerId + "KeyboardTurnLeft", keys[4].name);
+            PlayerPrefs.SetString("Player" + playerId + "KeyboardTurnRight", keys[5].name);
+            PlayerPrefs.Save();
         }
     }
 }

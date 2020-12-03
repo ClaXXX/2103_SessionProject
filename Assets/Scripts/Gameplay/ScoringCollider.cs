@@ -15,9 +15,9 @@ public class ScoringCollider : MonoBehaviour {
 
     private IEnumerator gameWin() {
         GameObject go = Instantiate(BallInHoleSound);
-        Destroy(go, 2f);
+        Destroy(go, 1.4f);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1);
         
         OnGameWin?.Invoke();
     }

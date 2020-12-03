@@ -559,7 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 46827637}
-  position: {fileID: 1412393959}
+  position: {fileID: 1407640236}
   playerPrefabs: {fileID: 7136509915927973739, guid: 263e54a6b1fa80b47971ca984c86d521, type: 3}
   botPlayerPrefabs: {fileID: 4036350990744983373, guid: 5d2513462dd29d549a2b35341ad08b1e, type: 3}
   gameOverObj: {fileID: 1280544844180110524}
@@ -4743,6 +4743,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1397794607}
   m_CullTransparentMesh: 0
+--- !u!1 &1407640235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1407640236}
+  m_Layer: 0
+  m_Name: Position
+  m_TagString: Respawn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1407640236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407640235}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.35, y: 0.043, z: 3.765}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1412393958
 GameObject:
   m_ObjectHideFlags: 0
@@ -4753,12 +4783,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1412393959}
   m_Layer: 0
-  m_Name: Position
+  m_Name: TRUEPosition
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1412393959
 Transform:
   m_ObjectHideFlags: 0
@@ -5199,7 +5229,7 @@ Transform:
   m_GameObject: {fileID: 1535290914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1.17, z: 0}
-  m_LocalScale: {x: 1.44, y: 1, z: 1.48}
+  m_LocalScale: {x: 1.44, y: 2.3348, z: 1.48}
   m_Children: []
   m_Father: {fileID: 538361978}
   m_RootOrder: 2

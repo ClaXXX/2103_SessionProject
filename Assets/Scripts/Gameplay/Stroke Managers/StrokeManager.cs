@@ -43,6 +43,8 @@ namespace Gameplay.Stroke_Managers
             playerBall.AddForce(
                 Quaternion.Euler(0f, StrokeAngle, 0f)
                 * new Vector3(0,0,StrokeForce), ForceMode.Impulse);
+            
+            // TODO : Play sound
         }
 
         #region Updates

@@ -1,5 +1,4 @@
 ﻿using DefaultNamespace;
-using GamePlay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

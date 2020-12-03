@@ -9,7 +9,6 @@ public class ScoringCollider : MonoBehaviour {
     public Action OnGameWin;
     private void OnTriggerEnter(Collider other)
     {
-        // TODO : Play sound on linked object here
         StartCoroutine(gameWin());
     }
 

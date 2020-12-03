@@ -29,6 +29,7 @@ namespace GamePlay.Player
         public void OnPlay()
         {
             Camera.enabled = true;
+            Camera.GetComponent<AudioListener>().enabled = true;
             Interface.SetActive(true);
             playerManager.StrokeManager.StopWait();
             StartCoroutine(playerManager.Playing());
@@ -37,6 +38,7 @@ namespace GamePlay.Player
         public void AfterPlaying()
         {
             Camera.enabled = false;
+            Camera.GetComponent<AudioListener>().enabled = false;
             Interface.SetActive(false);
             _gameManager.Next();
         }

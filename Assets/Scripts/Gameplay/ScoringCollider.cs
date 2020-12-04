@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace.Sounds;
 using GamePlay;
 using UnityEngine;
 
 public class ScoringCollider : MonoBehaviour {
-    public GameObject BallInHoleSound;
+    public SoundManager soundManager;
     public Action OnGameWin;
     private void OnTriggerEnter(Collider other)
     {
@@ -13,8 +14,7 @@ public class ScoringCollider : MonoBehaviour {
     }
 
     private IEnumerator gameWin() {
-        GameObject go = Instantiate(BallInHoleSound);
-        Destroy(go, 1.4f);
+        soundManager.playBallInHoleSound(this.transform);
 
         yield return new WaitForSeconds(1);
         

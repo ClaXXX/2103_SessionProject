@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DefaultNamespace.Sounds;
 using UnityEngine;
 
 namespace Gameplay.Stroke_Managers
@@ -9,7 +10,7 @@ namespace Gameplay.Stroke_Managers
         private const float MAXStrokeForce = 15f;
         public Dictionary<String, Action> Reactions = new Dictionary<string, Action>();
         public Player player;
-        public GameObject HitBall;
+        public SoundManager soundManager;
         
         public Rigidbody playerBall;
         public int StrokeCount { get; protected set; }
@@ -39,11 +40,9 @@ namespace Gameplay.Stroke_Managers
             Reactions.Add("Stroke", () => StrokeModeVar = StrokeMode.Stroke);
         }
         
-        public void StrokeTheBall()
-        {
-            // TODO : Play sound
-            GameObject go = Instantiate(HitBall, playerBall.transform);
-            Destroy(go, 1f);
+        public void StrokeTheBall() {
+
+            soundManager.playHitSound(playerBall.transform);
 
             playerBall.AddForce(
                 Quaternion.Euler(0f, StrokeAngle, 0f)

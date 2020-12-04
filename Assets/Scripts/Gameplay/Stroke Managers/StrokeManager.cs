@@ -9,6 +9,7 @@ namespace Gameplay.Stroke_Managers
         private const float MAXStrokeForce = 15f;
         public Dictionary<String, Action> Reactions = new Dictionary<string, Action>();
         public Player player;
+        public GameObject HitBall;
         
         public Rigidbody playerBall;
         public int StrokeCount { get; protected set; }
@@ -40,6 +41,10 @@ namespace Gameplay.Stroke_Managers
         
         public void StrokeTheBall()
         {
+            // TODO : Play sound
+            GameObject go = Instantiate(HitBall, playerBall.transform);
+            Destroy(go, 1f);
+
             playerBall.AddForce(
                 Quaternion.Euler(0f, StrokeAngle, 0f)
                 * new Vector3(0,0,StrokeForce), ForceMode.Impulse);

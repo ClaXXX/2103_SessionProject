@@ -10,7 +10,7 @@ namespace Gameplay.Stroke_Managers
         private const float MAXStrokeForce = 15f;
         public Dictionary<String, Action> Reactions = new Dictionary<string, Action>();
         public Player player;
-        public SoundManager soundManager;
+        private SoundManager soundManager;
         
         public Rigidbody playerBall;
         public int StrokeCount { get; protected set; }
@@ -25,6 +25,7 @@ namespace Gameplay.Stroke_Managers
 
         private void Start() 
         {
+            soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
             StrokeForce = 1f;
             StrokeModeVar = StrokeMode.Waiting;
             

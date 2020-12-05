@@ -6,8 +6,15 @@ using GamePlay;
 using UnityEngine;
 
 public class ScoringCollider : MonoBehaviour {
-    public SoundManager soundManager;
+    private GameObject soundObject;
+    private SoundManager soundManager;
     public Action OnGameWin;
+
+    public void Awake() {
+        soundObject = GameObject.Find("SoundManager");
+        soundManager = soundObject.GetComponent<SoundManager>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         StartCoroutine(gameWin());

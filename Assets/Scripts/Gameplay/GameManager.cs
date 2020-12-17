@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DefaultNamespace;
+using Gameplay.Stroke_Managers;
+using Particles;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,8 @@ namespace GamePlay
     {
         private readonly List<PlayerManager> _playersManagers = new List<PlayerManager>();
         private List<global::Player> _players = new List<global::Player>(); // TODO : Player devrait être remplacé par PlayerManager
+
+        [SerializeField] private ParticleSystemPool activePlayerParticlesSystemPool;
         
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
@@ -122,6 +125,7 @@ namespace GamePlay
             
             if (PlayerNbr - PlayerIndex > GameSettings.BotNumber) { 
                 go = Instantiate(playerPrefabs, position);
+                go.GetComponentInChildren<StrokeManager>().activePlayerParticlesSystemPool = activePlayerParticlesSystemPool;
 
                 // Player Creation Post Action called
                 OnPlayerCreated?.Invoke(go, PlayerIndex);

@@ -510,6 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0070cdd7f90bf0c45a17b3a9e5af76b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
 --- !u!114 &8838057787466774110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +526,7 @@ MonoBehaviour:
   Camera: {fileID: 4036350990343993791}
   Interface: {fileID: 4036350991673927352}
   playerManager: {fileID: 1295892033002690539}
+  activePlayerParticles: {fileID: 8616791404214289372, guid: d5f7255b6c8e5bb46945a7f12022fb73, type: 3}
 --- !u!1 &4036350990904543920
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,6 +780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4644129043961933991}
+  HitBall: {fileID: 0}
   playerBall: {fileID: 3338392708590533064}
 --- !u!114 &3966278076841386297
 MonoBehaviour:

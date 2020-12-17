@@ -3,19 +3,21 @@ using UnityEngine;
 
 namespace Particles {
     public class ParticleSystemPool : MonoBehaviour {
-        private Stack<Transform> objectPool; 
+        private Stack<Transform> objectPool = new Stack<Transform>(); 
         private Transform cache;
+        
+        [SerializeField]
         private Transform particleSystemPrefab;
         
         [SerializeField]
         private int maxAmount = 1;
 
-        void Awake() { 
+        void Awake() {
+            cache = this.transform.parent;
             for (int i = 0; i < maxAmount; i++) {
-                // TODO : Vérifier l'ordre ici
                 particleSystemPrefab.transform.parent = cache;
-                Instantiate(particleSystemPrefab);
-                objectPool.Push(particleSystemPrefab);
+                var instance = Instantiate(particleSystemPrefab, cache);
+                objectPool.Push(instance);
             }
         }
         
@@ -24,10 +26,10 @@ namespace Particles {
                 return null;
             }
             
-            particleSystemPrefab = objectPool.Pop();
-            particleSystemPrefab.transform.parent = parent;
+            var test = objectPool.Pop();
+            test.position = parent.position;
 
-            return particleSystemPrefab; 
+            return test; 
         }
 
         public void ReturnToPool(Transform unusedInstance) {

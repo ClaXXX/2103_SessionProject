@@ -10,7 +10,7 @@ namespace Particles {
             particleSystemRenderer = GetComponent<ParticleSystemRenderer>();
         }
 
-        void startParticleSystem(ParticleSystemPool pool) {
+        public void startParticleSystem(ParticleSystemPool pool) {
             _pool = pool;
 
             particleSystemRenderer.enabled = true;
@@ -19,7 +19,7 @@ namespace Particles {
             particleSystem.Play(true);
         }
 
-        void stopParticleSystem() {
+        public void stopParticleSystem() {
             particleSystem.Stop();
             particleSystem.time = 0;
             particleSystem.Clear(true);
@@ -27,7 +27,7 @@ namespace Particles {
         }
 
         void Update() {
-            if (!particleSystem.IsAlive(true) && particleSystemRenderer.enabled)
+            if (!(particleSystem.IsAlive(true) && particleSystemRenderer.enabled))
             {
                 _pool.ReturnToPool(transform);
             }

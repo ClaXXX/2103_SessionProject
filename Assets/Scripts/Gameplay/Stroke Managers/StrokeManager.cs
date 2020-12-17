@@ -30,8 +30,6 @@ namespace Gameplay.Stroke_Managers
         public Action Stroke;
 
         private void Start() {
-        private void Start() 
-        {
             soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
             StrokeForce = 1f;
             StrokeModeVar = StrokeMode.Waiting;

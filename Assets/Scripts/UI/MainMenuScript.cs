@@ -1,5 +1,6 @@
 ﻿using System;
 using DefaultNamespace;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,7 @@ namespace UI {
         [SerializeField] private GameObject LowerLocalGameSetterGameObject;
         [SerializeField] private GameObject UpperLocalGameSetterGameObject;
         // TODO : Add main menu thing here
+        [SerializeField] private TextMeshProUGUI title;
 
         #endregion
         
@@ -51,7 +53,7 @@ namespace UI {
                 // TODO : Implement
             }
 
-            if (toGameConfig) {
+            if (true) {
                 easeOutMainMenu(time);
                 // TODO : Une fois le main menu "out", on ease "in" le play menu
                 if (true) {
@@ -132,7 +134,10 @@ namespace UI {
         }
         
         private void easeOutMainMenu(float time) {
-            // TODO : Mth that is call to move menu items    
+            // TODO : Mth that is call to move menu items   
+            Color color = title.color;
+            color.a = interpolateFloat(color.a, 0, time);
+            title.color = color;
         }
 
         private void easeOutPlayPage(float time) {
@@ -140,15 +145,30 @@ namespace UI {
         }
 
         private void easeInPlayPage(float time) {
-            Vector3 test =
-            interpolate(UpperLocalGameSetterGameObject.transform.position,
-                UpperLocalGameSetterVisiblePosition.position, time);
+            bool isUpperDone = false;
+            bool isLowerDone = false;
 
-            UpperLocalGameSetterGameObject.transform.position = test;
-            Debug.Log(UpperLocalGameSetterGameObject.transform.position.x - 
-                      UpperLocalGameSetterVisiblePosition.position.x);
             if (UpperLocalGameSetterGameObject.transform.position.y - 0.1f < UpperLocalGameSetterVisiblePosition.position.y) {
                 UpperLocalGameSetterGameObject.transform.position = UpperLocalGameSetterVisiblePosition.position;
+                isUpperDone = true;
+            }
+            else {
+                UpperLocalGameSetterGameObject.transform.position =
+                    interpolateToPosition(UpperLocalGameSetterGameObject.transform.position,
+                        UpperLocalGameSetterVisiblePosition.position, time);
+            }
+            
+            if (LowerLocalGameSetterGameObject.transform.position.y > LowerLocalGameSetterVisiblePosition.position.y - 0.1f) {
+                LowerLocalGameSetterGameObject.transform.position = LowerLocalGameSetterVisiblePosition.position;
+                isLowerDone = true;
+            }
+            else {
+                LowerLocalGameSetterGameObject.transform.position =
+                    interpolateToPosition(LowerLocalGameSetterGameObject.transform.position,
+                        LowerLocalGameSetterVisiblePosition.position, time);
+            }
+
+            if (isLowerDone && isUpperDone) {
                 toGameConfig = false;
             }
         }
@@ -156,7 +176,7 @@ namespace UI {
         private void makeButtonRainbow(float time) {
             // TODO : Mth that is called to interpolate button color
         }
-        private Vector3 interpolate(Vector3 a, Vector3 b, float t) {
+        private Vector3 interpolateToPosition(Vector3 a, Vector3 b, float t) {
             t = Mathf.Clamp01(t); 
             
             t = (2f * t) - (2f * t * t);
@@ -164,6 +184,13 @@ namespace UI {
             return new Vector3(t * b.x + (1 - t) * a.x,
                 t * b.y + (1 - t) * a.y, 
                 t * b.z + (1 - t) * a.z);
+        }
+
+        private float interpolateFloat(float a, float b, float time) {
+            time = Mathf.Clamp01(time);
+            time = (2f * time) - (2f * time * time);  
+            
+            return time * b + (1 - time) * a;
         }
     }
 }

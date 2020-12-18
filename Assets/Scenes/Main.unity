@@ -2094,6 +2094,7 @@ MonoBehaviour:
   player2Select: {fileID: 188480486}
   LowerLocalGameSetterGameObject: {fileID: 0}
   UpperLocalGameSetterGameObject: {fileID: 0}
+  title: {fileID: 0}
   LowerLocalGameSetterVisiblePosition: {fileID: 0}
   UpperLocalGameSetterVisiblePosition: {fileID: 0}
   toMainMenu: 0
@@ -14335,8 +14336,9 @@ MonoBehaviour:
   localPlayer1Controls: {fileID: 1259900085}
   localPlayer2Controls: {fileID: 753517920}
   player2Select: {fileID: 188480486}
-  LowerLocalGameSetterGameObject: {fileID: 481543012}
+  LowerLocalGameSetterGameObject: {fileID: 1820731616}
   UpperLocalGameSetterGameObject: {fileID: 823197704}
+  title: {fileID: 1411631006}
   LowerLocalGameSetterVisiblePosition: {fileID: 481543013}
   UpperLocalGameSetterVisiblePosition: {fileID: 461120879}
   toMainMenu: 0

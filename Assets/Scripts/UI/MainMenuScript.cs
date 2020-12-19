@@ -2,6 +2,7 @@
 using DefaultNamespace;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.TerrainAPI;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,7 +21,15 @@ namespace UI {
         [SerializeField] private GameObject UpperLocalGameSetterGameObject;
         // TODO : Add main menu thing here
         [SerializeField] private TextMeshProUGUI title;
-
+        [SerializeField] private Image playButton;
+        [SerializeField] private TextMeshProUGUI playButtonText;
+        [SerializeField] private Image quitButton;
+        [SerializeField] private TextMeshProUGUI quitButtonText;
+        [SerializeField] private Image settingsButton;
+        [SerializeField] private TextMeshProUGUI settingsButtonText;
+        [SerializeField] private Image onlineButton;
+        [SerializeField] private TextMeshProUGUI onlineButtonText;
+        
         #endregion
         
         #region VisibleCoordinates
@@ -34,6 +43,7 @@ namespace UI {
 
         public bool toMainMenu;
         public bool toGameConfig;
+        public bool isGameConfigsMoving;
         public bool toGame;
         
         
@@ -53,10 +63,9 @@ namespace UI {
                 // TODO : Implement
             }
 
-            if (true) {
+            if (toGameConfig) {
                 easeOutMainMenu(time);
-                // TODO : Une fois le main menu "out", on ease "in" le play menu
-                if (true) {
+                if (isGameConfigsMoving) {
                     easeInPlayPage(time);
                 }
             }
@@ -131,13 +140,38 @@ namespace UI {
         
         public void setToPlayMenu(bool boolean) {
             toGameConfig = boolean;
+            isGameConfigsMoving = boolean;
         }
         
         private void easeOutMainMenu(float time) {
-            // TODO : Mth that is call to move menu items   
             Color color = title.color;
+            
+            // TODO : On pogne le alpha d'un élément et on set les autres en fonction de lui
+            
             color.a = interpolateFloat(color.a, 0, time);
             title.color = color;
+            playButton.color = color;
+            playButtonText.color = color;
+            quitButton.color = color;
+            quitButtonText.color = color;
+            settingsButton.color = color;
+            settingsButtonText.color = color;
+            onlineButton.color = color;
+            onlineButtonText.color = color;
+            
+            if (color.a - 0.001 < 0) {
+                color.a = 0;
+                title.color = color;
+                playButton.color = color;
+                playButtonText.color = color;
+                quitButton.color = color;
+                quitButtonText.color = color;
+                settingsButton.color = color;
+                settingsButtonText.color = color;
+                onlineButton.color = color;
+                onlineButtonText.color = color;
+                toGameConfig = false;
+            }
         }
 
         private void easeOutPlayPage(float time) {
@@ -169,7 +203,7 @@ namespace UI {
             }
 
             if (isLowerDone && isUpperDone) {
-                toGameConfig = false;
+                isGameConfigsMoving = false;
             }
         }
 

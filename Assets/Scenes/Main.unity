@@ -2095,10 +2095,19 @@ MonoBehaviour:
   LowerLocalGameSetterGameObject: {fileID: 0}
   UpperLocalGameSetterGameObject: {fileID: 0}
   title: {fileID: 0}
+  playButton: {fileID: 0}
+  playButtonText: {fileID: 0}
+  quitButton: {fileID: 0}
+  quitButtonText: {fileID: 0}
+  settingsButton: {fileID: 0}
+  settingsButtonText: {fileID: 0}
+  onlineButton: {fileID: 0}
+  onlineButtonText: {fileID: 0}
   LowerLocalGameSetterVisiblePosition: {fileID: 0}
   UpperLocalGameSetterVisiblePosition: {fileID: 0}
   toMainMenu: 0
   toGameConfig: 0
+  isGameConfigsMoving: 0
   toGame: 0
 --- !u!1 &238526923
 GameObject:
@@ -14339,10 +14348,19 @@ MonoBehaviour:
   LowerLocalGameSetterGameObject: {fileID: 1820731616}
   UpperLocalGameSetterGameObject: {fileID: 823197704}
   title: {fileID: 1411631006}
+  playButton: {fileID: 704196112}
+  playButtonText: {fileID: 0}
+  quitButton: {fileID: 586826607}
+  quitButtonText: {fileID: 0}
+  settingsButton: {fileID: 1418996778}
+  settingsButtonText: {fileID: 0}
+  onlineButton: {fileID: 539515082}
+  onlineButtonText: {fileID: 0}
   LowerLocalGameSetterVisiblePosition: {fileID: 481543013}
   UpperLocalGameSetterVisiblePosition: {fileID: 461120879}
   toMainMenu: 0
   toGameConfig: 0
+  isGameConfigsMoving: 0
   toGame: 0
 --- !u!1 &1448116394
 GameObject:

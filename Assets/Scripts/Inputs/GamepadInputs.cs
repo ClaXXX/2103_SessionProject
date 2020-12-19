@@ -36,7 +36,6 @@ namespace Scenes {
             if (buttons[code] != null) {
                 // Ouvrir menu pause
                 if (code == 0) {
-                    // TODO : À IMPLÉMENTER
                     return Keyboard.current.escapeKey.isPressed;
                 }
                 return buttons[code].IsPressed();

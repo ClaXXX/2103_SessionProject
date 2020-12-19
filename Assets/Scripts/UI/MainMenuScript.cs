@@ -136,11 +136,17 @@ namespace UI {
         public void setToMainMenu(bool boolean) {
             toMainMenu = boolean;
             isGameSetterEasingOut = boolean;
+            
+            toGameConfig = !boolean;
+            isGameSetterEasingIn = !boolean;
         }
         
         public void setToPlayMenu(bool boolean) {
             toGameConfig = boolean;
             isGameSetterEasingIn = boolean;
+            
+            toMainMenu = !boolean;
+            isGameSetterEasingOut = !boolean;
         }
 
         private void easeInMainMenu(float time) {

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using Gameplay.Stroke_Managers;
 using Particles;
+using Sounds;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +14,7 @@ namespace GamePlay
     {
         private readonly List<PlayerManager> _playersManagers = new List<PlayerManager>();
         private List<global::Player> _players = new List<global::Player>(); // TODO : Player devrait être remplacé par PlayerManager
+        private MusicManager _musicManager;
 
         [SerializeField] private ParticleSystemPool activePlayerParticlesSystemPool;
         
@@ -64,10 +67,17 @@ namespace GamePlay
                 OnGameLaunched = onLocalGameLaunched;
                 OnGameOver = onLocalGameOver;
                 FindObjectOfType<ScoringCollider>().OnGameWin = GameOver;
+                _musicManager = FindObjectOfType<MusicManager>();
 
                 // then launch the game
                 LaunchGame(2, GameSettings.BotNumber);
             }
+        }
+        
+        IEnumerator WaitForMusicChange()
+        {
+            yield return new WaitForSeconds(_musicManager.fadingTime);
+            Time.timeScale = 0;
         }
 
         void Pause()
@@ -77,8 +87,8 @@ namespace GamePlay
             _playersManagers[PlayerIndex - 1].Pause(); // Paused all players
             mainCamera.enabled = true; // Activate Main Camera
             mainListener.enabled = true;
-            Time.timeScale = 0;
-            // _musicManager.ChangeMusic("Menu");
+            _musicManager.ChangeMusic("Menu");
+            StartCoroutine(WaitForMusicChange());
         }
 
         void Update()
@@ -196,6 +206,7 @@ namespace GamePlay
             mainCamera.enabled = true;
             mainListener.enabled = true;
             gameOverObj.SetActive(true);
+            _musicManager.ChangeMusic("Menu");
         }
         
         #endregion
@@ -208,6 +219,7 @@ namespace GamePlay
             GameModeVar = GameMode.Running;
             mainCamera.enabled = false;
             mainListener.enabled = false;
+            _musicManager.PlayBack();
             _playersManagers[PlayerIndex - 1].Continue();
         }
         

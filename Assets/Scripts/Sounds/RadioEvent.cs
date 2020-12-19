@@ -1,5 +1,6 @@
 ﻿﻿using System.Collections.Generic;
-using Events;
+ using System.Linq;
+ using Events;
  using GamePlay;
  using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,7 +9,7 @@ namespace Sounds
 {
     public class RadioEvent : EventTrigger
     {
-        private List<PlayerManager> _players = new List<PlayerManager>();
+        private List<GameObject> _players = new List<GameObject>();
         private Vector3 _holePosition;
         private MusicManager _musicManager;
         private GameManager _gameManager;
@@ -38,20 +39,22 @@ namespace Sounds
 
         protected override bool CheckEvent()
         {
+            if (EventEndCondition())
+                return true;
+            
             if (_lastIndex != _players.Count) // Avoid to reset all along the party
             {
-                _players = new List<PlayerManager>(FindObjectsOfType<PlayerManager>());
+                _players = GameObject.FindGameObjectsWithTag("Player").ToList(); // Get all components
                 _lastIndex = _players.Count;
             }
-            
-            foreach (PlayerManager player in _players)
+
+
+            foreach (GameObject player in _players)
             {
-                bool ret = true;
-                Vector3 pos = _holePosition - player.transform.position;
-                if (isBetween(pos.x, -around, around)
-                    && isBetween(pos.z, -around, around))
+                if (isBetween(player.transform.position.x, _holePosition.x - around, _holePosition.x + around)
+                    && isBetween(player.transform.position.z, _holePosition.z - around, _holePosition.z + around))
                 {
-                    ret = !_triggered;
+                    bool ret = !_triggered;
                     _triggered = true;
                     return ret;
                 }
@@ -67,6 +70,8 @@ namespace Sounds
 
         protected override void Trigger()
         {
+            if (EventEndCondition())
+                return;
             if (!_musicManager)
             {
                 _musicManager = FindObjectOfType<MusicManager>();

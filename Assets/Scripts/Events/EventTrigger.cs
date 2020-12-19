@@ -14,9 +14,8 @@ namespace Events
         {
             while (!EventEndCondition())
             {
-                yield return new WaitForSeconds(1);
-                if (!EventEndCondition() && CheckEvent())
-                    Trigger();
+                yield return new WaitUntil(() => CheckEvent());
+                Trigger();
             }
         }
 

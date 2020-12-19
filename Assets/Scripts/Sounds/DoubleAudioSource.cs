@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 namespace Sounds
 {
-    [RequireComponent(typeof(AudioSource))]
     public class DoubleAudioSource : MonoBehaviour
     {
         private AudioSource _source0;
@@ -16,17 +14,29 @@ namespace Sounds
         private Coroutine _zerothSourceFadeRoutine;
         private Coroutine _firstSourceFadeRoutine;
 
+        private float _volume = 0;
         public float volume
         {
-            get => _isFirst ? _source0.volume : _source1.volume;
-            set {
+            get => _volume;
+            set
+            {
+                _volume = value;
                 _source0.volume = _isFirst ? value : 0;
                 _source1.volume = _isFirst ? 0 : value;
             }
         }
 
-        public bool loop;
-        [SerializeField] private float _volume;
+        private bool _loop = false;
+        public bool loop
+        {
+            get => _loop;
+            set
+            {
+                _loop = value;
+                _source0.loop = _loop;
+                _source1.loop = _loop;
+            }
+        }
 
         void Reset() {
             Update();
@@ -58,12 +68,15 @@ namespace Sounds
                         _source1 = audioSources[1];
                     } break;
             }
+
+            _source0.loop = true;
+            _source1.loop = true;
         }
 
         public void CrossFade( AudioClip audio,
                                float fadingTime,
                                float delayBeforeCrossFade = 0) {
-            StartCoroutine(Fade(audio,fadingTime, delayBeforeCrossFade));
+            StartCoroutine(Fade(audio, fadingTime, delayBeforeCrossFade));
         }
         
         public void CrossFadeBack(float fadingTime,
@@ -77,20 +90,19 @@ namespace Sounds
         {
             var playing = _isFirst ? _source0 : _source1;
             var toPlay = _isFirst ? _source1 : _source0;
-            var maxVolume = volume;
 
             if (delayBeforeCrossFade > 0)
                 yield return new WaitForSeconds(delayBeforeCrossFade);
             
-            toPlay.clip = audio;
             toPlay.loop = loop;
-            toPlay.Play();
+            toPlay.clip = audio;
             toPlay.volume = 0;
+            toPlay.Play();
  
             if(_firstSourceFadeRoutine != null)
                 StopCoroutine(_firstSourceFadeRoutine);
             _firstSourceFadeRoutine = StartCoroutine(fadeSource(toPlay,
-                toPlay.volume,maxVolume,fadingTime));
+                toPlay.volume,volume,fadingTime));
             
             if (_zerothSourceFadeRoutine != null) {
                 StopCoroutine(_zerothSourceFadeRoutine);
@@ -105,19 +117,17 @@ namespace Sounds
         {
             var playing = _isFirst ? _source0 : _source1;
             var toPlay = _isFirst ? _source1 : _source0;
-            var maxVolume = volume;
 
             if (delayBeforeCrossFade > 0)
                 yield return new WaitForSeconds(delayBeforeCrossFade);
             
             toPlay.loop = loop;
-            toPlay.Play();
             toPlay.volume = 0;
  
             if(_firstSourceFadeRoutine != null)
                 StopCoroutine(_firstSourceFadeRoutine);
             _firstSourceFadeRoutine = StartCoroutine(fadeSource(toPlay,
-                toPlay.volume,maxVolume,fadingTime));
+                toPlay.volume,volume,fadingTime));
             
             if (_zerothSourceFadeRoutine != null) {
                 StopCoroutine(_zerothSourceFadeRoutine);
@@ -127,26 +137,25 @@ namespace Sounds
             _isFirst = !_isFirst;
         }
      
-        IEnumerator fadeSource(AudioSource sourceToFade, float startVolume, float endVolume, float duration) {
-                float startTime = Time.time;
-     
-                while(true) {
-                    if(duration == 0) {
-                       sourceToFade.volume = endVolume;
-                       break;//break, to prevent division by  zero
-                    }
-                    float elapsed = Time.time - startTime;
-               
-                    sourceToFade.volume = Mathf.Clamp01(Mathf.Lerp( startVolume,
-                                                                    endVolume,
-                                                                    elapsed/duration ));
-     
-                    if(Math.Abs(sourceToFade.volume - endVolume) < 0.01f)
-                        break;
-                    yield return null;
+        IEnumerator fadeSource(AudioSource sourceToFade, float startVolume, float endVolume, float duration)
+        {
+            float startTime = Time.time;
+ 
+            while (true)
+            {
+                float elapsed = Time.time - startTime;
+ 
+                sourceToFade.volume = Mathf.Clamp01(Mathf.Lerp(startVolume, endVolume, elapsed / duration));
+ 
+                if (sourceToFade.volume == endVolume)
+                {
+                    break;
                 }
+ 
+                yield return null;
+            }
         }
-     
+
      
         //returns false if BOTH sources are not playing and there are no sounds are staged to be played.
         //also returns false if one of the sources is not yet initialized

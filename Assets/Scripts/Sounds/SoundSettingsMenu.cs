@@ -1,26 +1,27 @@
-﻿using System;
-using Sounds;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundSettingsMenu : MonoBehaviour {
+namespace Sounds
+{
+    public class SoundSettingsMenu : MonoBehaviour {
 
-    [SerializeField] private SoundManager soundManager;
-    [SerializeField] private Slider ambientSoundVolumeSlider;
-    [SerializeField] private Slider songsVolumeSlider;
+        [SerializeField] private SoundManager soundManager;
+        [SerializeField] private Slider ambientSoundVolumeSlider;
+        [SerializeField] private Slider songsVolumeSlider;
 
-    private void Start()
-    {
-        ambientSoundVolumeSlider.value = soundManager.ambientSoundVolume;
-        songsVolumeSlider.value = soundManager.songsVolume;
-    }
+        private void Start()
+        {
+            ambientSoundVolumeSlider.value = soundManager.ambientSoundVolume;
+            songsVolumeSlider.value = soundManager.songsVolume;
+        }
 
-    public void onChangeSoundEffectsVolume() {
-        soundManager.modifyAmbientSoundVolume(ambientSoundVolumeSlider.value);
-    }
+        public void onChangeSoundEffectsVolume() {
+            soundManager.modifyAmbientSoundVolume(ambientSoundVolumeSlider.value);
+        }
     
-    public void onChangeSongsVolume() {
-        soundManager.modifySongsVolume(songsVolumeSlider.value);
-    }
+        public void onChangeSongsVolume() {
+            soundManager.modifySongsVolume(songsVolumeSlider.value);
+        }
 
+    }
 }

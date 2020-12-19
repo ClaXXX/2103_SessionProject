@@ -348,6 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0070cdd7f90bf0c45a17b3a9e5af76b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
 --- !u!114 &1816753182641319051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,9 +410,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ae1c9ee9df9544183a654094120da8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   StrokeManager: {fileID: 2190160145690888156}
+  readyToPlay: 0
 --- !u!1 &117531439564950727
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +513,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117531440069287354}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.40511355, y: 0.27657038, z: -4.073816}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 117531439368553840}
@@ -532,6 +532,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 8777853417521062555}
+  HitBall: {fileID: 0}
+  activePlayerParticlesSystemPool: {fileID: 0}
   playerBall: {fileID: 1726615423978089460}
 --- !u!1 &117531440654283908
 GameObject:

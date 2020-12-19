@@ -25,7 +25,7 @@ namespace Sounds
 
         [Header("Sources")]
         public DoubleAudioSource source; // MainCamera most of the time
-        public float fadingTime = 1f;
+        public float fadingTime = 0.1f;
         
         void Start()
         {
@@ -33,7 +33,7 @@ namespace Sounds
             System.Random rand = new System.Random();
 
             _originalMusic = musics.ElementAt(rand.Next(musics.Count)); // Get a random music
-            source.loop = true; // Init a loop system
+            source.loop = true;
             ActualiseForVolumeChange();
             source.CrossFade(_originalMusic, fadingTime);
             

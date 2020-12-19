@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using DefaultNamespace.Sounds;
 using GamePlay;
+using Sounds;
 using UnityEngine;
 
 public class ScoringCollider : MonoBehaviour {

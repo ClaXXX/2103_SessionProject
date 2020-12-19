@@ -1,21 +1,22 @@
-﻿using System.Collections.Generic;
+﻿﻿using System;
+using System.Collections.Generic;
+using GamePlay;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-namespace DefaultNamespace.Sounds {
+namespace Sounds {
     public class SoundManager : MonoBehaviour {
         // TODO : Tous les sons et musiques vont ici
         public GameObject hitSound;
         public GameObject ballInHoleSound;
-        
+
         private List<GameObject> ambientSounds = new List<GameObject>();
         private List<GameObject> songs = new List<GameObject>();
 
-        public float ambientSoundVolume = 0.5f;
-        public float songsVolume = 0.5f;
+        public float ambientSoundVolume = 1f;
+        public float songsVolume = 0.2f;
 
         public void Start() {
-            DontDestroyOnLoad(this.gameObject); // TODO : Vérifier que ça marche
+            DontDestroyOnLoad(gameObject);
             ambientSounds.Add(hitSound);
             ambientSounds.Add(ballInHoleSound);
         }
@@ -23,7 +24,7 @@ namespace DefaultNamespace.Sounds {
         public void playHitSound(Transform source) {
             AudioSource audioClip = hitSound.GetComponent<AudioSource>();
             audioClip.volume = ambientSoundVolume;
-            Debug.Log(audioClip.volume);
+//            Debug.Log(audioClip.volume);
             GameObject go = Instantiate(hitSound, source);
             Destroy(go, 1f);
         }

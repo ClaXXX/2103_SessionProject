@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Particles;
-using DefaultNamespace.Sounds;
+using Sounds;
 using UnityEngine;
 
 namespace Gameplay.Stroke_Managers

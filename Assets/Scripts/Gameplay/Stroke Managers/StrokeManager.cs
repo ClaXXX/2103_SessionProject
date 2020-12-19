@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Particles;
 using DefaultNamespace.Sounds;
 using UnityEngine;
 
@@ -10,7 +11,12 @@ namespace Gameplay.Stroke_Managers
         private const float MAXStrokeForce = 15f;
         public Dictionary<String, Action> Reactions = new Dictionary<string, Action>();
         public Player player;
+        public GameObject HitBall;
         private SoundManager soundManager;
+        
+        
+        public ParticleSystemPool activePlayerParticlesSystemPool;
+        private Transform particle;
         
         public Rigidbody playerBall;
         public int StrokeCount { get; protected set; }
@@ -23,8 +29,7 @@ namespace Gameplay.Stroke_Managers
 
         public Action Stroke;
 
-        private void Start() 
-        {
+        private void Start() {
             soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
             StrokeForce = 1f;
             StrokeModeVar = StrokeMode.Waiting;
@@ -44,7 +49,13 @@ namespace Gameplay.Stroke_Managers
         public void StrokeTheBall() {
 
             soundManager.playHitSound(playerBall.transform);
-
+            
+            GameObject go = Instantiate(HitBall, playerBall.transform);
+            Destroy(go, 1f);
+            
+            //activePlayerParticlesSystemPool.ReturnToPool(particle);
+            particle.GetComponent<PooledParticleSystem>().stopParticleSystem();
+            
             playerBall.AddForce(
                 Quaternion.Euler(0f, StrokeAngle, 0f)
                 * new Vector3(0,0,StrokeForce), ForceMode.Impulse);
@@ -118,8 +129,11 @@ namespace Gameplay.Stroke_Managers
             StrokeModeVar = StrokeMode.Waiting;
         }
 
-        public void StopWait()
-        {
+        public void StopWait() {
+            var parent = this.gameObject.transform.parent;
+            parent = parent.Find("BallPrefab");
+            particle = activePlayerParticlesSystemPool.GetFromPool(parent);
+            particle.GetComponent<PooledParticleSystem>().startParticleSystem(activePlayerParticlesSystemPool);
             StrokeModeVar = StrokeMode.Static;
         }
 

@@ -35,7 +35,9 @@ namespace UI {
         #region VisibleCoordinates
 
         [SerializeField] private Transform LowerLocalGameSetterVisiblePosition;
+        [SerializeField] private Transform LowerLocalGameSetterBasePosition;
         [SerializeField] private Transform UpperLocalGameSetterVisiblePosition;
+        [SerializeField] private Transform UpperLocalGameSetterBasePosition;
         // TODO : Add main menu things here
 
         #endregion
@@ -43,10 +45,10 @@ namespace UI {
 
         public bool toMainMenu;
         public bool toGameConfig;
-        public bool isGameConfigsMoving;
-        public bool toGame;
-        
-        
+        public bool isGameSetterEasingOut;
+        public bool isGameSetterEasingIn;
+
+
         private PlayerAssembler playerAssembler;
         private ConfigManager _configManager;
         
@@ -60,18 +62,17 @@ namespace UI {
         public void Update() {
             float time = Time.deltaTime;
             if (toMainMenu) {
-                // TODO : Implement
+                easeInMainMenu(time);
+            }
+            if (isGameSetterEasingOut) { // TODO : Créer un nouveau bool
+                easeOutPlayPage(time);
             }
 
             if (toGameConfig) {
                 easeOutMainMenu(time);
-                if (isGameConfigsMoving) {
-                    easeInPlayPage(time);
-                }
             }
-
-            if (toGame) {
-                
+            if (isGameSetterEasingIn) {
+                easeInPlayPage(time);
             }
         }
 
@@ -91,8 +92,6 @@ namespace UI {
                 players[1] = playerAssembler.assemble(player2ControlsValue, player2SelectValue, 2);
             
                 _configManager.addPlayers(players);
-            
-            
                 
                 LoadingData.sceneToLoad = "NetworkGame";
                 SceneManager.LoadScene("Loading");
@@ -136,48 +135,89 @@ namespace UI {
 
         public void setToMainMenu(bool boolean) {
             toMainMenu = boolean;
+            isGameSetterEasingOut = boolean;
         }
         
         public void setToPlayMenu(bool boolean) {
             toGameConfig = boolean;
-            isGameConfigsMoving = boolean;
+            isGameSetterEasingIn = boolean;
         }
-        
-        private void easeOutMainMenu(float time) {
-            Color color = title.color;
+
+        private void easeInMainMenu(float time) {
+            Color titleColor = title.color;
             
-            // TODO : On pogne le alpha d'un élément et on set les autres en fonction de lui
+            Color buttonColor = quitButton.color;
             
-            color.a = interpolateFloat(color.a, 0, time);
-            title.color = color;
-            playButton.color = color;
-            playButtonText.color = color;
-            quitButton.color = color;
-            quitButtonText.color = color;
-            settingsButton.color = color;
-            settingsButtonText.color = color;
-            onlineButton.color = color;
-            onlineButtonText.color = color;
+            Color playColor = playButton.color;
+           
+            titleColor.a = interpolateFloat(titleColor.a, 1, time);
+            buttonColor.a = interpolateFloat(buttonColor.a, 1, time);
+            playColor.a = interpolateFloat(playColor.a, 1, time);
+            title.color = titleColor;
+            playButton.color = playColor;
+            playButtonText.color = titleColor;
+            quitButton.color = buttonColor;
+            quitButtonText.color = titleColor;
+            settingsButton.color = buttonColor;
+            settingsButtonText.color = titleColor;
+            onlineButton.color = buttonColor;
+            onlineButtonText.color = titleColor;
             
-            if (color.a - 0.001 < 0) {
-                color.a = 0;
-                title.color = color;
-                playButton.color = color;
-                playButtonText.color = color;
-                quitButton.color = color;
-                quitButtonText.color = color;
-                settingsButton.color = color;
-                settingsButtonText.color = color;
-                onlineButton.color = color;
-                onlineButtonText.color = color;
+            if (titleColor.a + 0.001 > 1) {
+                titleColor.a = 0;
+                buttonColor.a = 0;
+                playColor.a = 0;
+                    
+                title.color = titleColor;
+                playButton.color = playColor;
+                playButtonText.color = titleColor;
+                quitButton.color = buttonColor;
+                quitButtonText.color = titleColor;
+                settingsButton.color = buttonColor;
+                settingsButtonText.color = titleColor;
+                onlineButton.color = buttonColor;
+                onlineButtonText.color = titleColor;
                 toGameConfig = false;
             }
         }
-
-        private void easeOutPlayPage(float time) {
-            // TODO : Mth that is call to move menu items   
+        
+        private void easeOutMainMenu(float time) {
+            Color titleColor = title.color;
+            
+            Color buttonColor = quitButton.color;
+            
+            Color playColor = playButton.color;
+           
+            titleColor.a = interpolateFloat(titleColor.a, 0, time);
+            buttonColor.a = interpolateFloat(buttonColor.a, 0, time);
+            playColor.a = interpolateFloat(playColor.a, 0, time);
+            title.color = titleColor;
+            playButton.color = playColor;
+            playButtonText.color = titleColor;
+            quitButton.color = buttonColor;
+            quitButtonText.color = titleColor;
+            settingsButton.color = buttonColor;
+            settingsButtonText.color = titleColor;
+            onlineButton.color = buttonColor;
+            onlineButtonText.color = titleColor;
+            
+            if (titleColor.a - 0.001 < 0) {
+                titleColor.a = 0;
+                buttonColor.a = 0;
+                playColor.a = 0;
+                title.color = titleColor;
+                playButton.color = playColor;
+                playButtonText.color = titleColor;
+                quitButton.color = buttonColor;
+                quitButtonText.color = titleColor;
+                settingsButton.color = buttonColor;
+                settingsButtonText.color = titleColor;
+                onlineButton.color = buttonColor;
+                onlineButtonText.color = titleColor;
+                toGameConfig = false;
+            }
         }
-
+        
         private void easeInPlayPage(float time) {
             bool isUpperDone = false;
             bool isLowerDone = false;
@@ -203,7 +243,36 @@ namespace UI {
             }
 
             if (isLowerDone && isUpperDone) {
-                isGameConfigsMoving = false;
+                isGameSetterEasingIn = false;
+            }
+        }
+
+        private void easeOutPlayPage(float time) {
+            bool isUpperDone = false;
+            bool isLowerDone = false;
+
+            if (UpperLocalGameSetterGameObject.transform.position.y > UpperLocalGameSetterBasePosition.position.y - 0.1f) {
+                UpperLocalGameSetterGameObject.transform.position = UpperLocalGameSetterBasePosition.position;
+                isUpperDone = true;
+            }
+            else {
+                UpperLocalGameSetterGameObject.transform.position =
+                    interpolateToPosition(UpperLocalGameSetterGameObject.transform.position,
+                        UpperLocalGameSetterBasePosition.position, time);
+            }
+            
+            if (LowerLocalGameSetterGameObject.transform.position.y - 0.1f < LowerLocalGameSetterBasePosition.position.y) {
+                LowerLocalGameSetterGameObject.transform.position = LowerLocalGameSetterBasePosition.position;
+                isLowerDone = true;
+            }
+            else {
+                LowerLocalGameSetterGameObject.transform.position =
+                    interpolateToPosition(LowerLocalGameSetterGameObject.transform.position,
+                        LowerLocalGameSetterBasePosition.position, time);
+            }
+
+            if (isLowerDone && isUpperDone) {
+                isGameSetterEasingOut = false;
             }
         }
 

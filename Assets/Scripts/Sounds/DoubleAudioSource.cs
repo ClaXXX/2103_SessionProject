@@ -16,9 +16,18 @@ namespace Sounds
         private Coroutine _zerothSourceFadeRoutine;
         private Coroutine _firstSourceFadeRoutine;
 
-        public float volume;
+        public float volume
+        {
+            get => _isFirst ? _source0.volume : _source1.volume;
+            set {
+                _source0.volume = _isFirst ? value : 0;
+                _source1.volume = _isFirst ? 0 : value;
+            }
+        }
+
         public bool loop;
- 
+        [SerializeField] private float _volume;
+
         void Reset() {
             Update();
         }
@@ -68,6 +77,7 @@ namespace Sounds
         {
             var playing = _isFirst ? _source0 : _source1;
             var toPlay = _isFirst ? _source1 : _source0;
+            var maxVolume = volume;
 
             if (delayBeforeCrossFade > 0)
                 yield return new WaitForSeconds(delayBeforeCrossFade);
@@ -80,7 +90,7 @@ namespace Sounds
             if(_firstSourceFadeRoutine != null)
                 StopCoroutine(_firstSourceFadeRoutine);
             _firstSourceFadeRoutine = StartCoroutine(fadeSource(toPlay,
-                toPlay.volume,volume,fadingTime));
+                toPlay.volume,maxVolume,fadingTime));
             
             if (_zerothSourceFadeRoutine != null) {
                 StopCoroutine(_zerothSourceFadeRoutine);
@@ -95,6 +105,7 @@ namespace Sounds
         {
             var playing = _isFirst ? _source0 : _source1;
             var toPlay = _isFirst ? _source1 : _source0;
+            var maxVolume = volume;
 
             if (delayBeforeCrossFade > 0)
                 yield return new WaitForSeconds(delayBeforeCrossFade);
@@ -106,7 +117,7 @@ namespace Sounds
             if(_firstSourceFadeRoutine != null)
                 StopCoroutine(_firstSourceFadeRoutine);
             _firstSourceFadeRoutine = StartCoroutine(fadeSource(toPlay,
-                toPlay.volume,volume,fadingTime));
+                toPlay.volume,maxVolume,fadingTime));
             
             if (_zerothSourceFadeRoutine != null) {
                 StopCoroutine(_zerothSourceFadeRoutine);
@@ -134,7 +145,7 @@ namespace Sounds
                         break;
                     yield return null;
                 }
-       }
+        }
      
      
         //returns false if BOTH sources are not playing and there are no sounds are staged to be played.

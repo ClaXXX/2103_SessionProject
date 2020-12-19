@@ -16,7 +16,7 @@ namespace Sounds {
         public float songsVolume = 0.2f;
 
         public void Start() {
-            DontDestroyOnLoad(this.gameObject); // TODO : Vérifier que ça marche
+            DontDestroyOnLoad(gameObject);
             ambientSounds.Add(hitSound);
             ambientSounds.Add(ballInHoleSound);
         }

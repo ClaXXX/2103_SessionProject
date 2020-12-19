@@ -1,6 +1,7 @@
 ﻿﻿using System.Collections.Generic;
 using Events;
-using UnityEngine;
+ using GamePlay;
+ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Sounds
@@ -10,17 +11,26 @@ namespace Sounds
         private List<PlayerManager> _players = new List<PlayerManager>();
         private Vector3 _holePosition;
         private MusicManager _musicManager;
+        private GameManager _gameManager;
+
         private int _lastIndex = -1;
-        private bool _triggered = false;
+        private bool _triggered;
         
-        public float around = 100f;
+        public float around = 1f; // Un mètre de distance
+        
 
         protected override void EventInit()
         {
             _holePosition = GameObject.FindGameObjectWithTag("Finish")
                 .gameObject.transform.position;
+            _gameManager = FindObjectOfType<GameManager>();
         }
-
+     
+        protected override bool EventEndCondition()
+        {
+            return _gameManager.GameModeVar != GameManager.GameMode.Running;
+        }
+        
         private bool isBetween(float a, float b, float c)
         {
             return a > b && a < c;

@@ -26,6 +26,7 @@ namespace GamePlay
 
         [Header("General")]
         public Camera mainCamera;
+        public AudioListener mainListener;
         public Transform position;
         
         [Header("Prefabs")]
@@ -69,6 +70,17 @@ namespace GamePlay
             }
         }
 
+        void Pause()
+        {
+            GameModeVar = GameMode.Paused;
+            pauseObj.SetActive(true); // Print menu items
+            _playersManagers[PlayerIndex - 1].Pause(); // Paused all players
+            mainCamera.enabled = true; // Activate Main Camera
+            mainListener.enabled = true;
+            Time.timeScale = 0;
+            // _musicManager.ChangeMusic("Menu");
+        }
+
         void Update()
         {
             if (GameModeVar != GameMode.Running)
@@ -78,11 +90,7 @@ namespace GamePlay
 
             if (Input.GetKeyUp("escape"))
             {
-                GameModeVar = GameMode.Paused;
-                pauseObj.SetActive(true);
-                _playersManagers[PlayerIndex - 1].Pause();
-                mainCamera.enabled = true;
-                Time.timeScale = 0;
+                Pause();
             }
         }
 
@@ -178,13 +186,15 @@ namespace GamePlay
 
         void onLocalGameLaunched()
         {
-            mainCamera.enabled = true;
+            mainCamera.enabled = false;
+            mainListener.enabled = false;
         }
 
         void onLocalGameOver()
         {
             _playersManagers.ForEach(manager => manager.Destroy());
             mainCamera.enabled = true;
+            mainListener.enabled = true;
             gameOverObj.SetActive(true);
         }
         
@@ -197,6 +207,7 @@ namespace GamePlay
             Time.timeScale = 1;
             GameModeVar = GameMode.Running;
             mainCamera.enabled = false;
+            mainListener.enabled = false;
             _playersManagers[PlayerIndex - 1].Continue();
         }
         

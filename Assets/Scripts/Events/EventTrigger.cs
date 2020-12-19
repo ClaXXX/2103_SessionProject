@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Events
@@ -7,17 +7,23 @@ namespace Events
     {
         protected abstract bool CheckEvent();
         protected abstract void Trigger();
+        protected abstract bool EventEndCondition();
         protected abstract void EventInit();
 
-        public void EventHandler()
+        private IEnumerator EventRoutine()
         {
-            if (CheckEvent())
-                Trigger();
+            while (!EventEndCondition())
+            {
+                yield return new WaitForSeconds(1);
+                if (!EventEndCondition() && CheckEvent())
+                    Trigger();
+            }
         }
 
         private void Start()
         {
             EventInit();
+            StartCoroutine(EventRoutine());
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Particles;
-using DefaultNamespace.Sounds;
 using UnityEngine;
 
 namespace Gameplay.Stroke_Managers
@@ -12,7 +11,7 @@ namespace Gameplay.Stroke_Managers
         public Dictionary<String, Action> Reactions = new Dictionary<string, Action>();
         public Player player;
         public GameObject HitBall;
-        private SoundManager soundManager;
+        //private SoundManager soundManager;
         
         
         public ParticleSystemPool activePlayerParticlesSystemPool;
@@ -30,7 +29,7 @@ namespace Gameplay.Stroke_Managers
         public Action Stroke;
 
         private void Start() {
-            soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+            //soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
             StrokeForce = 1f;
             StrokeModeVar = StrokeMode.Waiting;
             
@@ -48,7 +47,7 @@ namespace Gameplay.Stroke_Managers
         
         public void StrokeTheBall() {
 
-            soundManager.playHitSound(playerBall.transform);
+            //soundManager.playHitSound(playerBall.transform);
             
             GameObject go = Instantiate(HitBall, playerBall.transform);
             Destroy(go, 1f);

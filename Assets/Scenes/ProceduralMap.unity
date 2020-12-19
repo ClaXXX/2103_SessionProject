@@ -154,9 +154,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51054bfc2b3ac348a0a321457c4da31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   mesh: {fileID: 0}
   vertices: []
   triangles: 
+=======
+>>>>>>> Stashed changes
   mapXSize: 20
   mapZSize: 20
 --- !u!23 &69525037
@@ -179,7 +182,10 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ece0e4ae0d642bd47bda1e6087680c84, type: 2}
+<<<<<<< Updated upstream
   - {fileID: 2100000, guid: 29b49c27a74f145918356859bd7af511, type: 2}
+=======
+>>>>>>> Stashed changes
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

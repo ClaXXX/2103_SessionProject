@@ -11,6 +11,7 @@ public class ScoringCollider : MonoBehaviour {
     private GameObject soundObject;
     private SoundManager soundManager;
     public ParticleSystemPool particleSystemPool;
+    private Transform particle;
     public Action OnGameWin;
     
     public void Awake() {
@@ -28,10 +29,9 @@ public class ScoringCollider : MonoBehaviour {
         soundManager.playBallInHoleSound(this.transform);
 
         yield return new WaitForSeconds(1);
-        particleSystemPool.GetFromPool(transform);
-        var test = particleSystemPool.GetComponent<PooledParticleSystem>();
-        test.startParticleSystem(particleSystemPool);
-        
+        particle = particleSystemPool.GetFromPool(transform);
+        particle.GetComponent<PooledParticleSystem>().startParticleSystem(particleSystemPool);
+
         OnGameWin?.Invoke();
     }
 }

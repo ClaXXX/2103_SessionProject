@@ -17,6 +17,8 @@ namespace GamePlay
         private MusicManager _musicManager;
 
         [SerializeField] private ParticleSystemPool activePlayerParticlesSystemPool;
+        [SerializeField] private ParticleSystemPool finishParticlesSystemPool;
+        [SerializeField] private ScoringCollider scoringCollider;
         
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
@@ -66,7 +68,9 @@ namespace GamePlay
                 OnPlayerCreated = onLocalPlayerCreated;
                 OnGameLaunched = onLocalGameLaunched;
                 OnGameOver = onLocalGameOver;
-                FindObjectOfType<ScoringCollider>().OnGameWin = GameOver;
+                scoringCollider = FindObjectOfType<ScoringCollider>();
+                scoringCollider.OnGameWin = GameOver;
+                scoringCollider.particleSystemPool = finishParticlesSystemPool;
                 _musicManager = FindObjectOfType<MusicManager>();
 
                 // then launch the game

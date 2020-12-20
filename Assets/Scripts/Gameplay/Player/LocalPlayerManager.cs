@@ -7,6 +7,7 @@ namespace GamePlay.Player
     public class LocalPlayerManager : MonoBehaviour
     {
         public Camera Camera;
+        public AudioListener Listener;
         public GameObject Interface;
         public PlayerManager playerManager;
         private GameManager _gameManager;
@@ -28,6 +29,7 @@ namespace GamePlay.Player
 
         public void OnPlay()
         {
+            Listener.enabled = true;
             Camera.enabled = true;
             Interface.SetActive(true);
             playerManager.StrokeManager.StopWait();
@@ -36,6 +38,7 @@ namespace GamePlay.Player
 
         public void AfterPlaying()
         {
+            Listener.enabled = false;
             Camera.enabled = false;
             Interface.SetActive(false);
             _gameManager.Next();
@@ -43,11 +46,13 @@ namespace GamePlay.Player
 
         public void OnPause()
         {
+            Listener.enabled = false;
             Camera.enabled = false;
         }
 
         public void OnContinue()
         {
+            Listener.enabled = true;
             Camera.enabled = true;
         }
     }

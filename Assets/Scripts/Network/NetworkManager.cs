@@ -12,15 +12,6 @@ namespace Network
         private List<NetworkConnection> _connections = new List<NetworkConnection>();
         private GameManager _gameManager;
 
-        public static NetworkManager instance;
-
-        void Awake() {
-            if (instance == null) {
-                instance = this;
-                DontDestroyOnLoad(instance);
-            }
-        }
-
         #region HUD
 
         public void setAdress(String addr)

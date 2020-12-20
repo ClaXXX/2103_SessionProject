@@ -59,7 +59,6 @@ public class PlayerManager : MonoBehaviour
     public IEnumerator Playing()
     {
         yield return new WaitUntil(() => (StrokeManager.StrokeModeVar == StrokeMode.Waiting));
-        Debug.Log("Player has playing");
         AfterPlaying?.Invoke();
     }
 }

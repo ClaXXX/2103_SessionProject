@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using DefaultNamespace;
+using Gameplay.Stroke_Managers;
+using Particles;
+using Sounds;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +14,11 @@ namespace GamePlay
     {
         private readonly List<PlayerManager> _playersManagers = new List<PlayerManager>();
         private List<global::Player> _players = new List<global::Player>(); // TODO : Player devrait être remplacé par PlayerManager
+        private MusicManager _musicManager;
+
+        [SerializeField] private ParticleSystemPool activePlayerParticlesSystemPool;
+        [SerializeField] private ParticleSystemPool finishParticlesSystemPool;
+        [SerializeField] private ScoringCollider scoringCollider;
         
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
@@ -23,6 +31,7 @@ namespace GamePlay
 
         [Header("General")]
         public Camera mainCamera;
+        public AudioListener mainListener;
         public Transform position;
         
         [Header("Prefabs")]
@@ -59,11 +68,31 @@ namespace GamePlay
                 OnPlayerCreated = onLocalPlayerCreated;
                 OnGameLaunched = onLocalGameLaunched;
                 OnGameOver = onLocalGameOver;
-                FindObjectOfType<ScoringCollider>().OnGameWin = GameOver;
+                scoringCollider = FindObjectOfType<ScoringCollider>();
+                scoringCollider.OnGameWin = GameOver;
+                scoringCollider.particleSystemPool = finishParticlesSystemPool;
+                _musicManager = FindObjectOfType<MusicManager>();
 
                 // then launch the game
                 LaunchGame(2, GameSettings.BotNumber);
             }
+        }
+        
+        IEnumerator WaitForMusicChange()
+        {
+            yield return new WaitForSeconds(_musicManager.fadingTime);
+            Time.timeScale = 0;
+        }
+
+        void Pause()
+        {
+            GameModeVar = GameMode.Paused;
+            pauseObj.SetActive(true); // Print menu items
+            _playersManagers[PlayerIndex - 1].Pause(); // Paused all players
+            mainCamera.enabled = true; // Activate Main Camera
+            mainListener.enabled = true;
+            _musicManager.ChangeMusic("Menu");
+            StartCoroutine(WaitForMusicChange());
         }
 
         void Update()
@@ -75,11 +104,7 @@ namespace GamePlay
 
             if (Input.GetKeyUp("escape"))
             {
-                GameModeVar = GameMode.Paused;
-                pauseObj.SetActive(true);
-                _playersManagers[PlayerIndex - 1].Pause();
-                mainCamera.enabled = true;
-                Time.timeScale = 0;
+                Pause();
             }
         }
 
@@ -122,6 +147,7 @@ namespace GamePlay
             
             if (PlayerNbr - PlayerIndex > GameSettings.BotNumber) { 
                 go = Instantiate(playerPrefabs, position);
+                go.GetComponentInChildren<StrokeManager>().activePlayerParticlesSystemPool = activePlayerParticlesSystemPool;
 
                 // Player Creation Post Action called
                 OnPlayerCreated?.Invoke(go, PlayerIndex);
@@ -174,14 +200,17 @@ namespace GamePlay
 
         void onLocalGameLaunched()
         {
-            mainCamera.enabled = true;
+            mainCamera.enabled = false;
+            mainListener.enabled = false;
         }
 
         void onLocalGameOver()
         {
             _playersManagers.ForEach(manager => manager.Destroy());
             mainCamera.enabled = true;
+            mainListener.enabled = true;
             gameOverObj.SetActive(true);
+            _musicManager.ChangeMusic("Menu");
         }
         
         #endregion
@@ -193,6 +222,8 @@ namespace GamePlay
             Time.timeScale = 1;
             GameModeVar = GameMode.Running;
             mainCamera.enabled = false;
+            mainListener.enabled = false;
+            _musicManager.PlayBack();
             _playersManagers[PlayerIndex - 1].Continue();
         }
         
@@ -209,6 +240,7 @@ namespace GamePlay
         
         public void Quit()
         {
+            Time.timeScale = 1;
             LoadScene.LoadTo("Main");
         }
 

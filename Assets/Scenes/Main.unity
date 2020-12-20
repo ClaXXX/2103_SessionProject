@@ -7804,7 +7804,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36cdb8513b40404893a81b7e06605c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundManager: {fileID: 3186251951053334121}
   ambientSoundVolumeSlider: {fileID: 887477361}
   songsVolumeSlider: {fileID: 1864712602}
 --- !u!1 &908915313
@@ -13773,6 +13772,8 @@ MonoBehaviour:
   settingsButtonText: {fileID: 394073539}
   onlineButton: {fileID: 131540836}
   onlineButtonText: {fileID: 1884635028}
+  proceduralButton: {fileID: 341934109}
+  proceduralButtonText: {fileID: 14843193}
   LowerLocalGameSetterVisiblePosition: {fileID: 305838512}
   LowerLocalGameSetterBasePosition: {fileID: 1815810303}
   UpperLocalGameSetterVisiblePosition: {fileID: 250032348}
@@ -20442,17 +20443,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f91957f1d080ea46984a6f620d60ae2, type: 3}
---- !u!114 &3186251951053334121 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6692176102671809196, guid: 9f91957f1d080ea46984a6f620d60ae2, type: 3}
-  m_PrefabInstance: {fileID: 3186251951053334120}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb451765ff494920b5302cab451731d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3455333741459444707
 PrefabInstance:
   m_ObjectHideFlags: 0

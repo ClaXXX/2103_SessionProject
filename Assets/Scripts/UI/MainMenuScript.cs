@@ -27,7 +27,9 @@ namespace UI {
         [SerializeField] private TextMeshProUGUI settingsButtonText;
         [SerializeField] private Image onlineButton;
         [SerializeField] private TextMeshProUGUI onlineButtonText;
-        
+        [SerializeField] private Image proceduralButton;
+        [SerializeField] private TextMeshProUGUI proceduralButtonText;
+
         #endregion
         
         #region VisibleCoordinates
@@ -192,6 +194,8 @@ namespace UI {
             settingsButtonText.color = titleColor;
             onlineButton.color = buttonColor;
             onlineButtonText.color = titleColor;
+            proceduralButton.color = buttonColor;
+            proceduralButtonText.color = titleColor;
             
             if (titleColor.a + 0.001 > 1) {
                 titleColor.a = 0;
@@ -207,6 +211,8 @@ namespace UI {
                 settingsButtonText.color = titleColor;
                 onlineButton.color = buttonColor;
                 onlineButtonText.color = titleColor;
+                proceduralButton.color = buttonColor;
+                proceduralButtonText.color = titleColor;
                 toGameConfig = false;
             }
         }
@@ -230,6 +236,8 @@ namespace UI {
             settingsButtonText.color = titleColor;
             onlineButton.color = buttonColor;
             onlineButtonText.color = titleColor;
+            proceduralButton.color = buttonColor;
+            proceduralButtonText.color = titleColor;
             
             if (titleColor.a - 0.001 < 0) {
                 titleColor.a = 0;
@@ -244,6 +252,8 @@ namespace UI {
                 settingsButtonText.color = titleColor;
                 onlineButton.color = buttonColor;
                 onlineButtonText.color = titleColor;
+                proceduralButton.color = buttonColor;
+                proceduralButtonText.color = titleColor;
                 toGameConfig = false;
             }
         }

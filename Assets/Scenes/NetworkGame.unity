@@ -6613,6 +6613,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808218065}
   m_CullTransparentMesh: 0
+--- !u!1 &1849974316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1849974318}
+  - component: {fileID: 1849974317}
+  m_Layer: 0
+  m_Name: FinishParticleSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1849974317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849974316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4ebfdfbc95442faffe88f39b6f5c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystemPrefab: {fileID: 38040571505551805, guid: 6dc006e446a6ca14685d8568202094f1, type: 3}
+  maxAmount: 1
+--- !u!4 &1849974318
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849974316}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6129647, y: 0.31855154, z: 0.024116158}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1888744587
 GameObject:
   m_ObjectHideFlags: 0
@@ -7222,6 +7267,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scoring Collider
       objectReference: {fileID: 0}
+    - target: {fileID: 4543709144321421797, guid: 6f9a0c6ab7d64c34db25fdb9ce3b3cd4, type: 3}
+      propertyPath: particleSystemPool
+      value: 
+      objectReference: {fileID: 1849974317}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f9a0c6ab7d64c34db25fdb9ce3b3cd4, type: 3}
 --- !u!114 &4620454438282063926

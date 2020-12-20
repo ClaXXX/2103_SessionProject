@@ -11,6 +11,7 @@ namespace UI {
         [SerializeField] private Dropdown localPlayer1Controls;
         [SerializeField] private Dropdown localPlayer2Controls;
         [SerializeField] private Dropdown player2Select;
+        [SerializeField] private InputField seedInput;
 
         #region UIGameObjects
 
@@ -48,12 +49,18 @@ namespace UI {
 
         private PlayerAssembler playerAssembler;
         private ConfigManager _configManager;
+        private SeedManager _seedManager;
         
         private Transform menuPanel;
 
-        public void Start() {
+        public void Awake() {
             playerAssembler = new PlayerAssembler();
             _configManager = ConfigManager.instance;
+            _seedManager = SeedManager.instance;
+            toMainMenu = false;
+            toGameConfig = false;
+            isGameSetterEasingIn = false;
+            isGameSetterEasingOut = false;
         }
 
         public void Update() {
@@ -92,6 +99,26 @@ namespace UI {
                 
                 LoadingData.sceneToLoad = "NetworkGame";
                 SceneManager.LoadScene("Loading");
+        }
+        
+        public void configureProceduralGame() {
+            int player1ControlsValue = localPlayer1Controls.value;
+            int player2ControlsValue = localPlayer2Controls.value;
+
+            int player2SelectValue = player2Select.value;
+                
+            PlayerDto[] players = new PlayerDto[2];
+
+            players[0] = playerAssembler.assemble(player1ControlsValue, 1, 1);
+            players[1] = playerAssembler.assemble(player2ControlsValue, player2SelectValue, 2);
+            
+            _configManager.addPlayers(players);
+            _seedManager.setSeed(seedInput.text);
+                
+            // TODO : Envoyer la germe!
+            
+            LoadingData.sceneToLoad = "ProceduralGeneration";
+            SceneManager.LoadScene("Loading");
         }
 
         public void configureOnlineGame() {
@@ -278,10 +305,7 @@ namespace UI {
                 isGameSetterEasingOut = false;
             }
         }
-
-        private void makeButtonRainbow(float time) {
-            // TODO : Mth that is called to interpolate button color
-        }
+        
         private Vector3 interpolateToPosition(Vector3 a, Vector3 b, float t) {
             t = Mathf.Clamp01(t); 
             

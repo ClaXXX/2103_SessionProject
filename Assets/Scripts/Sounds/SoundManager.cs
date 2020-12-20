@@ -1,6 +1,4 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using GamePlay;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sounds {
@@ -12,11 +10,19 @@ namespace Sounds {
         private List<GameObject> ambientSounds = new List<GameObject>();
         private List<GameObject> songs = new List<GameObject>();
 
+        public static SoundManager instance;
+        
         public float ambientSoundVolume = 1f;
         public float songsVolume = 0.2f;
 
-        public void Start() {
-            DontDestroyOnLoad(gameObject);
+        public void Awake() {
+            if (instance == null) {
+                instance = this;
+                DontDestroyOnLoad (this);
+            } else {
+                DestroyObject(this);
+            }
+                
             ambientSounds.Add(hitSound);
             ambientSounds.Add(ballInHoleSound);
         }

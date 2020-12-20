@@ -68,7 +68,7 @@ namespace UI {
             if (toMainMenu) {
                 easeInMainMenu(time);
             }
-            if (isGameSetterEasingOut) { // TODO : Créer un nouveau bool
+            if (isGameSetterEasingOut) { 
                 easeOutPlayPage(time);
             }
 

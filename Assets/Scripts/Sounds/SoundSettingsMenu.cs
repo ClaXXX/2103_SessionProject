@@ -5,12 +5,12 @@ namespace Sounds
 {
     public class SoundSettingsMenu : MonoBehaviour {
 
-        [SerializeField] private SoundManager soundManager;
+        private SoundManager soundManager;
         [SerializeField] private Slider ambientSoundVolumeSlider;
         [SerializeField] private Slider songsVolumeSlider;
 
-        private void Start()
-        {
+        private void Awake() {
+            soundManager = FindObjectOfType<SoundManager>();
             ambientSoundVolumeSlider.value = soundManager.ambientSoundVolume;
             songsVolumeSlider.value = soundManager.songsVolume;
         }

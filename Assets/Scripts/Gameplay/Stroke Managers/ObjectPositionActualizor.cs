@@ -53,7 +53,7 @@ namespace Gameplay.Stroke_Managers
                     _descendant = false;
                 else if (x > 1f)
                     _descendant = true;
-                x = _descendant ? x - 0.05f * Time.deltaTime : x + 0.05f * Time.deltaTime;
+                x = _descendant ? x - Time.deltaTime : x + Time.deltaTime;
             }
             
             switch (effect)

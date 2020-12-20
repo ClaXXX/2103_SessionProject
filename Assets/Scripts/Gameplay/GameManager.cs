@@ -236,6 +236,7 @@ namespace GamePlay
         
         public void Quit()
         {
+            Time.timeScale = 1;
             LoadScene.LoadTo("Main");
         }
 

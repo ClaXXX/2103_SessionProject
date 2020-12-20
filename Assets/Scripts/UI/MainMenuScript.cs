@@ -53,10 +53,14 @@ namespace UI {
         
         private Transform menuPanel;
 
-        public void Start() {
+        public void Awake() {
             playerAssembler = new PlayerAssembler();
             _configManager = ConfigManager.instance;
             _seedManager = SeedManager.instance;
+            toMainMenu = false;
+            toGameConfig = false;
+            isGameSetterEasingIn = false;
+            isGameSetterEasingOut = false;
         }
 
         public void Update() {
@@ -301,10 +305,7 @@ namespace UI {
                 isGameSetterEasingOut = false;
             }
         }
-
-        private void makeButtonRainbow(float time) {
-            // TODO : Mth that is called to interpolate button color
-        }
+        
         private Vector3 interpolateToPosition(Vector3 a, Vector3 b, float t) {
             t = Mathf.Clamp01(t); 
             

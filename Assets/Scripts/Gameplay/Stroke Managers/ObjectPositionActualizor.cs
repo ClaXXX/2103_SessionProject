@@ -63,7 +63,7 @@ namespace Gameplay.Stroke_Managers
                 case Effect.easeInQuart:
                     offset *= (easeInQuart(x)); break;
                 case Effect.easeInOutQuad:
-                    offset *= (easeInQuart(x)); break;            }
+                    offset *= (easeInOutQuad(x)); break;            }
 
             transform.position = mainObject.transform.position + (transform.rotation * offset);
         }

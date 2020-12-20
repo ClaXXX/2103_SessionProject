@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics;
+using Unity.Collections.LowLevel.Unsafe;
+using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour {
@@ -7,6 +9,8 @@ public class MeshGenerator : MonoBehaviour {
     [SerializeField] private GameObject holePrefab;
     [SerializeField] private Transform holePosition;
     [SerializeField] private GameObject playerStartPosition;
+    [SerializeField] private GameObject poplarTreePrefab;
+    [SerializeField] private GameObject firTreePrefab;
     private Vector3[] vertices;
     private int[] triangles;
 
@@ -189,6 +193,36 @@ public class MeshGenerator : MonoBehaviour {
         Vector3 startPosition = c + (d - c) / 2;
         startPosition.y = 0.7f;
         playerStartPosition.transform.position = startPosition;
+
+        // Instanciate trees
+        for (int i = 0; i < Random.Range(3, 15); i++) {
+            bool isInUsedZone = false;
+            int position = Random.Range(0, vertices.Length);
+            foreach (var variable in puttingHoleVertices) {
+                if (position == i) {
+                    isInUsedZone = true;
+                }
+            }
+            foreach (var variable in startZoneVertices) {
+                if (position == i) {
+                    isInUsedZone = true;
+                }
+            }
+
+            if (!isInUsedZone) {
+                float treeType = Random.Range(0, 2);
+                if (treeType == 0f) {
+                    var test = new GameObject();
+                    test.transform.position = transform.TransformPoint(mesh.vertices[position]);
+                    Instantiate(poplarTreePrefab, test.transform);
+                }
+                else {
+                    var test = new GameObject();
+                    test.transform.position = transform.TransformPoint(mesh.vertices[position]);
+                    Instantiate(firTreePrefab, test.transform);
+                }
+            }
+        }
         
     }
 

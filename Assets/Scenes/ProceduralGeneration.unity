@@ -2947,7 +2947,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 74b155f6dfb30c843b41d0b8d002eae8, type: 2}
+  - {fileID: 2100000, guid: 9482a9862b214425ac10716add1bb5b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7390,6 +7390,8 @@ MonoBehaviour:
   holePrefab: {fileID: 1508467768}
   holePosition: {fileID: 840448959}
   playerStartPosition: {fileID: 646362777}
+  poplarTreePrefab: {fileID: 137650, guid: 826b6a0b570e8460990010fa615b5a2a, type: 3}
+  firTreePrefab: {fileID: 192044, guid: 19682540d8a014522a319b1cf788aee2, type: 3}
   mapXSize: 20
   mapZSize: 20
 --- !u!23 &2121321254

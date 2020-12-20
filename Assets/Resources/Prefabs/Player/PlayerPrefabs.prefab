@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainObject: {fileID: 8457298687681159667}
+  effect: 3
 --- !u!1 &7136509915269373491
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainObject: {fileID: 8457298687681159667}
+  effect: 2
 --- !u!1 &7136509915927973739
 GameObject:
   m_ObjectHideFlags: 0

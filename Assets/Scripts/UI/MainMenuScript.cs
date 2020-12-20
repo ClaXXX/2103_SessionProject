@@ -90,8 +90,27 @@ namespace UI {
             
                 _configManager.addPlayers(players);
                 
-                LoadingData.sceneToLoad = "ProceduralGeneration"; // TODO : DON'T FORGET TO CHANGE THIS
+                LoadingData.sceneToLoad = "NetworkGame";
                 SceneManager.LoadScene("Loading");
+        }
+        
+        public void configureProceduralGame() {
+            int player1ControlsValue = localPlayer1Controls.value;
+            int player2ControlsValue = localPlayer2Controls.value;
+
+            int player2SelectValue = player2Select.value;
+                
+            PlayerDto[] players = new PlayerDto[2];
+
+            players[0] = playerAssembler.assemble(player1ControlsValue, 1, 1);
+            players[1] = playerAssembler.assemble(player2ControlsValue, player2SelectValue, 2);
+            
+            _configManager.addPlayers(players);
+                
+            // TODO : Envoyer la germe!
+            
+            LoadingData.sceneToLoad = "ProceduralGeneration";
+            SceneManager.LoadScene("Loading");
         }
 
         public void configureOnlineGame() {

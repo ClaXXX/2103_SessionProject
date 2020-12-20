@@ -1460,7 +1460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &235314200
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4729,7 +4729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &842527389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12794,6 +12794,10 @@ PrefabInstance:
     - target: {fileID: 1594964530098791008, guid: 9f91957f1d080ea46984a6f620d60ae2, type: 3}
       propertyPath: m_Name
       value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6692176102671809196, guid: 9f91957f1d080ea46984a6f620d60ae2, type: 3}
+      propertyPath: songsVolume
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f91957f1d080ea46984a6f620d60ae2, type: 3}

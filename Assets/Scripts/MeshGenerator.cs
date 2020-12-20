@@ -174,8 +174,7 @@ public class MeshGenerator : MonoBehaviour {
     private void instanciatePrefabs() {
         Vector3 a = transform.TransformPoint(mesh.vertices[puttingHoleVertices[0]]);
         Vector3 b = transform.TransformPoint(mesh.vertices[puttingHoleVertices[15]]);
-
-
+        
         Vector3 puttingPosition = a + (b - a)/2;
         puttingPosition.y = 0.7f;
         holePosition.position = puttingPosition;
@@ -183,12 +182,14 @@ public class MeshGenerator : MonoBehaviour {
         holePrefab.transform.position = holePosition.position;
         holePrefab.transform.localScale = holePosition.localScale;
         
+        
         Vector3 c = transform.TransformPoint(mesh.vertices[startZoneVertices[0]]);
         Vector3 d = transform.TransformPoint(mesh.vertices[startZoneVertices[15]]);
-
+        
         Vector3 startPosition = c + (d - c) / 2;
         startPosition.y = 0.7f;
         playerStartPosition.transform.position = startPosition;
+        
     }
 
     private void OnDrawGizmos() {

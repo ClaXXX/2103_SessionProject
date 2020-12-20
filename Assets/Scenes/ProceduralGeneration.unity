@@ -7283,6 +7283,7 @@ MonoBehaviour:
   meshCollider: {fileID: 2121321256}
   holePrefab: {fileID: 196086803}
   holePosition: {fileID: 840448959}
+  playerStartPosition: {fileID: 646362777}
   mapXSize: 20
   mapZSize: 20
 --- !u!23 &2121321254

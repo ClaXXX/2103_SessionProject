@@ -6,6 +6,7 @@ public class MeshGenerator : MonoBehaviour {
     [SerializeField] private MeshCollider meshCollider;
     [SerializeField] private GameObject holePrefab;
     [SerializeField] private Transform holePosition;
+    [SerializeField] private GameObject playerStartPosition;
     private Vector3[] vertices;
     private int[] triangles;
 
@@ -13,7 +14,9 @@ public class MeshGenerator : MonoBehaviour {
     public int mapZSize = 2;
 
     private bool foundPuttingZone = false;
+    private bool foundStartZone = false;
     private int[] puttingHoleVertices = new int[16];
+    private int[] startZoneVertices = new int[16];
 
     // Start is called before the first frame update
     void Start() {
@@ -93,9 +96,36 @@ public class MeshGenerator : MonoBehaviour {
                     foundPuttingZone = true;
                 }
 
+                if (foundStartZone) {
+                    foreach (var variable in startZoneVertices) {
+                        if (variable == a) {
+                            y = 0.7f;
+                            generateNoise = false;
+                        }
+                    }
+                }
+                
                 if (i == startZoneX && j == startZoneZ) {
-                    y = 3f;
+                    startZoneVertices[0] = a + 0;
+                    startZoneVertices[1] = a + 1;
+                    startZoneVertices[2] = a + 2;
+                    startZoneVertices[3] = a + 3;
+                    startZoneVertices[4] = a + mapXSize + 1;
+                    startZoneVertices[5] = a + mapXSize + 2;
+                    startZoneVertices[6] = a + mapXSize + 3;
+                    startZoneVertices[7] = a + mapXSize + 4;
+                    startZoneVertices[8] = a + 2 * mapXSize + 2;
+                    startZoneVertices[9] = a + 2 * mapXSize + 3;
+                    startZoneVertices[10] = a + 2 * mapXSize + 4;
+                    startZoneVertices[11] = a + 2 * mapXSize + 5;
+                    startZoneVertices[12] = a + 3 * mapXSize + 3;
+                    startZoneVertices[13] = a + 3 * mapXSize + 4;
+                    startZoneVertices[14] = a + 3 * mapXSize + 5;
+                    startZoneVertices[15] = a + 3 * mapXSize + 6;
+                    
+                    y = 0.7f;
                     generateNoise = false;
+                    foundStartZone = true;
                 }
  
 
@@ -146,12 +176,19 @@ public class MeshGenerator : MonoBehaviour {
         Vector3 b = transform.TransformPoint(mesh.vertices[puttingHoleVertices[15]]);
 
 
-        Vector3 test = a + (b - a)/2;
-        test.y = 0.7f;
-        holePosition.position = test;
+        Vector3 puttingPosition = a + (b - a)/2;
+        puttingPosition.y = 0.7f;
+        holePosition.position = puttingPosition;
         holePosition.localScale = new Vector3(0.07f, 0.07f, 0.07f);
         holePrefab.transform.position = holePosition.position;
         holePrefab.transform.localScale = holePosition.localScale;
+        
+        Vector3 c = transform.TransformPoint(mesh.vertices[startZoneVertices[0]]);
+        Vector3 d = transform.TransformPoint(mesh.vertices[startZoneVertices[15]]);
+
+        Vector3 startPosition = c + (d - c) / 2;
+        startPosition.y = 0.7f;
+        playerStartPosition.transform.position = startPosition;
     }
 
     private void OnDrawGizmos() {

@@ -11,6 +11,7 @@ namespace UI {
         [SerializeField] private Dropdown localPlayer1Controls;
         [SerializeField] private Dropdown localPlayer2Controls;
         [SerializeField] private Dropdown player2Select;
+        [SerializeField] private InputField seedInput;
 
         #region UIGameObjects
 
@@ -48,12 +49,14 @@ namespace UI {
 
         private PlayerAssembler playerAssembler;
         private ConfigManager _configManager;
+        private SeedManager _seedManager;
         
         private Transform menuPanel;
 
         public void Start() {
             playerAssembler = new PlayerAssembler();
             _configManager = ConfigManager.instance;
+            _seedManager = SeedManager.instance;
         }
 
         public void Update() {
@@ -106,6 +109,7 @@ namespace UI {
             players[1] = playerAssembler.assemble(player2ControlsValue, player2SelectValue, 2);
             
             _configManager.addPlayers(players);
+            _seedManager.setSeed(seedInput.text);
                 
             // TODO : Envoyer la germe!
             

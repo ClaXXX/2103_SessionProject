@@ -1,6 +1,7 @@
-﻿using System.Diagnostics;
-using Unity.Collections.LowLevel.Unsafe;
+﻿using System;
+using DefaultNamespace;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour {
@@ -12,6 +13,9 @@ public class MeshGenerator : MonoBehaviour {
     [SerializeField] private GameObject poplarTreePrefab;
     [SerializeField] private GameObject firTreePrefab;
     [SerializeField] private GameObject flagMarker;
+
+    private SeedManager _seedManager;
+    
     private Vector3[] vertices;
     private int[] triangles;
 
@@ -22,12 +26,21 @@ public class MeshGenerator : MonoBehaviour {
     private bool foundStartZone = false;
     private int[] puttingHoleVertices = new int[16];
     private int[] startZoneVertices = new int[16];
+    
+    // TODO : Put random values here
+    private float perlinX;
+    private float perlinZ;
+    private int puttingHoleX;
+    private int puttingHoleZ;
+    
 
     // Start is called before the first frame update
     void Start() {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
+        _seedManager = SeedManager.instance;
+        setRandomValues(_seedManager.getSeed());
         createShape();
         updateMesh();
         instanciatePrefabs();
@@ -38,13 +51,6 @@ public class MeshGenerator : MonoBehaviour {
 
         int a = 0;
 
-        float test1 = Random.Range(1, 9) / 10f;
-        float test2 = Random.Range(1, 4) / 10f; // TODO : Faire que le système génère un numbre aléatoire pour décider de la direction des vauges
-        
-        // TODO : Choisir la position du drapeau
-        int puttingHoleX = Random.Range(0, mapXSize - 4);
-        int puttingHoleZ = Random.Range(0, mapZSize - 4);
-            
         int startZoneX = 0;
         int startZoneZ = 0;    
 
@@ -136,7 +142,7 @@ public class MeshGenerator : MonoBehaviour {
 
 
                 if (generateNoise) {
-                    y = Mathf.PerlinNoise(i * test1, j * test2); 
+                    y = Mathf.PerlinNoise(i * perlinX, j * perlinZ); 
                 }
 
                 vertices[a] = new Vector3(i, y, j);
@@ -233,6 +239,34 @@ public class MeshGenerator : MonoBehaviour {
         
     }
 
+    private void setRandomValues(String seed) {
+        if (string.IsNullOrEmpty(seed)) {
+            perlinX = Random.Range(1, 9) / 10f;
+            perlinZ = Random.Range(1, 4) / 10f;
+
+            puttingHoleX = Random.Range(0, mapXSize - 4);
+            puttingHoleZ = Random.Range(0, mapZSize - 4);
+        } else {
+            // TODO : on va absolument devoir faire un "switcheroo" pour mettre les valeurs sur la même base que ceux générés
+            for (int i = 0; i < seed.Length; i++) {
+                if (i == 0) {
+                    perlinX = Mathf.InverseLerp(1, 9, (float) Char.GetNumericValue(seed[i])) / 10f;
+                }
+                if (i == 1) {
+                    perlinZ = Mathf.InverseLerp(1, 4, (float) Char.GetNumericValue(seed[i])) / 10f;
+                }
+
+                if (i == 2) {
+                    puttingHoleX = (int) Mathf.InverseLerp(0, mapXSize - 4, (float) Char.GetNumericValue(seed[i])) / 10;
+                }
+
+                if (i == 3) {
+                    puttingHoleZ = (int) Mathf.InverseLerp(0, mapZSize - 4, (float) Char.GetNumericValue(seed[i])) / 10;
+                }
+            }
+        }
+    }
+    
     private void OnDrawGizmos() {
         if (vertices == null) {
             return;

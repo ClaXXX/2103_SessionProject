@@ -90,7 +90,7 @@ namespace UI {
             
                 _configManager.addPlayers(players);
                 
-                LoadingData.sceneToLoad = "NetworkGame";
+                LoadingData.sceneToLoad = "ProceduralGeneration"; // TODO : DON'T FORGET TO CHANGE THIS
                 SceneManager.LoadScene("Loading");
         }
 

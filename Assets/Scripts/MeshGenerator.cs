@@ -46,7 +46,7 @@ public class MeshGenerator : MonoBehaviour {
                 if (foundPuttingZone) {
                     foreach (var variable in puttingHoleVertices) {
                         if (variable == a) {
-                            y = 2f;
+                            y = 0.7f;
                             generateNoise = false;
                         }
                     }
@@ -70,7 +70,7 @@ public class MeshGenerator : MonoBehaviour {
                         puttingHoleVertices[14] = a + 3 * mapXSize + 5;
                         puttingHoleVertices[15] = a + 3 * mapXSize + 6;
 
-                        y = 2f;
+                        y = 0.7f;
                         generateNoise = false;
                         foundPuttingZone = true;
                     }   
@@ -123,9 +123,11 @@ public class MeshGenerator : MonoBehaviour {
 
 
         Vector3 test = a + (b - a)/2;
-        test.y = 2;
+        test.y = 0.7f;
         holePosition.position = test;
-        Instantiate(holePrefab, holePosition);
+        holePosition.localScale = new Vector3(0.07f, 0.07f, 0.07f);
+        holePrefab.transform.position = holePosition.position;
+        holePrefab.transform.localScale = holePosition.localScale;
     }
     
     private void OnDrawGizmos() {

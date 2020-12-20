@@ -11,6 +11,7 @@ public class MeshGenerator : MonoBehaviour {
     [SerializeField] private GameObject playerStartPosition;
     [SerializeField] private GameObject poplarTreePrefab;
     [SerializeField] private GameObject firTreePrefab;
+    [SerializeField] private GameObject flagMarker;
     private Vector3[] vertices;
     private int[] triangles;
 
@@ -185,6 +186,11 @@ public class MeshGenerator : MonoBehaviour {
         holePosition.localScale = new Vector3(0.07f, 0.07f, 0.07f);
         holePrefab.transform.position = holePosition.position;
         holePrefab.transform.localScale = holePosition.localScale;
+
+        Vector3 flagPosition = holePosition.position;
+        flagPosition.y = 4f;
+        
+        flagMarker.transform.position = flagPosition;      
         
         
         Vector3 c = transform.TransformPoint(mesh.vertices[startZoneVertices[0]]);
@@ -195,16 +201,17 @@ public class MeshGenerator : MonoBehaviour {
         playerStartPosition.transform.position = startPosition;
 
         // Instanciate trees
-        for (int i = 0; i < Random.Range(3, 15); i++) {
+        for (int i = 0; i < Random.Range(6, 15); i++) {
             bool isInUsedZone = false;
             int position = Random.Range(0, vertices.Length);
+            
             foreach (var variable in puttingHoleVertices) {
-                if (position == i) {
+                if (position == variable) {
                     isInUsedZone = true;
                 }
             }
             foreach (var variable in startZoneVertices) {
-                if (position == i) {
+                if (position == variable) {
                     isInUsedZone = true;
                 }
             }

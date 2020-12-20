@@ -617,6 +617,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activePlayerParticlesSystemPool: {fileID: 81027606}
+  finishParticlesSystemPool: {fileID: 1849974317}
+  scoringCollider: {fileID: 1907833670}
   mainCamera: {fileID: 46827637}
   mainListener: {fileID: 46827636}
   position: {fileID: 1412393959}
@@ -4063,6 +4065,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1100673927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1100673928}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1100673928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100673927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -24, y: 22.5, z: 5.3800273}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1849974318}
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1101788071
 GameObject:
   m_ObjectHideFlags: 0
@@ -6651,12 +6684,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849974316}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6129647, y: 0.31855154, z: 0.024116158}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -53.82579, y: -1.3306184, z: -5.3559113}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_Father: {fileID: 1100673928}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1888744587
 GameObject:
@@ -6814,6 +6847,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888744587}
   m_CullTransparentMesh: 0
+--- !u!114 &1907833670 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4543709144321421797, guid: 6f9a0c6ab7d64c34db25fdb9ce3b3cd4, type: 3}
+  m_PrefabInstance: {fileID: 4543709145806299073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c75ce519cd1f449ab3806137b120ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1911366968
 GameObject:
   m_ObjectHideFlags: 0

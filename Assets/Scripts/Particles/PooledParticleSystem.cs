@@ -6,7 +6,7 @@ namespace Particles {
         private ParticleSystemRenderer particleSystemRenderer;
         private ParticleSystemPool _pool;
 
-        public void Start() {
+        public void Awake() {
             particleSystemRenderer = GetComponent<ParticleSystemRenderer>();
         }
 

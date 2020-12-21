@@ -2,9 +2,11 @@
 using UnityEngine;
 
 public class Radio : MonoBehaviour {
-    public ParticleSystemPool activePlayerParticlesSystemPool;
-    void Start() {
-        var test = activePlayerParticlesSystemPool.GetFromPool(this.transform);
+    [SerializeField] ParticleSystemPool radioParticlesSystemPool;
+    
+    public void playSoundParticles() {
+        var test = radioParticlesSystemPool.GetFromPool(transform);
+        test.GetComponent<PooledParticleSystem>().startParticleSystem(radioParticlesSystemPool);
         test.rotation = Quaternion.Euler(90, 0, 0);
     }
 }

@@ -27,10 +27,11 @@ public class ScoringCollider : MonoBehaviour {
 
     private IEnumerator gameWin() {
         soundManager.playBallInHoleSound(this.transform);
-
-        yield return new WaitForSeconds(1);
         particle = particleSystemPool.GetFromPool(transform);
         particle.GetComponent<PooledParticleSystem>().startParticleSystem(particleSystemPool);
+        
+        yield return new WaitForSeconds(1);
+
 
         OnGameWin?.Invoke();
     }

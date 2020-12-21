@@ -19,7 +19,9 @@ namespace GamePlay
         [SerializeField] private ParticleSystemPool activePlayerParticlesSystemPool;
         [SerializeField] private ParticleSystemPool finishParticlesSystemPool;
         [SerializeField] private ScoringCollider scoringCollider;
-        
+
+        [SerializeField] private Radio radio;
+
         private const int MAXPlayerNbr = 4;
         public int PlayerNbr { get; protected set; }
         public int PlayerIndex { get; protected set; }
@@ -72,7 +74,11 @@ namespace GamePlay
                 scoringCollider.OnGameWin = GameOver;
                 scoringCollider.particleSystemPool = finishParticlesSystemPool;
                 _musicManager = FindObjectOfType<MusicManager>();
+                if (radio != null) {
+                    radio.playSoundParticles();
+                }
 
+                
                 // then launch the game
                 LaunchGame(2, GameSettings.BotNumber);
             }

@@ -39,9 +39,11 @@ namespace Sounds
             
             foreach (AmbiantManager.NamedAudioClip placedAudioClip in placedAudioClips)
             {
-                placedAudioClip.source.loop = true; // Init a loop system
-                placedAudioClip.source.clip = placedAudioClip.audio;
-                placedAudioClip.source.Play();
+                if (placedAudioClip.source != null) {
+                    placedAudioClip.source.loop = true; // Init a loop system
+                    placedAudioClip.source.clip = placedAudioClip.audio;
+                    placedAudioClip.source.Play();
+                }
             }
         }
 
@@ -50,7 +52,9 @@ namespace Sounds
             source.volume = _soundManager.songsVolume;
             foreach (AmbiantManager.NamedAudioClip placedAudioClip in placedAudioClips)
             {
-                placedAudioClip.source.volume = _soundManager.songsVolume;
+                if (placedAudioClip.source != null) {
+                    placedAudioClip.source.volume = _soundManager.songsVolume;
+                }
             }
         }
 

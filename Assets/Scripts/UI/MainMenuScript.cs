@@ -35,9 +35,9 @@ namespace UI {
         #region VisibleCoordinates
 
         [SerializeField] private Transform LowerLocalGameSetterVisiblePosition;
-        [SerializeField] private Transform LowerLocalGameSetterBasePosition;
+        private Vector3 LowerLocalGameSetterBasePosition;
         [SerializeField] private Transform UpperLocalGameSetterVisiblePosition;
-        [SerializeField] private Transform UpperLocalGameSetterBasePosition;
+        Vector3 UpperLocalGameSetterBasePosition;
         // TODO : Add main menu things here
 
         #endregion
@@ -57,12 +57,14 @@ namespace UI {
 
         public void Awake() {
             playerAssembler = new PlayerAssembler();
-            _configManager = ConfigManager.instance;
             _seedManager = SeedManager.instance;
             toMainMenu = false;
             toGameConfig = false;
             isGameSetterEasingIn = false;
             isGameSetterEasingOut = false;
+            LowerLocalGameSetterBasePosition = LowerLocalGameSetterGameObject.transform.position;
+            UpperLocalGameSetterBasePosition = UpperLocalGameSetterGameObject.transform.position;
+
         }
 
         public void Update() {
@@ -97,7 +99,7 @@ namespace UI {
                 players[0] = playerAssembler.assemble(player1ControlsValue, 1, 1);
                 players[1] = playerAssembler.assemble(player2ControlsValue, player2SelectValue, 2);
             
-                _configManager.addPlayers(players);
+                ConfigManager.instance.addPlayers(players);
                 
                 LoadingData.sceneToLoad = "NetworkGame";
                 SceneManager.LoadScene("Loading");
@@ -114,7 +116,7 @@ namespace UI {
             players[0] = playerAssembler.assemble(player1ControlsValue, 1, 1);
             players[1] = playerAssembler.assemble(player2ControlsValue, player2SelectValue, 2);
             
-            _configManager.addPlayers(players);
+            ConfigManager.instance.addPlayers(players);
             _seedManager.setSeed(seedInput.text);
                 
             // TODO : Envoyer la germe!
@@ -129,7 +131,7 @@ namespace UI {
             players[0] = playerAssembler.assemble(player1ControlsValue, 1, 1);
             
             Debug.Log("Player Configuration added");
-            _configManager.addPlayers(players);
+            ConfigManager.instance.addPlayers(players);
         }
 
         public void initPlayerOneDropdowns() {
@@ -291,24 +293,24 @@ namespace UI {
             bool isUpperDone = false;
             bool isLowerDone = false;
 
-            if (UpperLocalGameSetterGameObject.transform.position.y > UpperLocalGameSetterBasePosition.position.y - 0.1f) {
-                UpperLocalGameSetterGameObject.transform.position = UpperLocalGameSetterBasePosition.position;
+            if (UpperLocalGameSetterGameObject.transform.position.y > UpperLocalGameSetterBasePosition.y - 0.1f) {
+                UpperLocalGameSetterGameObject.transform.position = UpperLocalGameSetterBasePosition;
                 isUpperDone = true;
             }
             else {
                 UpperLocalGameSetterGameObject.transform.position =
                     interpolateToPosition(UpperLocalGameSetterGameObject.transform.position,
-                        UpperLocalGameSetterBasePosition.position, time);
+                        UpperLocalGameSetterBasePosition, time);
             }
             
-            if (LowerLocalGameSetterGameObject.transform.position.y - 0.1f < LowerLocalGameSetterBasePosition.position.y) {
-                LowerLocalGameSetterGameObject.transform.position = LowerLocalGameSetterBasePosition.position;
+            if (LowerLocalGameSetterGameObject.transform.position.y - 0.1f < LowerLocalGameSetterBasePosition.y) {
+                LowerLocalGameSetterGameObject.transform.position = LowerLocalGameSetterBasePosition;
                 isLowerDone = true;
             }
             else {
                 LowerLocalGameSetterGameObject.transform.position =
                     interpolateToPosition(LowerLocalGameSetterGameObject.transform.position,
-                        LowerLocalGameSetterBasePosition.position, time);
+                        LowerLocalGameSetterBasePosition, time);
             }
 
             if (isLowerDone && isUpperDone) {

@@ -17,6 +17,7 @@ namespace Particles {
             for (int i = 0; i < maxAmount; i++) {
                 particleSystemPrefab.transform.parent = cache;
                 var instance = Instantiate(particleSystemPrefab, cache);
+                instance.GetComponent<ParticleSystemRenderer>().enabled = false;
                 objectPool.Push(instance);
             }
         }
